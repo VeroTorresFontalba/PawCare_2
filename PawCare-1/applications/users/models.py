@@ -20,7 +20,7 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
     apellidos= models.CharField(max_length=100)
     telefono= models.CharField(max_length=9)
     #tipodeusuario=models.CharField(max_length=2,choices=TIPOUSER_CHOICES)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True,default='Cliente')
     #
     is_staff = models.BooleanField(default=False) #para especificar si el usuario es administrador
 
