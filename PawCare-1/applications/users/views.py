@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 
@@ -6,6 +8,7 @@ from django.http import HttpResponseRedirect
 
 from django.views.generic import (
     View,
+    ListView,
     CreateView
 )
 from django.views.generic.edit import (
@@ -17,6 +20,7 @@ from django.views.generic.edit import (
 from .forms import UserRegisterForm, LoginForm
 
 from .models import User
+from .managers import UserManager
 # Create your views here.
 class UserRegisterView(FormView):
     template_name='users/registro.html'
@@ -55,3 +59,11 @@ class LogoutView(View):
         return HttpResponseRedirect(
             reverse('home_app:home')
             )
+    
+class ListCuidadores(ListView):
+    #model= User
+    context_object_name= 'lista_cuidadores'
+    template_name= 'home/servicios.html'
+
+    def get_queryset(self):
+        return User.objects.listar_cuidadores()
