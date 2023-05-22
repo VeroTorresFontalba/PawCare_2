@@ -31,6 +31,8 @@ class UserRegisterView(FormView):
             form.cleaned_data['password1'],
             nombres = form.cleaned_data['nombres'],
             apellidos = form.cleaned_data['apellidos'],
+            telefono = form.cleaned_data['telefono'],
+            rut = form.cleaned_data['rut'],
             categoria = form.cleaned_data['categoria'],
         )
         return super(UserRegisterView, self).form_valid(form)

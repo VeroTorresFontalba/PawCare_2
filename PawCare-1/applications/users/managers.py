@@ -4,7 +4,7 @@ from django.contrib.auth.models import BaseUserManager,AbstractBaseUser ,Permiss
 
 class UserManager(BaseUserManager, models.Manager):
 
-    def _create_user(self, username, email ,password, is_staff, is_superuser, **extra_fields):
+    def _create_user(self, username, email,password, is_staff, is_superuser, **extra_fields):
         user = self.model(
             username = username,
             email = email,

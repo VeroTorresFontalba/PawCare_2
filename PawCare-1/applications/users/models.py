@@ -34,3 +34,4 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
         return self.username
     def get_full_name(self):
         return self.nombres+" "+self.apellidos
+    
