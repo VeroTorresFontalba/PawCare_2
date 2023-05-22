@@ -9,9 +9,6 @@ from .models import User, Categoria
 
 class UserRegisterForm(forms.ModelForm):
 
- 
-
-
     password1 = forms.CharField(
         label='Contraseña',
         required= True,
