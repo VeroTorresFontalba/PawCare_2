@@ -6,7 +6,8 @@ from django.http import HttpResponseRedirect
 
 from django.views.generic import (
     View,
-    CreateView
+    CreateView,
+    TemplateView
 )
 from django.views.generic.edit import (
     FormView
@@ -34,6 +35,7 @@ class UserRegisterView(FormView):
             telefono = form.cleaned_data['telefono'],
             rut = form.cleaned_data['rut'],
             categoria = form.cleaned_data['categoria'],
+            
         )
         return super(UserRegisterView, self).form_valid(form)
     
@@ -57,3 +59,6 @@ class LogoutView(View):
         return HttpResponseRedirect(
             reverse('home_app:home')
             )
+    
+class PerfilView(TemplateView):
+    template_name='perfil/perfil.html'
