@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -17,7 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'applications.categoria',
     'applications.home',
-    'applications.users'
+    'applications.users',
+    'applications.perfil'
 ]
 
 
@@ -36,7 +38,7 @@ ROOT_URLCONF = 'PawCare.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
