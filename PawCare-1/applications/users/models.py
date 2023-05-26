@@ -8,11 +8,6 @@ from applications.categoria.models import Categoria
 # Create your models here.
 class User (AbstractBaseUser, PermissionsMixin, models.Model ):
 
-    TIPOUSER_CHOICES = (
-        ('CL','Cliente'),
-        ('CU','Cuidador')
-    )
-
     username = models.CharField(max_length=16, unique=True)
     email = models.EmailField()
     rut = models.CharField(max_length=9)
