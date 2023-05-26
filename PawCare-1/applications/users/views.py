@@ -266,4 +266,4 @@ def modificar_perfil(request,id):
             formulario.save()
             return redirect('/administrador/perfiles')
     
-    return render(request, '/administrador/modificar_perfiles.html', datos)
+    return render(request, 'administrador/modificar_perfiles.html', datos)
