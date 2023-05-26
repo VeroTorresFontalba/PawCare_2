@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path ,re_path,include
+from django.conf import settings
+from django.conf.urls.static import static
 from applications.home.views import HomeView,ColaboradoresView,SomosView,ServicioView
 from applications.users.views import UserRegisterView
 
@@ -32,4 +34,10 @@ urlpatterns = [
 
     re_path('', include('applications.home.urls')),
 
+    path('users/',include('applications.users.urls',namespace='users'))
+
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}  
+<div class="container">
+    <h2>Modificando servicio</h2><br>
+    <form method="POST" action="" id="formulario">
+        {% csrf_token %}            
+        <div class="form-group">
+            {{ form.id.label}}
+            {{ form.id}}
+        </div>
+
+        <div class="form-group">
+            {{ form.descripcion.label}}
+            {{ form.descripcion}}
+        </div>
+
+        <div class="form-group">
+            {{ form.servicios.label}}
+            {{ form.servicios}}
+        </div>
+
+
+        <br>
+        <input type="submit" class="btn btn-primary" value="Modificar">
+        <a href="{% url 'users_app:listar_servicio' %}" class="btn btn-success"> Mostrar Servicios</a>
+
+    </form>
+</div>
+<br><br>
+
+{% endblock %} 

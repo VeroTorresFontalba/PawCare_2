@@ -1,7 +1,9 @@
 from django import forms
 from django.forms import ValidationError
 from django.contrib.auth import authenticate
-from .models import User, Categoria
+from .models import User, Categoria, Profile, Servicio
+
+
 
 
 
@@ -165,8 +167,189 @@ class LoginForm(forms.Form):
                 raise forms.ValidationError('Los datos de usuarios no son correctos')  
              return self.cleaned_data
         
+
         
+# admistracion
+
+class ServiciosForm(forms.ModelForm):
+     class Meta:
+          model = Servicio
+          fields = ['id','nombre','informacion']
+          labels = {
+               'id': 'Numero del Servicio',
+               'nombre':'Nombre del servicio',
+               'informacion':'Informacion de servicios'
+          }
+          widgets = {
+               'id':forms.TextInput(
+                    attrs ={
+                         'class':'form-control',
+                         'placeholder':'Ingrese el numero del nuevo servicio'
+                    }
+               ),
+               'nombre':forms.Textarea(
+                    attrs={
+                         'class':'form-control',
+                         'placeholder':'Ingrese el nombre del nuevo servicio'
+                    }
+               ),
+               'informacion':forms.Textarea(
+                    attrs={
+                         'class':'form-control',
+                         'placeholder':'Ingrese una breve descripccion'
+                    }
+               )
+          }
+
+
+class PerfilForm(forms.ModelForm):
+    
+
+
+    
+
+    class Meta:
+        model = Profile
+        fields = ('descripcion','servicios')
+        label = {
             
+            'descripcion': 'Bibliogrfia',
+            'servicios': 'Tipos de servicios'
+        }
+        widgets = {
+            'descripcion': forms.TextInput(
+                attrs = {
+                    'class': 'form-control',
+                    'placeholder': 'Ingrese una breve descripción'
+                }
+            ),
+            'servicios': forms.SelectMultiple(
+                attrs = {
+                    'class':'form-control',
+                    'type':'checkbox'
+                }
+            ),
+        }
+
+class EditarProfileForm(forms.ModelForm):
+    email = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class':'form-control',
+            })
+    )
+    telefono = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class':'form-control',
+            })
+    )
+    picture = forms.ImageField(label='Profile Picture',required=False, widget=forms.FileInput(attrs={'class':'form-control'}))
+    descripcion = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=260, required=False)
+    servicios = forms.SelectMultiple(
+        # label='',
+        # required= True,
+            attrs={
+                    'class':'form-control',
+                    'type':'checkbox'
+            }
+        
+    )   
 
 
-      
+    class Meta:
+        model = Profile
+        fields = ('email','telefono','picture','descripcion','servicios')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #     email = forms.EmailField(
+    #     label='Correo',
+    #     required= False,
+    #     widget= forms.EmailField(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'placeholder': 'Ingrese un correo',
+    #         }
+    #     )
+    # );
+    #     telefono = forms.TextInput(
+    #     label='Telefono',
+    #     required= False,
+    #     widget= forms.TextInput(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'placeholder': 'Ingrese un telefono',
+    #         }
+    #     )
+    # )
+    #     picture = forms.ImageField(
+    #          label='Profile picture',
+    #          required= False,
+    #          widget= forms.FileInput(
+                  
+    #          )
+    #     )
+    #     descripcion = forms.CharField(
+    #     label='descripcion',
+    #     widget= forms.TextInput(
+    #         attrs={
+    #             'class': 'form-control',
+    #         }
+    #     )
+    # )
+     
+    #     username = forms.CharField(
+    #     label='Nombre de usuario',
+    #     required= True,
+    #     widget= forms.TextInput(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'placeholder': 'Ingrese su usuario',
+    #             'style': '{margin: 10}',
+    #         }
+    #     )
+    # )
+    #     password = forms.CharField(
+    #     label='Contraseña',
+    #     required= True,
+    #     widget= forms.PasswordInput(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'placeholder': 'Ingrese su contraseña',
+    #         }
+    #     )
+    # )
