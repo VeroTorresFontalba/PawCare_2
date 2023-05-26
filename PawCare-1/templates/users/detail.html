@@ -1,0 +1,130 @@
+
+{% extends 'base.html' %}
+
+{% block content %} 
+
+{% load static %}
+<section style="background-color: #fff;">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col">
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-5">
+            <div class="card-body text-center">
+              <img src="{{user.profile.picture.url}}" 
+                class="rounded-circle img-fluid" style="width: 500px; height: 500px;">
+              <h5 class="my-3">{{user.categoria}}</h5>
+              </a>
+              <div class="d-flex justify-content-center mb-2">
+                <a class="nav-link"  href="{% url 'users:edit-profile' %}">
+                <button type="button" class="btn btn-primary">Editar Perfil</button>
+                </a>
+
+                <button type="button" class="btn btn-outline-primary ms-1">Podria servir</button>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0">
+            <div class="card-body p-0">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Nombre de usuario:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.username}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Nombre completo:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.nombres}} {{user.apellidos}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Rut:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.rut}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Correo electronico</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.email}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Telefono</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.telefono}}</p>
+                </div>
+              </div>
+              <hr>
+
+              {%if user.is_authenticated and profile.user %}
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Tipos de servicios:</p>
+                </div>
+              </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">
+                    {% for servicios in user.profile.servicios.all %}
+                    <span class="badge bg-secondary">{{ servicios.nombre  | upper }}</span>
+                  {% endfor %} 
+                  </p>
+                  <br>
+                <div>
+                    <button type="button" class="btn btn-primary">+</button>
+                </div>
+              </div>
+              <div class="modal fade" id="seleccionar" rol="servicios">
+
+              </div>
+              {%endif%}
+
+
+
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Descipccion</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{user.profile.descripcion}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+{% endblock %}

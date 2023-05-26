@@ -1,6 +1,6 @@
 from django.db import models
 import os
-from PawCare.settings import local 
+from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser ,PermissionsMixin
 from django.db.models.signals import post_save 
 
@@ -10,7 +10,7 @@ from applications.categoria.models import Categoria
 
 def user_directory_path_profile(instance, filename):
     profile_picture_name = 'users/{0}/profile.jpg'.format(instance.user.username)
-    full_path = os.path.join(local.MEDIA_ROOT, profile_picture_name)
+    full_path = os.path.join(settings.MEDIA_ROOT, profile_picture_name)
 
     if os.path.exists(full_path):
         os.remove(full_path)
@@ -47,26 +47,35 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
         return self.nombres+" "+self.apellidos
 
 #Modelo de Tipos de servicios
-class Tservicio(models.Model):
+class Servicio(models.Model):
+    id= models.IntegerField(primary_key=True)
     nombre = models.CharField(max_length=80, unique= True,verbose_name='Tipo de servicio')
+    informacion=models.TextField(max_length=2000,blank=False,null=True, default='Sin description')
+    estado = models.BooleanField('Estado', default = True)
 
     class Meta:
-        verbose_name = 'Tipo de servicio'
-        verbose_name_plural ='Tipos de servicios'
-        ordering = ['nombre']
+        verbose_name = 'servicio'
+        verbose_name_plural ='servicios'
+        ordering = ['id']
     def __str__(self):
         return self.nombre 
 
 class Profile(models.Model):
+    id= models.AutoField(primary_key=True)
     user= models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     # picture = models.ImageField(default='users/user_default_profile.png', upload_to=user_directory_path_profile)
-    picture = models.ImageField(default='users/image_user.png', upload_to='users/')
-    descripcion= models.TextField(max_length=150,null=True,blank=True)
+    picture = models.ImageField(default='users/user_default_profile.png', upload_to=user_directory_path_profile)
+    descripcion= models.TextField(max_length=2000,null=True,blank=True)
     # servicios=models.ForeignKey(Tservicio,on_delete=models.CASCADE,null=True)
-    servicios=models.ManyToManyField(Tservicio,related_name='servicios',verbose_name='Tipos de servicios')
+    servicios=models.ManyToManyField(Servicio,related_name='servicios',verbose_name='Tipos de servicios')
 
     def __str__(self):
         return self.user.username
+    
+
+    # def obtener_servicios(self):
+    #     servicio = str([servicios for servicios in self.servicios_id.all().values_list('nombre',flat = True)]).replace("[","").replace("]","").replace("'","")
+    #     return servicio
     
 
 def create_user_profile(sender, instance, created, **kwargs):
