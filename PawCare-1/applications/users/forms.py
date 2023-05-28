@@ -11,9 +11,6 @@ from .models import User, Categoria, Profile, Servicio
 
 class UserRegisterForm(forms.ModelForm):
 
- 
-
-
     password1 = forms.CharField(
         label='Contraseña',
         required= True,

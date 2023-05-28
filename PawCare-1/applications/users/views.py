@@ -267,3 +267,11 @@ def modificar_perfil(request,id):
             return redirect('/administrador/perfiles')
     
     return render(request, '/administrador/modificar_perfiles.html', datos)
+    
+class ListCuidadores(ListView):
+    #model= User
+    context_object_name= 'lista_cuidadores'
+    template_name= 'home/servicios.html'
+
+    def get_queryset(self):
+        return User.objects.listar_cuidadores()
