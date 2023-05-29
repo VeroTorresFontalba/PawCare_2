@@ -1,4 +1,5 @@
 import dataclasses
+from django.forms.models import BaseModelForm
 from django.shortcuts import render,get_object_or_404,redirect
 from django.urls import reverse_lazy, reverse
 
@@ -6,7 +7,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login, logout
-from django.http import HttpResponseRedirect,JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 
 from django.views.generic import (
     View,
@@ -23,18 +24,17 @@ from django.views.generic.edit import (
 
 
 from .forms import UserRegisterForm, LoginForm,PerfilForm
+# , ServiciosForm ,PerfilForm,EditarProfileForm
 
+from .models import User,Profile #, Servicio ,
 
-from .models import User, Profile
-
-#, Servicio ,Profile
 
 
 # Create your views here.
 class UserRegisterView(FormView):
     template_name='users/registro.html'
     form_class=UserRegisterForm
-    success_url='/'
+    success_url=reverse_lazy('users_app:user_login')
 
     def form_valid(self, form):
 
@@ -79,6 +79,10 @@ class ListCuidadores(ListView):
 
     def get_queryset(self):
         return User.objects.listar_cuidadores()
+    
+# class PerfilDetailView(DetailView):
+#     model = Profile
+#     template_name = 'users/detail.html'
 
 class PerfilDetailView(DetailView):
     model = Profile
@@ -92,7 +96,8 @@ class PerfilDetailView(DetailView):
             'profile':profile
         }
         return render(request, 'users/detail.html', context)
-    
+
+
 class PerfilUpdateView(UpdateView):
     model= Profile
     form_class= PerfilForm 
@@ -105,3 +110,7 @@ class PerfilUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('users_app:update',args=[self.object.id]) + '?ok'
     
+
+
+
+
