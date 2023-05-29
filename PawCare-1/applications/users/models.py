@@ -8,18 +8,6 @@ from .managers import UserManager
 
 from applications.categoria.models import Categoria
 
-def user_directory_path_profile(instance, filename):
-    profile_picture_name = 'users/{0}/profile.jpg'.format(instance.user.username)
-    full_path = os.path.join(settings.MEDIA_ROOT, profile_picture_name)
-
-    if os.path.exists(full_path):
-        os.remove(full_path)
-
-    return profile_picture_name
-
-
-
-
 # Create your models here.
 class User (AbstractBaseUser, PermissionsMixin, models.Model ):
 
@@ -59,34 +47,43 @@ class Servicio(models.Model):
     def __str__(self):
         return self.nombre 
 
-# class Profile(models.Model):
-#     id= models.AutoField(primary_key=True)
-#     user= models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
-#     # picture = models.ImageField(default='users/user_default_profile.png', upload_to=user_directory_path_profile)
-#     picture = models.ImageField(default='users/user_default_profile.png', upload_to=user_directory_path_profile)
-#     descripcion= models.TextField(max_length=2000,null=True,blank=True)
-#     # servicios=models.ForeignKey(Tservicio,on_delete=models.CASCADE,null=True)
-#     servicios=models.ManyToManyField(Servicio,related_name='servicios',verbose_name='Tipos de servicios')
+#Modelo perfil
+def user_directory_path_profile(instance, filename):
+    profile_picture_name = 'users/{0}/profile.jpg'.format(instance.user.username)
+    full_path = os.path.join(settings.MEDIA_ROOT, profile_picture_name)
 
-#     def __str__(self):
-#         return self.user.username
+    if os.path.exists(full_path):
+        os.remove(full_path)
+
+    return profile_picture_name
+class Profile(models.Model):
+    id= models.AutoField(primary_key=True)
+    user= models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
+    # picture = models.ImageField(default='users/user_default_profile.png', upload_to=user_directory_path_profile)
+    picture = models.ImageField(default='users/user_default_profile.png', upload_to=user_directory_path_profile)
+    descripcion= models.TextField(max_length=2000,null=True,blank=True)
+    # servicios=models.ForeignKey(Tservicio,on_delete=models.CASCADE,null=True)
+    servicios=models.ManyToManyField(Servicio,related_name='servicios',verbose_name='Tipos de servicios')
+
+    def __str__(self):
+        return self.user.username
     
 
-    # def obtener_servicios(self):
-    #     servicio = str([servicios for servicios in self.servicios_id.all().values_list('nombre',flat = True)]).replace("[","").replace("]","").replace("'","")
-    #     return servicio
+    def obtener_servicios(self):
+        servicio = str([servicios for servicios in self.servicios_id.all().values_list('nombre',flat = True)]).replace("[","").replace("]","").replace("'","")
+        return servicio
     
 
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
 
 
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
 
-# # created profile
-# post_save.connect(create_user_profile, sender=User)
-# # save created profile
-# post_save.connect(save_user_profile, sender=User)
-    
+# created profile
+post_save.connect(create_user_profile, sender=User)
+# save created profile
+post_save.connect(save_user_profile, sender=User)
+ 

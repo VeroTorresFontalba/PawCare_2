@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ValidationError
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm , SetPasswordForm
-from .models import User, Servicio
+from .models import User, Servicio, Profile
 
 
 
@@ -233,56 +233,23 @@ class ServiciosForm(forms.ModelForm):
           }
 
 
-# class PerfilForm(forms.ModelForm):
-    
+class PerfilForm(forms.ModelForm):
+    picture = forms.ImageField(label='Nueva foto de perfil',required=False, widget=forms.FileInput(attrs={'class':'form-control'}))
 
+    descripcion = forms.CharField(label= 'Ingresa una breve descripción',widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=260, required=False)
 
-    
-
-#     class Meta:
-#         model = Profile
-#         fields = ('descripcion','servicios')
-#         label = {
-            
-#             'descripcion': 'Bibliogrfia',
-#             'servicios': 'Tipos de servicios'
-#         }
-#         widgets = {
-#             'descripcion': forms.TextInput(
-#                 attrs = {
-#                     'class': 'form-control',
-#                     'placeholder': 'Ingrese una breve descripción'
-#                 }
-#             ),
-#             'servicios': forms.SelectMultiple(
-#                 attrs = {
-#                     'class':'form-control',
-#                     'type':'checkbox'
-#                 }
-#             ),
-#         }
-
-# class EditarProfileForm(forms.ModelForm):
-
-#     picture = forms.ImageField(label='Profile Picture',required=False, widget=forms.FileInput(attrs={'class':'form-control'}))
-
-#     descripcion = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=260, required=False)
-
-#     servicios = forms.SelectMultiple(
-#         # label='',
-#         # required= True,
-#             attrs={
-#                     'class':'form-control',
-#                     'type':'checkbox'
-#             }
+    servicios = forms.SelectMultiple(
+        # label='',
+        # required= True,
+            attrs={
+                    'class':'form-control',
+                    'type':'checkbox'
+            }
         
-#     )   
-
-
-#     class Meta:
-#         model = Profile
-#         fields = ('picture','descripcion','servicios')
-
+    )   
+    class Meta:
+        model = Profile
+        fields = ('picture','descripcion','servicios')
 
 
 
