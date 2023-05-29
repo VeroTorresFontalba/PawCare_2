@@ -1,8 +1,9 @@
 from django import forms
 from django.forms import ValidationError
 from django.contrib.auth import authenticate
+from django.contrib.auth.forms import PasswordResetForm , SetPasswordForm
 from .models import User, Servicio
-# , Categoria, Profile, 
+from .models import User, Categoria
 
 
 
@@ -168,7 +169,36 @@ class LoginForm(forms.Form):
                 raise forms.ValidationError('Los datos de usuarios no son correctos')  
              return self.cleaned_data
         
+class UserPasswordResetForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(UserPasswordResetForm, self).__init__(*args, **kwargs)
 
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'ejemplo@dominio.com',
+        'type': 'email',
+        'name': 'email'
+        }))
+    
+class MySetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+        label= ("Nueva Contraseña"),
+        required= True,
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Contraseña',
+              'class': 'form-control',
+              'style': '{margin: 15}'}
+        
+    ))
+    new_password2 = forms.CharField(
+        label= ("Repita Nueva Contraseña"),
+        required= True,
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Contraseña', 
+            'class': 'form-control'
+            }),
+    )
+                
         
 # admistracion
 

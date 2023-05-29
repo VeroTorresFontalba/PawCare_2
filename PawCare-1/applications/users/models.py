@@ -31,10 +31,9 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
     telefono= models.CharField(max_length=9,null = True)
     #tipodeusuario=models.CharField(max_length=2,choices=TIPOUSER_CHOICES)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True)
-
     #
     is_staff = models.BooleanField(default=False) #para especificar si el usuario es administrador
-
+    is_active= models.BooleanField(default=True)   
     USERNAME_FIELD ='username'
 
     REQUIRED_FIELDS = ['email']
