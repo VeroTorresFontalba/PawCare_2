@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import ValidationError
 from django.contrib.auth import authenticate
-from .models import User, Categoria, Profile, Servicio
+from django.contrib.auth.forms import PasswordResetForm , SetPasswordForm
+from .models import User, Servicio
 
 
 
@@ -167,7 +168,37 @@ class LoginForm(forms.Form):
                 raise forms.ValidationError('Los datos de usuarios no son correctos')  
              return self.cleaned_data
         
+class UserPasswordResetForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(UserPasswordResetForm, self).__init__(*args, **kwargs)
 
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'ejemplo@dominio.com',
+        'type': 'email',
+        'name': 'email'
+        }))
+    
+class MySetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+        label= ("Nueva Contraseña"),
+        required= True,
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Contraseña',
+              'class': 'form-control',
+              'style': '{margin: 15}'}
+
+        
+    ))
+    new_password2 = forms.CharField(
+        label= ("Repita Nueva Contraseña"),
+        required= True,
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Contraseña', 
+            'class': 'form-control'
+            }),
+    )
+                
         
 # admistracion
 
@@ -202,62 +233,55 @@ class ServiciosForm(forms.ModelForm):
           }
 
 
-class PerfilForm(forms.ModelForm):
+# class PerfilForm(forms.ModelForm):
     
 
 
     
 
-    class Meta:
-        model = Profile
-        fields = ('descripcion','servicios')
-        label = {
+#     class Meta:
+#         model = Profile
+#         fields = ('descripcion','servicios')
+#         label = {
             
-            'descripcion': 'Bibliogrfia',
-            'servicios': 'Tipos de servicios'
-        }
-        widgets = {
-            'descripcion': forms.TextInput(
-                attrs = {
-                    'class': 'form-control',
-                    'placeholder': 'Ingrese una breve descripción'
-                }
-            ),
-            'servicios': forms.SelectMultiple(
-                attrs = {
-                    'class':'form-control',
-                    'type':'checkbox'
-                }
-            ),
-        }
+#             'descripcion': 'Bibliogrfia',
+#             'servicios': 'Tipos de servicios'
+#         }
+#         widgets = {
+#             'descripcion': forms.TextInput(
+#                 attrs = {
+#                     'class': 'form-control',
+#                     'placeholder': 'Ingrese una breve descripción'
+#                 }
+#             ),
+#             'servicios': forms.SelectMultiple(
+#                 attrs = {
+#                     'class':'form-control',
+#                     'type':'checkbox'
+#                 }
+#             ),
+#         }
 
-class EditarProfileForm(forms.ModelForm):
-    email = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'class':'form-control',
-            })
-    )
-    telefono = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'class':'form-control',
-            })
-    )
-    picture = forms.ImageField(label='Profile Picture',required=False, widget=forms.FileInput(attrs={'class':'form-control'}))
-    descripcion = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=260, required=False)
-    servicios = forms.SelectMultiple(
-        # label='',
-        # required= True,
-            attrs={
-                    'class':'form-control',
-                    'type':'checkbox'
-            }
+# class EditarProfileForm(forms.ModelForm):
+
+#     picture = forms.ImageField(label='Profile Picture',required=False, widget=forms.FileInput(attrs={'class':'form-control'}))
+
+#     descripcion = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=260, required=False)
+
+#     servicios = forms.SelectMultiple(
+#         # label='',
+#         # required= True,
+#             attrs={
+#                     'class':'form-control',
+#                     'type':'checkbox'
+#             }
         
-    )   
+#     )   
 
 
-    class Meta:
-        model = Profile
-        fields = ('email','telefono','picture','descripcion','servicios')
+#     class Meta:
+#         model = Profile
+#         fields = ('picture','descripcion','servicios')
 
 
 

@@ -31,10 +31,9 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
     telefono= models.CharField(max_length=9,null = True)
     #tipodeusuario=models.CharField(max_length=2,choices=TIPOUSER_CHOICES)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True)
-
     #
     is_staff = models.BooleanField(default=False) #para especificar si el usuario es administrador
-
+    is_active= models.BooleanField(default=True)   
     USERNAME_FIELD ='username'
 
     REQUIRED_FIELDS = ['email']
@@ -60,17 +59,17 @@ class Servicio(models.Model):
     def __str__(self):
         return self.nombre 
 
-class Profile(models.Model):
-    id= models.AutoField(primary_key=True)
-    user= models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
-    # picture = models.ImageField(default='users/user_default_profile.png', upload_to=user_directory_path_profile)
-    picture = models.ImageField(default='users/user_default_profile.png', upload_to=user_directory_path_profile)
-    descripcion= models.TextField(max_length=2000,null=True,blank=True)
-    # servicios=models.ForeignKey(Tservicio,on_delete=models.CASCADE,null=True)
-    servicios=models.ManyToManyField(Servicio,related_name='servicios',verbose_name='Tipos de servicios')
+# class Profile(models.Model):
+#     id= models.AutoField(primary_key=True)
+#     user= models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
+#     # picture = models.ImageField(default='users/user_default_profile.png', upload_to=user_directory_path_profile)
+#     picture = models.ImageField(default='users/user_default_profile.png', upload_to=user_directory_path_profile)
+#     descripcion= models.TextField(max_length=2000,null=True,blank=True)
+#     # servicios=models.ForeignKey(Tservicio,on_delete=models.CASCADE,null=True)
+#     servicios=models.ManyToManyField(Servicio,related_name='servicios',verbose_name='Tipos de servicios')
 
-    def __str__(self):
-        return self.user.username
+#     def __str__(self):
+#         return self.user.username
     
 
     # def obtener_servicios(self):
@@ -78,16 +77,16 @@ class Profile(models.Model):
     #     return servicio
     
 
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Profile.objects.create(user=instance)
 
 
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()
 
-# created profile
-post_save.connect(create_user_profile, sender=User)
-# save created profile
-post_save.connect(save_user_profile, sender=User)
+# # created profile
+# post_save.connect(create_user_profile, sender=User)
+# # save created profile
+# post_save.connect(save_user_profile, sender=User)
     
