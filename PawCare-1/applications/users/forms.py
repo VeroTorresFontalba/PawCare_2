@@ -7,7 +7,7 @@ from .models import User, Servicio
 from .models import User, Categoria
 =======
 from .models import User, Servicio, Profile
->>>>>>> Rama-FelipeGarcia
+# , Categoria, Profile, 
 
 
 
@@ -173,9 +173,11 @@ class LoginForm(forms.Form):
                 raise forms.ValidationError('Los datos de usuarios no son correctos')  
              return self.cleaned_data
         
+
+        
 class UserPasswordResetForm(PasswordResetForm):
-    def __init__(self, *args, **kwargs):
-        super(UserPasswordResetForm, self).__init__(*args, **kwargs)
+    def init(self, args, **kwargs):
+        super(UserPasswordResetForm, self).init(args, **kwargs)
 
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={
         'class': 'form-control',
@@ -183,7 +185,7 @@ class UserPasswordResetForm(PasswordResetForm):
         'type': 'email',
         'name': 'email'
         }))
-    
+
 class MySetPasswordForm(SetPasswordForm):
     new_password1 = forms.CharField(
         label= ("Nueva Contraseña"),
@@ -193,7 +195,7 @@ class MySetPasswordForm(SetPasswordForm):
               'class': 'form-control',
               'style': '{margin: 15}'}
 
-        
+
     ))
     new_password2 = forms.CharField(
         label= ("Repita Nueva Contraseña"),
@@ -203,9 +205,6 @@ class MySetPasswordForm(SetPasswordForm):
             'class': 'form-control'
             }),
     )
-                
-        
-# admistracion
 
 class ServiciosForm(forms.ModelForm):
      class Meta:
@@ -261,6 +260,36 @@ class PerfilForm(forms.ModelForm):
 
 
 
+
+
+# class PerfilForm(forms.ModelForm):
+#     class Meta:
+#         model = Profile
+#         fields = ('picture','descripcion','servicios')
+#         label = {
+#             'picture':'Imagen',
+#             'descripcion': 'Bibliogrfia',
+#             'servicios': 'Tipos de servicios'
+#         }
+#         widgets = {
+#             'descripcion': forms.TextInput(
+#                 attrs = {
+#                     'class': 'form-control',
+#                     'placeholder': 'Ingrese una breve descripción'
+#                 }
+#             ),
+#             'servicios': forms.SelectMultiple(
+#                 attrs = {
+#                     'class':'form-control',
+#                     'type':'checkbox'
+#                 }
+#             ),
+#             'picture': forms.ImageField(
+#                 attrs = {
+#                     'class':'form-control'
+#                 }
+#             ),
+#         }
 
 
 
