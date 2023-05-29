@@ -1,0 +1,162 @@
+
+{% extends 'base.html' %}
+
+{% block content %} 
+
+{% load static %}
+<section style ="background-color: #fff;">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col">
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-5">
+            <div class="card-body text-center">
+              <img src="{{ profile.picture.url}}" 
+                class="rounded-circle img-fluid" style="width: 500px; height: 500px;">
+              <h5 class="my-3">{{profile.user.categoria}} </h5>
+              </a>
+              <div class="d-flex justify-content-center mb-2">
+                <a class="nav-link"  href="#">
+                    <a class="btn btn-info rounded-pill float-end" href="{% url 'users:update' profile.id %}">Editar</a>
+                </a>
+{% comment %} 
+                <button type="button" class="btn btn-outline-primary ms-1">Podria servir</button> {% endcomment %}
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0">
+            <div class="card-body p-0">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Nombre de usuario:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.user.username}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Nombre completo:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.user.nombres}} {{profile.user.apellidos}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Rut:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.user.rut}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Correo electronico</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.user.email}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Telefono</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.user.telefono}}</p>
+                </div>
+              </div>
+              <hr>
+
+              {%if user.is_authenticated and profile.user %}
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Tipos de servicios:</p>
+                </div>
+              </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">
+                    {% for servicios in user.profile.servicios.all %}
+                    <span class="badge bg-secondary">{{ servicios.nombre  | upper }}</span>
+                  {% endfor %} 
+                  </p>
+                  <br>
+              </div>
+              <div class="modal fade" id="seleccionar" rol="servicios">
+
+              </div>
+              {%endif%}
+
+
+
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Descipccion</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{user.profile.descripcion}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} <article class="blog-post">
+    <div class="col-auto d-none d-lg-block">
+        <img src="{{ profile.picture.url }}" class="img-fluid" alt="">
+    </div>
+
+    <strong class="d-inline-block mb-2 mt-3 text-primary"><a href="#"?cat={{ post.category.id }}>{{ post.category }}</a></strong>
+    <h2 class="blog-post-title mb-1">{{ profile.user }} {{ profile.user.id }} {{ profile.user.telefono }} {{ profile.user.email }} {{user.profile.descripcion}}</h2>
+    <p class="blog-post-meta"> <a href="#"?aut={{ profile.user.id }}>{{ post.author }}</a></p>
+
+    <p class="lead my-3">{{ post.excerpt }}</p>
+    <hr>
+    <p>{{ post.content | safe }}</p>
+
+    <hr>
+
+    <strong>Servicios:</strong>
+    {% for servicios in user.profile.servicios.all %}
+    <span class="badge bg-secondary">{{ servicios.nombre  | upper }}</span>
+  {% endfor %} 
+</article>
+
+<div class="my-3">
+    <a class="btn btn-success rounded-pill" href="#">Volver al Inicio</a>
+    {% comment %}
+        {% if request.user == post.author %}
+    {% endcomment %}
+    {% comment %} {% if request.user.is_staff %} {% endcomment %}
+        {% comment %} <a class="btn btn-danger rounded-pill float-end" href="{% url 'delete' post.id %}">Eliminar</a>
+        <a class="btn btn-info rounded-pill float-end" href="{% url 'update' post.id %}">Editar</a> {% endcomment %}
+    {% comment %} {% endif %} {% endcomment %}
+    
+         {% comment %} <a class="btn btn-danger rounded-pill float-end" href="#">Eliminar</a>
+        <a class="btn btn-info rounded-pill float-end" href="#">Editar</a>
+</div> {% endcomment %} 
+
+
+
+{% endblock %}
