@@ -1,17 +1,16 @@
 from django import forms
 from django.forms import ValidationError
 from django.contrib.auth import authenticate
-from .models import User, Categoria
 from django.contrib.auth.forms import PasswordResetForm , SetPasswordForm
+from .models import User, Servicio, Profile
+
+
 
 
 
 
 
 class UserRegisterForm(forms.ModelForm):
-
- 
-
 
     password1 = forms.CharField(
         label='Contraseña',
@@ -188,6 +187,7 @@ class MySetPasswordForm(SetPasswordForm):
             'placeholder': 'Contraseña',
               'class': 'form-control',
               'style': '{margin: 15}'}
+
         
     ))
     new_password2 = forms.CharField(
@@ -200,7 +200,147 @@ class MySetPasswordForm(SetPasswordForm):
     )
                 
         
-            
+# admistracion
+
+class ServiciosForm(forms.ModelForm):
+     class Meta:
+          model = Servicio
+          fields = ['id','nombre','informacion']
+          labels = {
+               'id': 'Numero del Servicio',
+               'nombre':'Nombre del servicio',
+               'informacion':'Informacion de servicios'
+          }
+          widgets = {
+               'id':forms.TextInput(
+                    attrs ={
+                         'class':'form-control',
+                         'placeholder':'Ingrese el numero del nuevo servicio'
+                    }
+               ),
+               'nombre':forms.Textarea(
+                    attrs={
+                         'class':'form-control',
+                         'placeholder':'Ingrese el nombre del nuevo servicio'
+                    }
+               ),
+               'informacion':forms.Textarea(
+                    attrs={
+                         'class':'form-control',
+                         'placeholder':'Ingrese una breve descripccion'
+                    }
+               )
+          }
 
 
-      
+class PerfilForm(forms.ModelForm):
+    picture = forms.ImageField(label='Nueva foto de perfil',required=False, widget=forms.FileInput(attrs={'class':'form-control'}))
+
+    descripcion = forms.CharField(label= 'Ingresa una breve descripción',widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=260, required=False)
+
+    servicios = forms.SelectMultiple(
+        # label='',
+        # required= True,
+            attrs={
+                    'class':'form-control',
+                    'type':'checkbox'
+            }
+        
+    )   
+    class Meta:
+        model = Profile
+        fields = ('picture','descripcion','servicios')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #     email = forms.EmailField(
+    #     label='Correo',
+    #     required= False,
+    #     widget= forms.EmailField(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'placeholder': 'Ingrese un correo',
+    #         }
+    #     )
+    # );
+    #     telefono = forms.TextInput(
+    #     label='Telefono',
+    #     required= False,
+    #     widget= forms.TextInput(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'placeholder': 'Ingrese un telefono',
+    #         }
+    #     )
+    # )
+    #     picture = forms.ImageField(
+    #          label='Profile picture',
+    #          required= False,
+    #          widget= forms.FileInput(
+                  
+    #          )
+    #     )
+    #     descripcion = forms.CharField(
+    #     label='descripcion',
+    #     widget= forms.TextInput(
+    #         attrs={
+    #             'class': 'form-control',
+    #         }
+    #     )
+    # )
+     
+    #     username = forms.CharField(
+    #     label='Nombre de usuario',
+    #     required= True,
+    #     widget= forms.TextInput(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'placeholder': 'Ingrese su usuario',
+    #             'style': '{margin: 10}',
+    #         }
+    #     )
+    # )
+    #     password = forms.CharField(
+    #     label='Contraseña',
+    #     required= True,
+    #     widget= forms.PasswordInput(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'placeholder': 'Ingrese su contraseña',
+    #         }
+    #     )
+    # )

@@ -1,8 +1,9 @@
 from django.db import models
+from django.db.models import Q
 
 from django.contrib.auth.models import BaseUserManager,AbstractBaseUser ,PermissionsMixin 
 
-class UserManager(BaseUserManager, models.Manager):
+class UserManager(BaseUserManager,models.Manager):
 
     def _create_user(self, username, email ,password, is_staff, is_superuser, is_active, **extra_fields):
         user = self.model(
@@ -24,5 +25,8 @@ class UserManager(BaseUserManager, models.Manager):
     def create_superuser(self, username,email ,password=None, **extra_fields):
         return self._create_user(username, email, password ,True , True, True, **extra_fields)
 
-
-
+    def listar_cuidadores(self):
+   
+        return self.filter(
+            categoria__name = 'Cuidador' 
+        )
