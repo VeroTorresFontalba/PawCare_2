@@ -2,10 +2,8 @@ from django import forms
 from django.forms import ValidationError
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm , SetPasswordForm
-<<<<<<< HEAD
 from .models import User, Servicio
 from .models import User, Categoria
-=======
 from .models import User, Servicio, Profile
 # , Categoria, Profile, 
 

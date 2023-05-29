@@ -4,32 +4,24 @@
 {% block content %} 
 
 {% load static %}
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
 <section style ="background-color: #fff;">
     <div class="container py-5">
-      <div class="row">
-        <div class="col">
-        </div>
-      </div>
-  
       <div class="row">
         <div class="col-lg-4">
           <div class="card mb-5">
             <div class="card-body text-center">
               <img src="{{ profile.picture.url}}" 
-                class="rounded-circle img-fluid" style="width: 500px; height: 500px;">
+                class="rounded-circle img-fluid">
               <h5 class="my-3">{{profile.user.categoria}} </h5>
               </a>
               <div class="d-flex justify-content-center mb-2">
                 <a class="nav-link"  href="#">
-                    <a class="btn btn-info rounded-pill float-end" href="{% url 'users:update' profile.id %}">Editar</a>
+                    <a class="btn btn-info float-end" href="{% url 'users:update' profile.id %}">Editar</a>
                 </a>
 {% comment %} 
                 <button type="button" class="btn btn-outline-primary ms-1">Podria servir</button> {% endcomment %}
               </div>
-            </div>
-          </div>
-          <div class="card mb-4 mb-lg-0">
-            <div class="card-body p-0">
             </div>
           </div>
         </div>

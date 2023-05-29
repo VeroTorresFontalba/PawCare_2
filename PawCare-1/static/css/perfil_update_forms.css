@@ -1,10 +1,8 @@
-.titulo{
-    color: black;
-    text-indent: 50px;
-    font-size: 2.5em;
-    font-family: 'Times New Roman', Times, serif;
+#img_actual{
+    width: 250px; 
+    height: 250px;
+    justify-self: center;
 }
-
 
 .btn-info{
     background-color: #06BEE1;
@@ -21,3 +19,11 @@
     border-radius: 10px;
     border: 0; 
 }
+
+.card{
+    border: 0px;
+    justify-content: center;
+    text-align: center;
+    display: grid;
+}
+
