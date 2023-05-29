@@ -32,5 +32,5 @@ urlpatterns = [
     # path('administrador/modificar_perfil/<id>',modificar_perfil,name= 'modificar_perfil'), 
 
 
- 
+    path('servicios/', ListCuidadores.as_view(),name='cuidadores'),
 ]
