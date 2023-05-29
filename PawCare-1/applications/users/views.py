@@ -20,9 +20,12 @@ from django.views.generic.edit import (
 
 
 
-from .forms import UserRegisterForm, LoginForm, ServiciosForm ,PerfilForm,EditarProfileForm
+from .forms import UserRegisterForm, LoginForm
+# , ServiciosForm ,PerfilForm,EditarProfileForm
 
-from .models import User, Servicio ,Profile
+from .models import User
+
+#, Servicio ,Profile
 
 
 # Create your views here.
@@ -67,53 +70,58 @@ class LogoutView(View):
             reverse('home_app:home')
             )
     
-# class UserProfileView(TemplateView):
-#     template_name = 'perfil/perfil.html'
+class ListCuidadores(ListView):
+    model= User
+    context_object_name= 'lista_cuidadores'
+    template_name= 'home/servicios.html'
+
+    def get_queryset(self):
+        return User.objects.listar_cuidadores()
 
 class PerfilView(TemplateView):
     template_name='perfil/perfil.html'
     
-class UserProfileView(View):
+# class UserProfileView(View):
 
-    def get(self, request, username,*args, **kwargs):
-        user = get_object_or_404(User, username=username)
-        profile = Profile.objects.get(user=user)
+#     def get(self, request, username,*args, **kwargs):
+#         user = get_object_or_404(User, username=username)
+#         profile = Profile.objects.get(user=user)
 
-        context={
-            'user':user,
-            'profile':profile
-        }
-        return render(request, 'users/detail.html', context)
+#         context={
+#             'user':user,
+#             'profile':profile
+#         }
+#         return render(request, 'users/detail.html', context)
 
 
-@login_required    
-def EditProfile(request):
-    user = request.user.id
-    profile =Profile.objects.get(user__id=user)
-    user_basic_info= User.objects.get(id=user)
+# @login_required    
+# def EditProfile(request):
+#     user = request.user.id
+#     profile =Profile.objects.get(user__id=user)
+#     user_basic_info= User.objects.get(id=user)
 
-    if request.method == 'POST':
-        form=EditarProfileForm(request.POST,request.FILES,instance=profile)
-        if form.is_valid():
-            user_basic_info.email=form.cleaned_data.get('email')
-            user_basic_info.telefono=form.cleaned_data.get('telefono')
+#     if request.method == 'POST':
+#         form=EditarProfileForm(request.POST,request.FILES,instance=profile)
+#         if form.is_valid():
+#             user_basic_info.email=form.cleaned_data.get('email')
+#             user_basic_info.telefono=form.cleaned_data.get('telefono')
 
-            profile.picture = form.cleaned_data.get('picture')
-            profile.descripcion = form.cleaned_data.get('descripcion')
-            profile.servicios = form.cleaned_data.get('servicios')
+#             profile.picture = form.cleaned_data.get('picture')
+#             profile.descripcion = form.cleaned_data.get('descripcion')
+#             profile.servicios = form.cleaned_data.get('servicios')
 
-            profile.save()
-            user_basic_info.save()
-            return redirect('users:profile',username=request.user.username)
+#             profile.save()
+#             user_basic_info.save()
+#             return redirect('users:profile',username=request.user.username)
         
-    else:
-        form=EditarProfileForm(instance=profile)
+#     else:
+#         form=EditarProfileForm(instance=profile)
 
-    context={
-        'form':form,
-    }
+#     context={
+#         'form':form,
+#     }
 
-    return render(request, 'users/edit.html', context)
+#     return render(request, 'users/edit.html', context)
 
 
 # @login_required    
@@ -202,68 +210,69 @@ def EditProfile(request):
 #         else:
 #             return redirect('administrador/listar_servicio.html')
 
-def listar_servicio(request):
-    servicios = Servicio.objects.all()
+# def listar_servicio(request):
+#     servicios = Servicio.objects.all()
 
-    datos = {
-        'servicios': servicios
-    }
-    return render(request, 'administrador/listar_servicio.html', datos)
-
-
-def crear_servicio(request):
-    if request.method=='POST': 
-        servicio_form = ServiciosForm(request.POST)
-        if servicio_form.is_valid:
-            servicio_form.save()
-            return redirect ('/administrador/listar_servicio')
-    else:
-        servicio_form =ServiciosForm()
-    return render(request, 'administrador/crear_servicio.html', {'servicio_form': servicio_form})
+#     datos = {
+#         'servicios': servicios
+#     }
+#     return render(request, 'administrador/listar_servicio.html', datos)
 
 
+# def crear_servicio(request):
+#     if request.method=='POST': 
+#         servicio_form = ServiciosForm(request.POST)
+#         if servicio_form.is_valid:
+#             servicio_form.save()
+#             return redirect ('/administrador/listar_servicio')
+#     else:
+#         servicio_form =ServiciosForm()
+#     return render(request, 'administrador/crear_servicio.html', {'servicio_form': servicio_form})
 
-def modificar_servicio(request,id):
-    servicio = Servicio.objects.get(id=id)
-    datos={
-        'form': ServiciosForm(instance=servicio)
-    }
-    if request.method=='POST':
-        formulario=ServiciosForm(data=request.POST, instance=servicio)
-        if formulario.is_valid:
-            formulario.save()
-            return redirect('/administrador/listar_servicio')
+
+
+# def modificar_servicio(request,id):
+#     servicio = Servicio.objects.get(id=id)
+#     datos={
+#         'form': ServiciosForm(instance=servicio)
+#     }
+#     if request.method=='POST':
+#         formulario=ServiciosForm(data=request.POST, instance=servicio)
+#         if formulario.is_valid:
+#             formulario.save()
+#             return redirect('/administrador/listar_servicio')
     
-    return render(request, 'administrador/modificar_servicio.html', datos)
+#     return render(request, 'administrador/modificar_servicio.html', datos)
 
 
 
-def eliminar_servicio(request, id):
-    servicio = Servicio.objects.get(id=id)
-    servicio.delete()
-    return redirect('/administrador/listar_servicio')
+# def eliminar_servicio(request, id):
+#     servicio = Servicio.objects.get(id=id)
+#     servicio.delete()
+#     return redirect('/administrador/listar_servicio')
 
 
 
-def listar_perfiles(request):
-    perfile = Profile.objects.all()
+# def listar_perfiles(request):
+#     perfile = Profile.objects.all()
 
-    datos = {
-        'perfile': perfile
-    }
-    return render(request, 'administrador/perfiles.html', datos)
+#     datos = {
+#         'perfile': perfile
+#     }
+#     return render(request, 'administrador/perfiles.html', datos)
 
 
 
-def modificar_perfil(request,id):
-    perfile = Profile.objects.get(id=id)
-    datos={
-        'form': PerfilForm(instance=perfile)
-    }
-    if request.method=='POST':
-        formulario=PerfilForm(data=request.POST, instance=perfile)
-        if formulario.is_valid:
-            formulario.save()
-            return redirect('/administrador/perfiles')
+# def modificar_perfil(request,id):
+#     perfile = Profile.objects.get(id=id)
+#     datos={
+#         'form': PerfilForm(instance=perfile)
+#     }
+#     if request.method=='POST':
+#         formulario=PerfilForm(data=request.POST, instance=perfile)
+#         if formulario.is_valid:
+#             formulario.save()
+#             return redirect('/administrador/perfiles')
     
-    return render(request, 'administrador/modificar_perfiles.html', datos)
+#     return render(request, '/administrador/modificar_perfiles.html', datos)
+    
