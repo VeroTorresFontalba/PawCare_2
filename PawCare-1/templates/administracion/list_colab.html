@@ -1,0 +1,138 @@
+<!doctype html> <!--Definicion de extrucctura de la sintaxis del documneto-->
+<html>
+<head>
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">  
+
+<!-- jQuery library -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+
+<!-- Popper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+  {% load static %} 
+  {% comment %} <link rel="stylesheet"  type="text/css"  href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet"  type="text/css" href="{% static 'css/estilos.css' %}">
+  <link rel="stylesheet" href="{% static 'css/calendario.css' %}">
+  <link rel="stylesheet"  type="text/css" href="{% static 'css/color.css' %}"> {% endcomment %}
+  
+
+
+
+  <style>
+    .dropbtn {
+      background-color: red;
+      color: white;
+      padding: 9px;
+      font-size: 13px;
+      border: none;
+      border-radius: 5px;
+
+    }
+
+    .dropbtn:hover, .dropbtn:focus {
+      background-color: black;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: green;
+      min-width: 160px;
+      overflow: auto;
+      box-shadow: 0px 8px 8px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: rgb(255, 255, 255);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown a:hover {background-color: #ddd;}
+
+    .show {display: block;}
+    </style>
+
+
+</head>
+<body>
+    
+
+
+
+    <div class="form-control">
+        <h2>Lista de Colaboradores</h2><br><br>
+
+      
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre del Patrocinador</th>
+                    <th>Descipccion</th>
+                    <th>Codigo de descuento</th>
+                    <th>Link de Patrocinador</th>
+                    <th>Ingreso</th>
+                    {% comment %} <th>Estado</th> {% endcomment %}
+                    <th>Foto de la marca</th>
+      
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in Colaborador %}
+                <tr>
+                    <td>{{c.title}}</td>
+                    <td>{{c.content}}</td>
+                    <td>{{c.descuento}}</td>
+                    <td>{{c.url}}</td>
+                    <td>{{c.created}}</td>
+                    {% comment %} <td>{{c.published}}</td> {% endcomment %}
+                    <td>
+                      {% if c.image %}
+                      <img src="{{c.image.url}}" width="100px" height="100px" alt="">
+                      {% endif %}
+                    </td>
+
+                    <td><a href="#" class="btn btn-primary">Modificar</a></td>
+                    <td><a href="{% url 'admin_app:colaborador_eliminar' c.id %}" class="btn btn-danger">Eliminar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table><br>
+        <a href="{% url 'admin_app:crear_colaborador'  %}" class="btn btn-primary">Ingresar un nuevo Colaborador</a>
+        
+      </div><br><br>
+
+      
+
+    
+
+
+    
+  
+  
+  
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+  </div>  
+  </body>
+  </html>

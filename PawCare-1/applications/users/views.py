@@ -80,9 +80,6 @@ class ListCuidadores(ListView):
     def get_queryset(self):
         return User.objects.listar_cuidadores()
     
-# class PerfilDetailView(DetailView):
-#     model = Profile
-#     template_name = 'users/detail.html'
 
 class PerfilDetailView(DetailView):
     model = Profile
@@ -110,7 +107,6 @@ class PerfilUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('users_app:update',args=[self.object.id]) + '?ok'
     
-
 
 
 

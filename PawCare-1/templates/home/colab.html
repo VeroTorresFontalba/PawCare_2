@@ -2,9 +2,67 @@
 
 {% block content %} 
 
+{% comment %} <link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/tarjetacuidador.css' %}" type="text/css" rel="stylesheet"> {% endcomment %}
+
 <div>
-    <p>Probando plantilla para Colaboradores</p>
+    
+    <div><h1 class="titulo">Colaboradores</h1></div>
+    <hr>
+    <!--Tarjetas-->
+    <div class="container ">
+
+        
+        <div class="row row-cols-2 row-cols-md-4 g-4">
+            {% for c in Colaborador %}
+
+        <div class="col">
+                <div class="card">
+                    {% if c.image %}
+                    <img src="{{c.image.url}}" alt="Card image cap">
+                    {% endif %} 
+                    <div class="card-body">
+                        <center><h1>{{c.title}}</h1></center>
+
+                        <div>
+
+                            <strong>Quienes Somos:</strong>
+                        {{c.content}}
+
+                        <br> <br>
+
+
+                        {% if user.is_authenticated %}
+                        <div>
+
+                            <strong>Codigo de descuento:</strong>
+                        {{c.descuento}}
+
+                        <br>
+
+                        {% else %}
+
+
+                        <center><a class="btn btn-danger" href="{% url 'users_app:user_register' %}">Registrarte para obtener descuentos</a></center> 
+
+
+                    </div>
+                    {% endif %}
+                    <br>
+
+
+                    <center><a class="btn btn-primary" href="{{c.url}}">Visita Nuestra pagina</a></center>  
+
+                    </div>
+                </div>
+            </div> 
+            {% endfor %}
+        </div>
+       
+    </div>
+
 </div>
+
 
 
 {% endblock %}

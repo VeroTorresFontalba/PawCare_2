@@ -234,22 +234,25 @@ class ServiciosForm(forms.ModelForm):
 
 
 class PerfilForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ('picture','descripcion','servicios')
+
     picture = forms.ImageField(label='Nueva foto de perfil',required=False, widget=forms.FileInput(attrs={'class':'form-control'}))
 
     descripcion = forms.CharField(label= 'Ingresa una breve descripción',widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=260, required=False)
 
-    servicios = forms.SelectMultiple(
+    servicios = forms.CheckboxInput(
         # label='',
         # required= True,
-            attrs={
-                    'class':'form-control',
-                    'type':'checkbox'
-            }
+            # attrs={
+            #         'class':'checkbox',
+                    
+            # }
         
     )   
-    class Meta:
-        model = Profile
-        fields = ('picture','descripcion','servicios')
+
 
 
 

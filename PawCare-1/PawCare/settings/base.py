@@ -19,7 +19,8 @@ INSTALLED_APPS = [
     'applications.categoria',
     'applications.home',
     'applications.users',
-    'applications.perfil'
+    'applications.perfil',
+    'applications.administracion'
 ]
 
 

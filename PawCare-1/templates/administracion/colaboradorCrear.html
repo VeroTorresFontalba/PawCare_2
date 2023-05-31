@@ -1,0 +1,44 @@
+hola esto es para crear colaborador
+
+<div class="container">
+    <div class="row">
+        <h2>Ingresar Colaborador</h2>
+    </div>
+
+        <div class="row">
+            <form method="POST" action="#" id="formulario" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    
+                    {{ Colaborador_Form.title }}
+                </div>
+                 
+                <div class="form-group">
+                   
+                    {{ Colaborador_Form.image }}
+                </div>
+
+                <div class="form-group">
+                    
+                    {{ Colaborador_Form.content }}
+                </div>
+
+                <div class="form-group">
+                  
+                  {{ Colaborador_Form.descuento }}
+              </div>
+                <br>
+                <div class="row">
+                    <div class="col-md">
+
+                        <input type="submit" class="btn btn-primary" value="Crear">
+                        <input type="reset" class="btn btn-danger" value="Limpiar">
+                        <a href="{% url 'admin_app:colaboradores_admin' %}" class="btn btn-info">Volver</a>
+                        
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+</div> <br><br>

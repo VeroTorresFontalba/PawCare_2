@@ -16,9 +16,9 @@
     {% endif %} 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        {{form.as_p}}
 
-
-        <div class="form-group">
+        {% comment %} <div class="form-group">
             {{ form.picture.label}}
             {{ form.picture}}
             <br>
@@ -41,11 +41,14 @@
             
         </div>
 
-        <div class="form-group">
+        <div class="form-group control-label">
             {{ form.servicios.label}}
             {{ form.servicios}}
-        </div>      
-        <br><br>
+        </div>    
+        
+
+
+        <br><br> {% endcomment %}
 
         <div class="text-center">
             <input class="btn btn-lg btn-primary" type="submit" value="ACTUALIZAR PERFIL">
