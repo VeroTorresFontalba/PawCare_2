@@ -12,18 +12,19 @@
     <hr>
     <!--Tarjetas-->
     <div class="container ">
+        <div class="row">
 
+        </div>
         
         <div class="row row-cols-2 row-cols-md-4 g-4">
             {% for c in lista_cuidadores %}
-
-        <div class="col">
-                <div class="card">
-                    <img class="card-img-top" src="{% static 'img/card1.jpg' %}" alt="Card image cap">
+            <div class="col" width="240px">
+                <div class="card" width="240px">
+                    <img class="card-img-top" src="{{c.profile.picture.url}}" width="240px">
                     <div class="card-body">
                         <h5>{{c.nombres}} {{c.apellidos}}</h5>
-                        <p class="card-text">Descripcion cuidador</p>
-                        <div>estrellitas</div>
+                        <p class="card-text">{{c.profile.descripcion}}</p>
+                        <div>ESTRELLITAS</div>
 
                     </div>
                 </div>

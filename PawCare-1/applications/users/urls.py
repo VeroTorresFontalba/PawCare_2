@@ -7,6 +7,7 @@ from .views import *
 
 from .forms import UserPasswordResetForm
 
+from .views import *
 app_name ="users_app"
 
 

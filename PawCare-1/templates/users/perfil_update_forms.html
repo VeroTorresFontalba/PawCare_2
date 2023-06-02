@@ -4,62 +4,78 @@
 
 {% load static %}
 
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+
+<link href="{% static 'css/perfil_update_forms.css' %}" type="text/css" rel="stylesheet">
+
 <div class="container">
     <h2>Editar Perfil</h2>
      {% if 'ok' in request.GET %} 
          <div class="alert alert-success" role="alert">
             El Perfil  se ha actualizado correctamente 
             <span>
-                <a class="btn btn-sm btn-success" href="{% url 'users:profile' user.username %}">Ver mi Perfil</a>
+                <a class="btn btn-sm btn-success" href="{% url 'users:profile' user.username %}" id="">Ver mi Perfil</a>
             </span>
         </div>
     {% endif %} 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {% comment %} {{form.as_p}} {% endcomment %}
-
-         <div class="form-group">
-            {{ form.picture.label}}
-            {{ form.picture}}
-            <br>
-            <div class="container">
-                <p>Imagen actual</p>
-                <div class="col-lg-6">
-                  <div class="card mb-5">
-                    <div class="card-body text-center">
-                      <img src="{{profile.picture.url}}" 
-                        class="rounded-circle img-fluid" style="width: 500px; height: 500px;">
+<br>
+        <div class="container">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card mb-5" >
+                                    <img src="{{profile.picture.url}}" class="rounded-circle img-fluid card-img-top"  id="img_actual">
+                                    <div class="card-body">
+                                        {{ form.picture.label}}
+                                        {{ form.picture}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-4">
+                                <div class="form-group">
+                                    {{ form.descripcion.label}}
+                                    {{ form.descripcion}}
+                                    
+                                </div>
+                                <div class="form-group">
+                                    {{ form.servicios.label}}
+                                    {{ form.servicios}}
+                                </div> 
+                            </div>
+                        </div>
+                       
                     </div>
                 </div>
             </div>
         </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="text-end col-6">
+                <button class="btn btn-lg btn-info" type="button" value="Cancelar" id="cancelar">
+                    <a href="{% url 'users:profile' username=user.username %}">Cancelar</a>
+                </button>
+            </div>
+            <div class="text-start col-6">
+                <input class="btn btn-lg btn-info" type="submit" value="ACTUALIZAR PERFIL">
+            </div>
         </div>
-
-        <div class="form-group">
-            {{ form.descripcion.label}}
-            {{ form.descripcion}}
-            
-        </div>
-
-        <div class="form-group control-label">
-            {{ form.servicios.label}}
-            {{ form.servicios}}
-        </div>    
-        
+       
 
 
-        <br><br> 
-
-        <div class="text-center">
-            <input class="btn btn-lg btn-primary" type="submit" value="ACTUALIZAR PERFIL">
-        </div>
-
-        <a href="{% url 'users:profile' username=user.username %}" class="mt-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded dark:text-dark-txt text-indigo-700 dark:bg-dark-second bg-indigo-100 dark:hover:bg-dark-third hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-dark-third focus:ring-indigo-500">
+        <a href="{% url 'users:profile' username=user.username %}">
             Regresar a mi perfil </a>
+    </div>
+</div>
+    
+        
     </form>
 </div>
 
-
+<script src="{% static 'js/fotoperfil.js' %}"></script>
 
 
 
