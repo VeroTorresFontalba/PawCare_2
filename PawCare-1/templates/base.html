@@ -63,6 +63,10 @@
                             <a class="nav-link"  href="{% url 'users:profile' user.username %}">Bienvenido {{user.username | upper}} :)</a>   
 
                         </li>
+                        <li class= "nav-item">   
+                            <a class="nav-link"  href="{% url 'admin_app:colaboradores_admin'  %}">Administracion </a>   
+
+                        </li>
 
                         {% else %}
 

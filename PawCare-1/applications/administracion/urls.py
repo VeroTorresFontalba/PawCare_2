@@ -4,10 +4,22 @@ from .views import *
 app_name = "admin_app"
 
 urlpatterns = [
-    # path('colab/', ListColaboradores.as_view(),name='colaboradores'),
-    path('colab/', lista_colaboradores, name='colaboradores'),
-    path('list_colab_admin/', lista_colaboradores_admin, name='colaboradores_admin'),
-    path('crear_colaborador/',colaboradorCrear, name='crear_colaborador'),
-
-    path('colaborador_eliminar/<id>', colaborador_eliminar, name='colaborador_eliminar'),
+    path('colab/', ListColaboradores.as_view(),name='colaboradores'),
+    # path('colab/', lista_colaboradores, name='colaboradores'),
+    path('list_colab_admin/', ListColaboradores_admin.as_view(), name='colaboradores_admin'),
+    path('list_colab_admin/<id>', ListColaboradores2_admin.as_view(), name='colaboradores_admin_s'),
+    path('crear_colaborador/',AddColaboradores_admin.as_view(), name='crear_colaborador'),
+    path('colaborador_modificar/<int:pk>', ModificarColab_admin.as_view(),name='colaborador_modificar'),
+    
+    # path('colaborador_modificar/<id>', colaborador_modificar, name='colaborador_modificar'),
+    # path('colaborador_eliminar/<id>', colaborador_eliminar, name='colaborador_eliminar'),
 ]
+
+# urlpatterns = [
+#     # path('colab/', ListColaboradores.as_view(),name='colaboradores'),
+#     path('colab/', lista_colaboradores, name='colaboradores'),
+#     path('list_colab_admin/', lista_colaboradores_admin, name='colaboradores_admin'),
+#     path('crear_colaborador/',colaboradorCrear, name='crear_colaborador'),
+#     path('colaborador_modificar/<id>', colaborador_modificar, name='colaborador_modificar'),
+#     path('colaborador_eliminar/<id>', colaborador_eliminar, name='colaborador_eliminar'),
+# ]

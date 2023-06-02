@@ -243,15 +243,16 @@ class PerfilForm(forms.ModelForm):
 
     descripcion = forms.CharField(label= 'Ingresa una breve descripción',widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=260, required=False)
 
-    servicios = forms.CheckboxInput(
-        # label='',
-        # required= True,
-            # attrs={
-            #         'class':'checkbox',
-                    
-            # }
-        
-    )   
+    servicios = forms.ModelMultipleChoiceField(
+         queryset= None,
+         required=False,
+         widget=forms.CheckboxSelectMultiple()
+    )
+    def __init__(self,*args,**kwargs):
+         super(PerfilForm, self).__init__(*args,**kwargs)
+         self.fields['servicios'].queryset = Servicio.objects.all() 
+
+  
 
 
 

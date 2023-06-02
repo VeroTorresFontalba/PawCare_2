@@ -8,6 +8,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure--x*^e92@fby)6wo(=9w!wjv*32t_ih)_hgkh_kxr1h1xmmp!7-'
 
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',

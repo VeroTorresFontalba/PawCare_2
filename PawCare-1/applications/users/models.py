@@ -18,7 +18,7 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
     apellidos= models.CharField(max_length=100)
     telefono= models.CharField(max_length=9,null = True)
     #tipodeusuario=models.CharField(max_length=2,choices=TIPOUSER_CHOICES)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True,default=1)
     #
     is_staff = models.BooleanField(default=False) #para especificar si el usuario es administrador
     is_active= models.BooleanField(default=True)   
@@ -69,9 +69,9 @@ class Profile(models.Model):
         return self.user.username
     
 
-    def obtener_servicios(self):
-        servicio = str([servicios for servicios in self.servicios_id.all().values_list('nombre',flat = True)]).replace("[","").replace("]","").replace("'","")
-        return servicio
+    # def obtener_servicios(self):
+    #     servicio = str([servicios for servicios in self.servicios_id.all().values_list('nombre',flat = True)]).replace("[","").replace("]","").replace("'","")
+    #     return servicio
     
 
 def create_user_profile(sender, instance, created, **kwargs):
