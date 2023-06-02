@@ -87,4 +87,21 @@ post_save.connect(create_user_profile, sender=User)
 # save created profile
 post_save.connect(save_user_profile, sender=User)
  
+class DiaReserva(models.Model):
+    id=models.AutoField(primary_key=True)
+    fechaReserva=models.DateField()
+    horaReserva=models.TimeField()
+
+class Hora(models.Model):
+    id=models.AutoField(primary_key=True)
+    horas=models.TimeField()
+    
+
+class EstadoReserva(models.Model):
+    id=models.AutoField(primary_key=True)
+    reservaEstado= models.CharField(max_length=10)
+
+class Calificacion(models.Model):
+    id=models.AutoField(primary_key=True)
+    rating=models.IntegerField()
 

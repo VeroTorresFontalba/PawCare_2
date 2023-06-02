@@ -317,12 +317,6 @@ class PerfilForm(forms.ModelForm):
 
 
 
-
-
-
-
-
-
     #     email = forms.EmailField(
     #     label='Correo',
     #     required= False,

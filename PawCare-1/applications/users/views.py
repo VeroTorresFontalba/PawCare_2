@@ -110,5 +110,6 @@ class PerfilUpdateView(UpdateView):
         return reverse_lazy('users_app:update',args=[self.object.id]) + '?ok'
     
 
-
-
+class CalendarioView(TemplateView):
+    template_name = 'users/calendario.html'
+    
