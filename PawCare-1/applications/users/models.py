@@ -18,7 +18,7 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
     apellidos= models.CharField(max_length=100)
     telefono= models.CharField(max_length=9,null = True)
     #tipodeusuario=models.CharField(max_length=2,choices=TIPOUSER_CHOICES)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True,default=1)
     #
     is_staff = models.BooleanField(default=False) #para especificar si el usuario es administrador
     is_active= models.BooleanField(default=True)   
@@ -60,7 +60,7 @@ class Profile(models.Model):
     id= models.AutoField(primary_key=True)
     user= models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     # picture = models.ImageField(default='users/user_default_profile.png', upload_to=user_directory_path_profile)
-    picture = models.ImageField(default='users/user_default_profile.png', upload_to=user_directory_path_profile)
+    picture = models.ImageField(default='users/perfil_defecto.jpg', upload_to=user_directory_path_profile)
     descripcion= models.TextField(max_length=2000,null=True,blank=True)
     # servicios=models.ForeignKey(Tservicio,on_delete=models.CASCADE,null=True)
     servicios=models.ManyToManyField(Servicio,related_name='servicios',verbose_name='Tipos de servicios')
@@ -69,9 +69,9 @@ class Profile(models.Model):
         return self.user.username
     
 
-    def obtener_servicios(self):
-        servicio = str([servicios for servicios in self.servicios_id.all().values_list('nombre',flat = True)]).replace("[","").replace("]","").replace("'","")
-        return servicio
+    # def obtener_servicios(self):
+    #     servicio = str([servicios for servicios in self.servicios_id.all().values_list('nombre',flat = True)]).replace("[","").replace("]","").replace("'","")
+    #     return servicio
     
 
 def create_user_profile(sender, instance, created, **kwargs):
@@ -87,3 +87,21 @@ post_save.connect(create_user_profile, sender=User)
 # save created profile
 post_save.connect(save_user_profile, sender=User)
  
+class DiaReserva(models.Model):
+    id=models.AutoField(primary_key=True)
+    fechaReserva=models.DateField()
+    horaReserva=models.TimeField()
+
+class Hora(models.Model):
+    id=models.AutoField(primary_key=True)
+    horas=models.TimeField()
+    
+
+class EstadoReserva(models.Model):
+    id=models.AutoField(primary_key=True)
+    reservaEstado= models.CharField(max_length=10)
+
+class Calificacion(models.Model):
+    id=models.AutoField(primary_key=True)
+    rating=models.IntegerField()
+

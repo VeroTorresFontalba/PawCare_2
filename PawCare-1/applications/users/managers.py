@@ -30,5 +30,6 @@ class UserManager(BaseUserManager,models.Manager):
         return self.filter(
             categoria__name = 'Cuidador' 
         )
+    
 
 

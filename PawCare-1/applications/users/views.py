@@ -2,6 +2,7 @@ import dataclasses
 from django.forms.models import BaseModelForm
 from django.shortcuts import render,get_object_or_404,redirect
 from django.urls import reverse_lazy, reverse
+from django.contrib import messages
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -36,7 +37,7 @@ class UserRegisterView(FormView):
     form_class=UserRegisterForm
     success_url=reverse_lazy('users_app:user_login')
 
-    def form_valid(self, form):
+    def form_valid(self, form ):
 
         User.objects.create_user(
             form.cleaned_data['username'],
@@ -49,6 +50,7 @@ class UserRegisterView(FormView):
             categoria = form.cleaned_data['categoria'],
             
         )
+
         return super(UserRegisterView, self).form_valid(form)
     
 class LoginUser(FormView):
@@ -80,9 +82,6 @@ class ListCuidadores(ListView):
     def get_queryset(self):
         return User.objects.listar_cuidadores()
     
-# class PerfilDetailView(DetailView):
-#     model = Profile
-#     template_name = 'users/detail.html'
 
 class PerfilDetailView(DetailView):
     model = Profile
@@ -111,6 +110,6 @@ class PerfilUpdateView(UpdateView):
         return reverse_lazy('users_app:update',args=[self.object.id]) + '?ok'
     
 
-
-
-
+class CalendarioView(TemplateView):
+    template_name = 'users/calendario.html'
+    

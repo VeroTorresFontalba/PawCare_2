@@ -236,22 +236,26 @@ class ServiciosForm(forms.ModelForm):
 
 
 class PerfilForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ('picture','descripcion','servicios')
+
     picture = forms.ImageField(label='Nueva foto de perfil',required=False, widget=forms.FileInput(attrs={'class':'form-control'}))
 
     descripcion = forms.CharField(label= 'Ingresa una breve descripción',widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=260, required=False)
 
-    servicios = forms.SelectMultiple(
-        # label='',
-        # required= True,
-            attrs={
-                    'class':'form-control',
-                    'type':'checkbox'
-            }
-        
-    )   
-    class Meta:
-        model = Profile
-        fields = ('picture','descripcion','servicios')
+    servicios = forms.ModelMultipleChoiceField(
+         queryset= None,
+         required=False,
+         widget=forms.CheckboxSelectMultiple()
+    )
+    def __init__(self,*args,**kwargs):
+         super(PerfilForm, self).__init__(*args,**kwargs)
+         self.fields['servicios'].queryset = Servicio.objects.all() 
+
+  
+
 
 
 
@@ -288,12 +292,6 @@ class PerfilForm(forms.ModelForm):
 #                 }
 #             ),
 #         }
-
-
-
-
-
-
 
 
 
