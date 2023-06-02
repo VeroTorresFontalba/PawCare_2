@@ -7,6 +7,7 @@ from .views import *
 
 from .forms import UserPasswordResetForm
 
+from .views import *
 app_name ="users_app"
 
 
@@ -15,6 +16,7 @@ urlpatterns = [
     path('login/', LoginUser.as_view(),name='user_login'),
     path('logout/', LogoutView.as_view(),name='user_logout'),
     path('servicios/', ListCuidadores.as_view(),name='cuidadores'),
+
 
     path('users/<username>', PerfilDetailView.as_view(),name='profile'),
 

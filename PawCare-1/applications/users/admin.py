@@ -5,3 +5,6 @@ admin.site.register(User)
 admin.site.register(Servicio)
 admin.site.register(Profile)
 admin.site.register(Hora)
+
+
+

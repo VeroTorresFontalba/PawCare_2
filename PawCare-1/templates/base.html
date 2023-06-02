@@ -43,7 +43,7 @@
                             <a class="nav-link" id="somos" href="{% url 'home_app:somos' %}"#>Quienes somos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="colab" href="{% url 'home_app:colaboradores' %}">Colaboradores</a>
+                            <a class="nav-link" id="colaboradores" href="{% url 'admin_app:colaboradores' %}">Colaboradores</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="servicios" href="{% url 'home_app:servicios' %}">Servicios</a>
@@ -61,6 +61,10 @@
 
                         <li class= "nav-item">   
                             <a class="nav-link"  href="{% url 'users:profile' user.username %}">Bienvenido {{user.username | upper}} :)</a>   
+
+                        </li>
+                        <li class= "nav-item">   
+                            <a class="nav-link"  href="{% url 'admin_app:colaboradores_admin'  %}">Administracion </a>   
 
                         </li>
 
@@ -173,7 +177,7 @@
 
             <!-- Copyright -->
             <div id="copyright" class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-                <h6>Felipe Reyes - Verónica Torres © 2023 Copyright: PawCare</h6>
+                <h6>Felipe Garcia - Felipe Reyes - Verónica Torres © Portafolio 2023 Copyright: PawCare</h6>
                 <!--<h6><a class="text-reset fw-bold" href="">PawCare</a></h6>-->
             </div>
             <!-- Copyright -->

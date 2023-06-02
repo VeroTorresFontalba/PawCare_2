@@ -5,3 +5,19 @@
     font-family: 'Times New Roman', Times, serif;
 }
 
+
+.btn-info{
+    background-color: #06BEE1;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 10px;
+    border: 0;
+}
+
+.btn-info:hover{
+    background-color: #FF7d00;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 10px;
+    border: 0; 
+}
