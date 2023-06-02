@@ -252,6 +252,9 @@ class PerfilForm(forms.ModelForm):
         fields = ('picture','descripcion','servicios')
 
 
+class FechaForm(forms.ModelForm):
+    dia= forms.DateField(label='Fecha', required= False)
+
 
 
 
