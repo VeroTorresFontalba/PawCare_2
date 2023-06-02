@@ -16,20 +16,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path ,re_path,include
+from django.conf import settings
+from django.conf.urls.static import static
 from applications.home.views import HomeView,ColaboradoresView,SomosView,ServicioView
 from applications.users.views import UserRegisterView
+from applications.users.urls import auth_views 
+from applications.users.forms import MySetPasswordForm
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
- #   path('home/', HomeView.as_view(), name='home'),
-
- #   path('colab/', ColaboradoresView.as_view(), name='colaboradores'),
- #   path('somos/', SomosView.as_view(), name='somos'),
- #   path('servicios/', ServicioView.as_view(), name='servicios'),
 
     re_path('', include('applications.users.urls')),
 
     re_path('', include('applications.home.urls')),
 
+    re_path('', include('applications.administracion.urls')),
+
+    path('password_reset_confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html', form_class=MySetPasswordForm), name='password_reset_confirm'),
+    path('password_reset_done/', auth_views.PasswordResetDoneView.as_view(template_name='users/password_reset_done.html'), name='password_reset_done'),
+    path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'), name='password_reset_complete'),
+
+    path('users/',include('applications.users.urls',namespace='users')),
+    # path('administracion/',include('applications.administracion.urls',namespace='administracion')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

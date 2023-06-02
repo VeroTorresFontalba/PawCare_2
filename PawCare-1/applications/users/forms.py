@@ -1,16 +1,19 @@
 from django import forms
 from django.forms import ValidationError
 from django.contrib.auth import authenticate
+from django.contrib.auth.forms import PasswordResetForm , SetPasswordForm
+from .models import User, Servicio
 from .models import User, Categoria
+from .models import User, Servicio, Profile
+# , Categoria, Profile, 
+
+
 
 
 
 
 
 class UserRegisterForm(forms.ModelForm):
-
- 
-
 
     password1 = forms.CharField(
         label='Contraseña',
@@ -168,8 +171,206 @@ class LoginForm(forms.Form):
                 raise forms.ValidationError('Los datos de usuarios no son correctos')  
              return self.cleaned_data
         
+
         
-            
+class UserPasswordResetForm(PasswordResetForm):
+    def init(self, args, **kwargs):
+        super(UserPasswordResetForm, self).init(args, **kwargs)
+
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'ejemplo@dominio.com',
+        'type': 'email',
+        'name': 'email'
+        }))
+
+class MySetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+        label= ("Nueva Contraseña"),
+        required= True,
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Contraseña',
+              'class': 'form-control',
+              'style': '{margin: 15}'}
 
 
-      
+    ))
+    new_password2 = forms.CharField(
+        label= ("Repita Nueva Contraseña"),
+        required= True,
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Contraseña', 
+            'class': 'form-control'
+            }),
+    )
+
+class ServiciosForm(forms.ModelForm):
+     class Meta:
+          model = Servicio
+          fields = ['id','nombre','informacion']
+          labels = {
+               'id': 'Numero del Servicio',
+               'nombre':'Nombre del servicio',
+               'informacion':'Informacion de servicios'
+          }
+          widgets = {
+               'id':forms.TextInput(
+                    attrs ={
+                         'class':'form-control',
+                         'placeholder':'Ingrese el numero del nuevo servicio'
+                    }
+               ),
+               'nombre':forms.Textarea(
+                    attrs={
+                         'class':'form-control',
+                         'placeholder':'Ingrese el nombre del nuevo servicio'
+                    }
+               ),
+               'informacion':forms.Textarea(
+                    attrs={
+                         'class':'form-control',
+                         'placeholder':'Ingrese una breve descripccion'
+                    }
+               )
+          }
+
+
+class PerfilForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ('picture','descripcion','servicios')
+
+    picture = forms.ImageField(label='Nueva foto de perfil',required=False, widget=forms.FileInput(attrs={'class':'form-control'}))
+
+    descripcion = forms.CharField(label= 'Ingresa una breve descripción',widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=260, required=False)
+
+    servicios = forms.ModelMultipleChoiceField(
+         queryset= None,
+         required=False,
+         widget=forms.CheckboxSelectMultiple()
+    )
+    def __init__(self,*args,**kwargs):
+         super(PerfilForm, self).__init__(*args,**kwargs)
+         self.fields['servicios'].queryset = Servicio.objects.all() 
+
+  
+
+
+
+
+
+
+
+
+
+# class PerfilForm(forms.ModelForm):
+#     class Meta:
+#         model = Profile
+#         fields = ('picture','descripcion','servicios')
+#         label = {
+#             'picture':'Imagen',
+#             'descripcion': 'Bibliogrfia',
+#             'servicios': 'Tipos de servicios'
+#         }
+#         widgets = {
+#             'descripcion': forms.TextInput(
+#                 attrs = {
+#                     'class': 'form-control',
+#                     'placeholder': 'Ingrese una breve descripción'
+#                 }
+#             ),
+#             'servicios': forms.SelectMultiple(
+#                 attrs = {
+#                     'class':'form-control',
+#                     'type':'checkbox'
+#                 }
+#             ),
+#             'picture': forms.ImageField(
+#                 attrs = {
+#                     'class':'form-control'
+#                 }
+#             ),
+#         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #     email = forms.EmailField(
+    #     label='Correo',
+    #     required= False,
+    #     widget= forms.EmailField(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'placeholder': 'Ingrese un correo',
+    #         }
+    #     )
+    # );
+    #     telefono = forms.TextInput(
+    #     label='Telefono',
+    #     required= False,
+    #     widget= forms.TextInput(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'placeholder': 'Ingrese un telefono',
+    #         }
+    #     )
+    # )
+    #     picture = forms.ImageField(
+    #          label='Profile picture',
+    #          required= False,
+    #          widget= forms.FileInput(
+                  
+    #          )
+    #     )
+    #     descripcion = forms.CharField(
+    #     label='descripcion',
+    #     widget= forms.TextInput(
+    #         attrs={
+    #             'class': 'form-control',
+    #         }
+    #     )
+    # )
+     
+    #     username = forms.CharField(
+    #     label='Nombre de usuario',
+    #     required= True,
+    #     widget= forms.TextInput(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'placeholder': 'Ingrese su usuario',
+    #             'style': '{margin: 10}',
+    #         }
+    #     )
+    # )
+    #     password = forms.CharField(
+    #     label='Contraseña',
+    #     required= True,
+    #     widget= forms.PasswordInput(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'placeholder': 'Ingrese su contraseña',
+    #         }
+    #     )
+    # )
