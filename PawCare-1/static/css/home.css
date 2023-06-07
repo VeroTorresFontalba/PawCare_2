@@ -38,3 +38,12 @@ hr{
     text-align: center;
   }
 
+  .titulo{
+    font-size: 40px;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  .texto{
+    font-size: 23px;
+    font-family: 'Times New Roman', Times, serif;
+  }

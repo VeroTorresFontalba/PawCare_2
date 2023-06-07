@@ -90,40 +90,23 @@
         </nav>
     </header>
 
-    <main>
+    <main class="contenido">
         {% block content %}
 
         {% endblock %}
 
     </main>
 
-    <footer>
-        <footer class="text-center text-lg-start text-muted">
-            <section class="d-flex justify-content-lg-between p-4 border-bottom">
-                <div class="me-5 d-none d-lg-block ">
-                    <span id="spanfooter">Síguenos en nuestras redes sociales:</span>
-                </div>
-                <div>
-                    <a href="" class="me-4 text-reset">
-                        <img src="{% static 'img/facebook.png' %}" style="width: auto; height: 30px"></img>
-                    </a>
-                    <a href="" class="me-4 text-reset">
-                        <img src="{% static 'img/instagram.png' %}" style="width: auto; height: 30px"></img>
-                    </a>
-                    <a href="" class="me-4 text-reset">
-                        <img src="{% static 'img/twitter.png' %}" style="width: auto; height: 30px"></img>
-                    </a>
-                </div>
-            </section>
+    <footer class="bcolor">
+        <footer class="text-center text-lg-start text-muted border-top">           
             <section class="">
                 <div class="container container-fluid text-center text-md-start mt-5" style="height: 100%;">
                     <div class="row mt-3">
                         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 justify-content-center">
                             <!-- Content -->
-                            <img src="{% static 'img/logoder.png' %}" class="rounded-circle"
+                            <img src="{% static 'img/logofoot.png' %}" class="rounded-circle"
                                 style="width: auto; height: 150px "></img>
                         </div>
-
                         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                             <!-- Content -->
                             <h7 class="text-uppercase text-center fw-bold mb-4">
@@ -131,7 +114,6 @@
                             </h7>
                         </div>
                         <!-- Grid column -->
-
                         <!-- Grid column -->
                         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                             <!-- Links -->
@@ -140,7 +122,6 @@
                             </h7>
                         </div>
                         <!-- Grid column -->
-
                         <!-- Grid column -->
                         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                             <!-- Links -->
@@ -149,7 +130,6 @@
                             </h7>
                         </div>
                         <!-- Grid column -->
-
                         <!-- Grid column -->
                         <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-md-0 mb-4">
                             <!-- Links -->
@@ -174,10 +154,26 @@
                 </div>
             </section>
             <!-- Section: Links  -->
-
+            <section class="d-flex justify-content-lg-evenly p-4">
+                <div>
+                    <h2>Síguenos en nuestras redes sociales:</h2>
+                </div>
+                <div>
+                    <a href="/" class="me-4 text-reset">
+                        <img src="{% static 'img/facebook.png' %}"style="width: auto; height: 30px"></img>
+                    </a>
+                    <a href="/" class="me-4 text-reset">
+                        <img src="{% static 'img/instagram.png' %}"style="width: auto; height: 30px"></img>
+                    </a>
+                    <a href="/" class="me-4 text-reset">
+                        <img src="{% static 'img/twitter.png' %}"style="width: auto; height: 30px"></img>
+                    </a>
+                </div>
+            </section>
+            <section class="">
             <!-- Copyright -->
-            <div id="copyright" class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-                <h6>Felipe Garcia - Felipe Reyes - Verónica Torres © Portafolio 2023 Copyright: PawCare</h6>
+            <div id="copyright" class="text-center p-4" style="background-color: rgb(41, 41, 41);">
+                <h6 style="color: aliceblue;">Felipe Garcia - Felipe Reyes - Verónica Torres © Portafolio 2023 Copyright: PawCare</h6>
                 <!--<h6><a class="text-reset fw-bold" href="">PawCare</a></h6>-->
             </div>
             <!-- Copyright -->

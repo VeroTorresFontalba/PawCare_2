@@ -1,23 +1,57 @@
 .grid-container {
     display: grid;
     grid-template-columns: auto auto;
-    grid-template-rows: 500px 500px;
+    grid-template-rows: 250px 250px;
     padding: 10px;
   }
+
 .grid-item {
     background-color: rgba(255, 255, 255, 0.8);
     /* border: 1px solid rgba(0, 0, 0, 0.8);  */ 
     padding: 20px;
-    font-size: 30px;
-    text-align: center;
+    text-align: left;
   }
 
   .grid-item1 {
     background: #ff7d00;
-
+    height: auto;
   }
 
   .grid-item4 {
     background: #06bee1;
 
+  }
+  
+  .imagensomos1 {
+    border-style: double;
+    border-width: 5px;
+    border-color: #ff7d00;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    border-radius: 20px;
+  }
+
+  .imagensomos2 {
+    border-style: double;
+    border-width: 5px;
+    border-color: #06BEE1;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    border-radius: 20px;
+  }
+
+  .titulo{
+    text-align: center;
+    color:#ff7d00 ;
+    font-family: 'Lucida Sans';
+  }
+
+  p{
+    font-size: 23px;
+    text-align: left;
+    font-family: 'Times New Roman';
   }
