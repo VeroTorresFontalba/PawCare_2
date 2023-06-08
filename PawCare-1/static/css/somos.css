@@ -47,11 +47,11 @@
   .titulo{
     text-align: center;
     color:#ff7d00 ;
-    font-family: 'Lucida Sans';
+    font-family:'Roboto', sans-serif;
   }
 
   p{
     font-size: 23px;
     text-align: left;
-    font-family: 'Times New Roman';
+    font-family:'Roboto', sans-serif;
   }

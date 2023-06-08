@@ -50,7 +50,9 @@
    <div class="grid-container">
     <div class="grid-item">
         <div class="card" >
+          <a href="{% url 'admin_app:colaboradores' %}">
             <img class="card-img-top" src="{% static 'img/card1.jpg' %}" alt="Card image cap">
+          </a>
             <div class="card-body">
               <p class="titulo">La organización animalista Peludos</p>
             <p class="card-text texto">Nuestros colaboradores de la organización animalista peludos invitan a informar sobre la presencia de animales
@@ -61,7 +63,9 @@
     </div>
     <div class="grid-item">
         <div class="card" >
+          <a href="{% url 'admin_app:colaboradores' %}">
             <img class="card-img-top" src="{% static 'img/card2.jpeg' %}" alt="Card image cap">
+          </a>
             <div class="card-body">
               <p class="titulo">La campaña por adoptar aumenta este mes </p>
             <p class="card-text texto">La campaña 'No Compres ¡Adopta!' ha sido un exito, sumate. ¿Como hacerlo? Dirigete a tu albergue mas cercano y realiza la adopción
@@ -71,7 +75,9 @@
     </div>
     <div class="grid-item">
         <div class="card" >
-            <img class="card-img-top" src="{% static 'img/card3.jpg' %}" alt="Card image cap">
+            <a href="{% url 'home_app:servicios' %}">
+              <img class="card-img-top" src="{% static 'img/card3.jpg' %}" alt="Card image cap">
+            </a>
             <div class="card-body">
               <p class="titulo">Al solicitar algun servicio ayudas a miles de animales</p>
             <p class="card-text texto">Por cada vez que hagas uso de servicios en PawCare nosotros donaremos 10% del coste total del servicio a fundaciones animalistas y albergues de acogida
