@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser ,PermissionsMixin
 from django.db.models.signals import post_save 
 
-from .managers import UserManager
+from .managers import UserManager , HoraManager
 
 from applications.categoria.models import Categoria
 
@@ -19,6 +19,7 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
     telefono= models.CharField(max_length=9,null = True)
     #tipodeusuario=models.CharField(max_length=2,choices=TIPOUSER_CHOICES)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True,default=1)
+ 
     #
     is_staff = models.BooleanField(default=False) #para especificar si el usuario es administrador
     is_active= models.BooleanField(default=True)   
@@ -34,6 +35,9 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
         return self.nombres+" "+self.apellidos
 
 #Modelo de Tipos de servicios
+
+# Agregar una columna de valor x servicio que vamos a definir nosotros
+
 class Servicio(models.Model):
     id= models.IntegerField(primary_key=True)
     nombre = models.CharField(max_length=80, unique= True,verbose_name='Tipo de servicio')
@@ -56,6 +60,7 @@ def user_directory_path_profile(instance, filename):
         os.remove(full_path)
 
     return profile_picture_name
+
 class Profile(models.Model):
     id= models.AutoField(primary_key=True)
     user= models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
@@ -86,22 +91,80 @@ def save_user_profile(sender, instance, **kwargs):
 post_save.connect(create_user_profile, sender=User)
 # save created profile
 post_save.connect(save_user_profile, sender=User)
+
+
+#Reserva
+#Esta tabla debe ser llanda por nostros
+class EstadoReserva(models.Model):
+    id=models.AutoField(primary_key=True)
+    reservaEstado= models.CharField(max_length=15)
+    def __str__(self):
+        return self.reservaEstado 
  
 class DiaReserva(models.Model):
     id=models.AutoField(primary_key=True)
-    fechaReserva=models.DateField()
-    horaReserva=models.TimeField()
+    fechaReserva=models.DateField('Dia',auto_now=False,auto_now_add=True,null=True,blank=True)
+    horaInicio=models.TimeField(verbose_name='inicio')
+    horaFin=models.TimeField(null=True,verbose_name='fin')
+    estado= models.ForeignKey(EstadoReserva,on_delete=models.CASCADE,related_name='Estado',null=True)
+
+    objects = HoraManager()
+
+    def __str__(self):
+        return str(self.fechaReserva) + "/ " + str(self.horaInicio) + "-"+ str(self.horaFin) 
+
 
 class Hora(models.Model):
     id=models.AutoField(primary_key=True)
     horas=models.TimeField()
     
 
-class EstadoReserva(models.Model):
-    id=models.AutoField(primary_key=True)
-    reservaEstado= models.CharField(max_length=10)
+
 
 class Calificacion(models.Model):
     id=models.AutoField(primary_key=True)
     rating=models.IntegerField()
+
+
+
+
+#MASCOTAS
+#Esta tabla debe ser llenada por nosotros
+class Especies(models.Model):
+    id= models.IntegerField(primary_key=True)
+    nombre = models.CharField(max_length=80, unique= True,verbose_name='Tipo de mascota')
+
+
+    class Meta:
+        verbose_name = 'especie'
+        verbose_name_plural ='especies'
+        ordering = ['id']
+    def __str__(self):
+        return self.nombre 
+
+
+
+class Mascota(models.Model):
+    id= models.AutoField(primary_key=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='Dueño',null=True,blank=True)
+    nombre_de_mascota = models.CharField(max_length=50, blank= True, null=True)
+    chip= models.BooleanField(default=False, verbose_name='Chip')
+    n_chip= models.CharField(max_length=50, blank= True, null=True)
+    image = models.ImageField(upload_to='mascotas' ,null=True, blank=True, verbose_name='Imagen del la Mascota')
+    descripccion = models.TextField(verbose_name='Descripccion del la mascota')
+    especies=models.ForeignKey(Especies,related_name='especies',verbose_name='Tipos de mascota',on_delete=models.CASCADE,null=True,default=1)
+
+   
+
+    class Meta:
+        verbose_name = 'mascota'
+        verbose_name_plural ='mascotas'
+        ordering = ['id']
+
+    
+    
+    def __str__(self):
+        return  self.nombre_de_mascota
+
+                                         
 
