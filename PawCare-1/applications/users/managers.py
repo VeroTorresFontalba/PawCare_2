@@ -32,4 +32,15 @@ class UserManager(BaseUserManager,models.Manager):
         )
     
 
+    
+class HoraManager(models.Manager):
+
+    def listar_horas(self):
+
+        return self.filter(
+            estado__reservaEstado='Reservar'
+        )
+
+
+
 

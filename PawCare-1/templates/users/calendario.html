@@ -1,27 +1,97 @@
+{% extends 'base.html' %}
 
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>jQuery UI Datepicker - Default functionality</title>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-  <script>
-  $( function() {
-    $( "#datepicker" ).datepicker({
-        beforeShowDay: $.datepicker.noWeekends,
-        dateFormat: "dd-mm",
-        
+{% block content %} 
+
+{% load static %}
+
+{% comment %} {% for c in calendario %}
+<td>{{c.fechaReserva}}</td>
+<td>{{c.horaInicio}}</td>
+<td>{{c.horaFin}}</td>
+<td>{{c.estado}}</td>
+
+{%endfor%} {% endcomment %}
+
+
+<div class="container">
+  <h2>Lista de horas para calendario</h2><br><br>
+
+
+  {% comment %} <a href="{% url 'admin_app:crear_colaborador' %}" class="btn btn-primary">+</a> <br> {% endcomment %}
+  <table class="table"> <br>
+      <thead>
+          <tr>
+              <th>Fecha</th>
+              <th>Hora Inicio</th>
+              <th>Hora Fin</th>
+              <th>Estado</th>
+
+              {% comment %} <th>Estado</th>  {% endcomment %}
+
+
+          </tr>
+      </thead>
+      <tbody>
+        {% for c in calendario %}
+          <tr>
+            <td>{{c.fechaReserva}}</td>
+            <td>{{c.horaInicio}}</td>
+            <td>{{c.horaFin}}</td>
+            <td>{{c.estado}}</td>
+              {% comment %} <td>{{c.published}}</td> {% endcomment %}
+              {% comment %} <td>
+                {% if c.image %}
+                <img src="{{c.image.url}}" width="100px" height="100px" alt="">
+                {% endif %}
+              </td> {% endcomment %}
+              {% comment %} <td><a href="{% url 'admin_app:colaborador_modificar' c.id %}" class="btn btn-primary">Modificar</a></td> {% endcomment %}
+              {% comment %} <td><a href="#" class="btn btn-danger">Eliminar</a></td> {% endcomment %}
+          </tr>
+          {%endfor%}
+      </tbody>
+  </table><br>
+</div><br><br>
+
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          locale:'es',
+          headerToolbar:{
+            left:'prev,next,today',
+            center:'title',
+            right:'dayGridMonth,timeGridWeek,listWeek',
+          },
+          events: [
+            {% for c in calendario %}
+              {
+                title: "{{ c.estado }} / {{ c.horaInicio}} - {{ c.horaFin}}",
+                start: '{{ c.fechaReserva  | date:"Y-m-d" }}',
+
+              },
+            {%endfor%}
+          ]
+            
+
+        });
+        calendar.render();
+        calendar.setOptions('locale', 'es');
+
       });
-  });
-  </script>
-</head>
-<body>
- 
-<p>Date: <input type="text" id="datepicker"></p>
 
-</body>
+    </script>
+  </head>
+  <body>
+    <div class="container">
+    <div id='calendar'></div>
+    </div>
+  </body>
 </html>
+
+{% endblock %}

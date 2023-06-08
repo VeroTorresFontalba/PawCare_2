@@ -2,6 +2,8 @@ from django.db import models
 from .managers import ColabManager
 # Create your models here.
 
+
+#Esta tabla debe ser llanada por nosotros
 class Colaboradores(models.Model):
     title = models.CharField(max_length= 100, verbose_name='Nombre del Patrocinador')
     image = models.ImageField(upload_to='colaboradores' ,null=True, blank=True, verbose_name='Imagen del Patrocinador')

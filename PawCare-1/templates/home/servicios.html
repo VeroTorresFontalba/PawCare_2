@@ -24,6 +24,9 @@
                     <div class="card-body">
                         <h5>{{c.nombres}} {{c.apellidos}}</h5>
                         <p class="card-text">{{c.profile.descripcion}}</p>
+                        {% for servicios in c.profile.servicios.all %}
+                        <span class="badge bg-primary">{{ servicios.nombre  | upper }}</span>
+                      {% endfor %} 
                         <div>ESTRELLITAS</div>
 
                     </div>
