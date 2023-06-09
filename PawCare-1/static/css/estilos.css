@@ -66,3 +66,47 @@ footer div p {
     color: #1D4EC9;  
 }
 
+.bcolor{
+    background-color: #fa9435;
+}
+
+.border-top{
+    border-top: 20px;
+}
+
+.center-text{
+    text-align: center;
+}
+
+.contenido{
+    width: 1280px;
+    margin: 0 auto;
+}
+
+.resaltar:hover{
+    background-color: #FF7D00;
+}
+
+.resaltar1:hover{
+    background-color:#06BEE1;
+}
+
+.grow img{
+    transition: 1s ease;
+    }
+    
+.grow img:hover{
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    transition: 1s ease;
+    }
+
+.nolink{
+    text-decoration: none;
+    color: #0000009f;
+}
+
+.nolinkh:hover{
+    color: #0000009f;
+}

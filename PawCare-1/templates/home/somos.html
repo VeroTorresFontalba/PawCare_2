@@ -3,15 +3,33 @@
 
 {% block content %} 
 <link href="{% static 'css/somos.css' %}" type="text/css" rel="stylesheet">
-
-<div class="grid-container">
-  
-    <div class="grid-item grid-item1">1</div>
-    <div class="grid-item">2</div>
-    <div class="grid-item">3</div>  
-    <div class="grid-item grid-item4">4</div>
- 
+<br>
+<div class="contenido">
+<div class="grid-container container-fluid">
+  <div class="grid-item ">
+    <h1 class="titulo">¿Quienes Somos?</h1>
+    <br>
+    <p>Somos una organización que se especializa en la comercialización del mejor cuidado para mascotas.</p>
+    <p>Somos una organización que se fundo en 2023 con la idea de que las mascotas necesitan el mejor cuidado posible y no siempre estan sus dueños disponibles para ello.</p>
+    <p>Contamos con con la colaboracion con multiples organizaciónes y cuidadores que comparten nuestro objetivo</p>
   </div>
-
+  <div class="grid-item">
+    <img src="{% static 'img/quienessomos1.jpg' %}" class="imagensomos1 img-fluid ">
+  </div>
+</div>
+<hr>
+<div class="grid-container container-fluid">
+  <div class="grid-item">
+    <img src="{% static 'img/quienessomos2.jpeg' %}" class="imagensomos2 img-fluid">  
+  </div>  
+  <div class="grid-item ">
+    <h1 class="titulo">Nuestra Misión</h1>
+    <br>
+    <p>Nuestra misión como organización es que su mascota obtenga el mejor trato y cuidado posible.</p>
+    <p>Por eso contamos con cientos de cuidadores que trabajan bajo nuestro sistema de reservas.</p>
+  </div>
+</div>
+<br>
+</div>
 
 {% endblock %}
