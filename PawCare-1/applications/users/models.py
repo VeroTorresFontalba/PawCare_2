@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 import os
 from django.conf import settings
@@ -103,7 +104,7 @@ class EstadoReserva(models.Model):
  
 class DiaReserva(models.Model):
     id=models.AutoField(primary_key=True)
-    fechaReserva=models.DateField('Dia',auto_now=False,auto_now_add=True,null=True,blank=True)
+    fechaReserva=models.DateField('Dia',null=True,blank=True,default=date.today)
     horaInicio=models.TimeField(verbose_name='inicio')
     horaFin=models.TimeField(null=True,verbose_name='fin')
     estado= models.ForeignKey(EstadoReserva,on_delete=models.CASCADE,related_name='Estado',null=True)

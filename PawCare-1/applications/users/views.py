@@ -25,7 +25,7 @@ from django.views.generic.edit import (
 
 
 
-from .forms import MascotaForm, UserRegisterForm, LoginForm,PerfilForm
+from .forms import MascotaForm, UserRegisterForm, LoginForm,PerfilForm,FechaForm
 # , ServiciosForm ,PerfilForm,EditarProfileForm
 
 from .models import User,Profile ,Mascota,DiaReserva
@@ -118,7 +118,10 @@ class CalendarioView(ListView):
     def get_queryset(self):
         return DiaReserva.objects.all()
         # return DiaReserva.objects.listar_horas()
-
+class AddFechaView(CreateView):
+    template_name='users/calendario.html'
+    form_class= FechaForm
+    success_url=reverse_lazy('users_app:calendario')
 
     
 
