@@ -16,7 +16,8 @@ from django.views.generic import (
     TemplateView,
     ListView,
     DetailView,
-    UpdateView
+    UpdateView,
+    DeleteView
 )
 from django.views.generic.edit import (
     FormView
@@ -24,10 +25,11 @@ from django.views.generic.edit import (
 
 
 
-from .forms import UserRegisterForm, LoginForm,PerfilForm
+from .forms import MascotaForm, UserRegisterForm, LoginForm,PerfilForm
 # , ServiciosForm ,PerfilForm,EditarProfileForm
 
-from .models import User,Profile #, Servicio ,
+from .models import User,Profile ,Mascota,DiaReserva
+#, Servicio ,
 
 
 
@@ -110,6 +112,67 @@ class PerfilUpdateView(UpdateView):
         return reverse_lazy('users_app:update',args=[self.object.id]) + '?ok'
     
 
-class CalendarioView(TemplateView):
+class CalendarioView(ListView):
+    context_object_name= 'calendario'
     template_name = 'users/calendario.html'
+    def get_queryset(self):
+        return DiaReserva.objects.all()
+        # return DiaReserva.objects.listar_horas()
+
+
     
+
+
+class ListMascotas(ListView):
+    context_object_name= 'lista_mascota'
+    template_name= 'users/list_mascota.html'
+
+
+    def get_queryset(self):
+        return Mascota.objects.all()
+        # return Mascota.objects.listar_mascotas()
+    
+
+class ListMascotas2(ListView):
+    context_object_name= 'lista_mascota'
+    template_name= 'users/list_mascota.html'
+
+
+    def get_queryset(self):
+        return Mascota.objects.all()
+        return Mascota.objects.listar_mascotas()
+    
+class AddMascota(FormView):
+    template_name= 'users/mascotaCrear.html'
+    form_class = MascotaForm
+    success_url =reverse_lazy('users_app:mascota') 
+
+    def form_valid(self, form):
+        Mascota.objects.create(
+
+            nombre_de_mascota=form.cleaned_data['nombre_de_mascota'],
+            chip=False,
+            n_chip=form.cleaned_data['n_chip'],
+            image=form.cleaned_data['image'],
+            descripccion=form.cleaned_data['descripccion'],
+            especies=form.cleaned_data['especies'],
+        )
+        return super(AddMascota, self).form_valid(form)
+    
+class ModificarMascota(UpdateView):
+    model= Mascota
+    form_class= MascotaForm 
+    template_name='users/mascotaModificar.html'
+    # template_name='users/mascota.html'
+    success_url=reverse_lazy('users_app:mascota')
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('users_app:mascota',args=[self.object.id]) 
+    
+
+class MascotaDeleteView(DeleteView):
+    model = Mascota
+    success_url=reverse_lazy('users_app:mascota')
