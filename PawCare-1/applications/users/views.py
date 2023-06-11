@@ -167,7 +167,7 @@ class AddMascota(FormView):
 class ModificarMascota(UpdateView):
     model= Mascota
     form_class= MascotaForm 
-    template_name='users/mascotaModificar.html'
+    template_name='users/mascota_modificar.html'
     # template_name='users/mascota.html'
     success_url=reverse_lazy('users_app:mascota')
 
