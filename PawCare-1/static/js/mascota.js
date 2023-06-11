@@ -10,7 +10,8 @@ $( document ).ready(function(){
 //var $ = jQuery.noConflict();
 function abrir_modal_edicion(url){
   console.log(url)
- jQuery('#edicion').load(url, function(){
-    jQuery(this).modal('show');
+
+  $('#edicion').load(url, function(){
+    $('#edicion').modal('show');
   });
 }

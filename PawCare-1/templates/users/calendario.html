@@ -3,6 +3,7 @@
 {% block content %} 
 
 {% load static %}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 
 {% comment %} {% for c in calendario %}
 <td>{{c.fechaReserva}}</td>
@@ -15,9 +16,6 @@
 
 <div class="container">
   <h2>Lista de horas para calendario</h2><br><br>
-
-
-  {% comment %} <a href="{% url 'admin_app:crear_colaborador' %}" class="btn btn-primary">+</a> <br> {% endcomment %}
   <table class="table"> <br>
       <thead>
           <tr>
@@ -27,8 +25,6 @@
               <th>Estado</th>
 
               {% comment %} <th>Estado</th>  {% endcomment %}
-
-
           </tr>
       </thead>
       <tbody>
@@ -52,10 +48,8 @@
   </table><br>
 </div><br><br>
 
-<html lang='en'>
-  <head>
-    <meta charset='utf-8' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+
+
     <script>
 
       document.addEventListener('DOMContentLoaded', function() {
@@ -86,12 +80,6 @@
       });
 
     </script>
-  </head>
-  <body>
-    <div class="container">
-    <div id='calendar'></div>
-    </div>
-  </body>
-</html>
+
 
 {% endblock %}
