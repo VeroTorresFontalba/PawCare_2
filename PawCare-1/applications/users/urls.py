@@ -33,7 +33,9 @@ urlpatterns = [
 
     path('servicios/', ListCuidadores.as_view(),name='cuidadores'),
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html', form_class=UserPasswordResetForm), name='password_reset'),
+    
     path('calendario/',CalendarioView.as_view(), name= 'calendario'),
+    path('calendario2/',AddFechaView.as_view(), name= 'calendario'),
 
     #MASCOTAS
     # path('lista_mascota/', ListMascotas.as_view(), name='mascotas'),
