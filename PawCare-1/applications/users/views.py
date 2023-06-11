@@ -151,7 +151,7 @@ class AddMascota(FormView):
         Mascota.objects.create(
 
             nombre_de_mascota=form.cleaned_data['nombre_de_mascota'],
-            chip=False,
+            chip=form.cleaned_data['chip'],
             n_chip=form.cleaned_data['n_chip'],
             image=form.cleaned_data['image'],
             descripccion=form.cleaned_data['descripccion'],

@@ -145,10 +145,15 @@ class Especies(models.Model):
 
 
 class Mascota(models.Model):
+
+    IS_PUBLISHED_CHOICES = [
+        ('No','No'), 
+        ('Si', 'Si')]
+
     id= models.AutoField(primary_key=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='Dueño',null=True,blank=True)
     nombre_de_mascota = models.CharField(max_length=50, blank= True, null=True)
-    chip= models.BooleanField(default=False, verbose_name='Chip')
+    chip= models.CharField(max_length=2 ,verbose_name='Chip', choices=IS_PUBLISHED_CHOICES, default='NO')
     n_chip= models.CharField(max_length=50, blank= True, null=True)
     image = models.ImageField(upload_to='mascotas' ,null=True, blank=True, verbose_name='Imagen del la Mascota')
     descripccion = models.TextField(verbose_name='Descripccion del la mascota')

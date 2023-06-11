@@ -18,11 +18,11 @@
     <hr>
     <!--Tarjetas-->
     <div class="container ">
-      <a href="{% url 'users_app:crear_mascota' %}" class="btn btn-primary">+</a> <br>
+      <a href="{% url 'users_app:crear_mascota' %}" class="btn btn-primary btn-info btn-info-hover">Registrar Mascota</a> <br>
         <div class="row">
           
         </div>
-        
+        <br>
         <div class="row row-cols-6 row-cols-md-12 g-12">
           {%if user.is_authenticated %}
             {% for c in lista_mascota %}
@@ -32,13 +32,13 @@
                     <div class="card-body">
                       <p class="mb-4"><span class="text-primary font-italic me-1">{{c.nombre_de_mascota}} </span> 
                         <div class="accordion-body"><strong>Quien soy: </strong> {{c.descripccion}}</div>
-                        <div class="accordion-body"> <strong>Poose Chip: </strong> {{c.chip}} </div>
+                        <div class="accordion-body"> <strong>Posee Chip: </strong> {{c.chip}} </div>
                         <div class="accordion-body"> <strong>Mi numero de Chip es : </strong> {{c.n_chip}} </div>
                         <div class="accordion-body"> <strong>Especie : </strong> {{c.especies}} </div>
                     </div>
-                    <a href="{% url 'users_app:mascota_modificar' c.id %}" class="btn btn-primary">Modificar</button>
+                    <a href="{% url 'users_app:mascota_modificar' c.id %}" class="btn btn-primary btn-info btn-info-hover">Modificar</button>
                     {% comment %} <button type="button" class="btn btn-primary" onclick="abrir_modal_edicion('{% url 'users_app:mascota_modificar' c.id %}');">Modificar</button> {% endcomment %}
-                    <a href="{% url 'users_app:mascota_eliminar' c.id %}" class="btn btn-danger">Borrar</a>
+                    <a href="{% url 'users_app:mascota_eliminar' c.id %}" class="btn btn-danger btn-info btn-info-hover">Borrar</a>
                 </div>
             </div> 
             {% endfor %}
@@ -52,6 +52,7 @@
     </div>
 
 </div>
+<br>
 {% comment %} <script type="text/javascript">
   var $ = jQuery.noConflict();
   function abrir_modal_edicion(url){
