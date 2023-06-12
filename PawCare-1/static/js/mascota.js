@@ -1,16 +1,39 @@
 $( document ).ready(function(){
      console.log("hola")}
-    );
+);
 
-// window.addEventListener("onclick", function(event) {
-//     $('#edicion').delay(400).fadeOut(500);
-//     // Do what you want, the window is entirely loaded and ready to use.
-//     });
+function abrir_modal_edicion2(url){
+  console.log("estoy en abrir modal 2")
 
-//var $ = jQuery.noConflict();
-function abrir_modal_edicion(url){
-  console.log(url)
- jQuery('#edicion').load(url, function(){
-    jQuery(this).modal('show');
-  });
+
+
+    $.ajax({
+      url: url,
+      success: function(data){
+        $("#edicion").html(data);
+        $('#myModalEdit').modal('show');
+        console.log(data)
+      },
+      error: function(){
+        alert("No se cargó el modal")
+      }
+    });
+
 }
+
+function abrir_modal_eliminar(url){
+  console.log("estoy en abrir modal eliminar")
+    $.ajax({
+      url: url,
+      success: function(data){
+        $("#eliminar").html(data);
+        $('#myModalDelete').modal('show');
+        console.log(data)
+      },
+      error: function(){
+        alert("No se cargó el modal")
+      }
+    });
+
+}
+

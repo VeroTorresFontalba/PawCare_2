@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm , SetPasswordForm
 from .models import User, Servicio
 from .models import User, Categoria
-from .models import User, Servicio, Profile,Mascota, Especies
+from .models import User, Servicio, Profile,Mascota, Especies, DiaReserva
 # , Categoria, Profile, 
 
 
@@ -282,4 +282,41 @@ class MascotaForm(forms.ModelForm):
 
 
 class FechaForm(forms.ModelForm):
-    dia= forms.DateField(label='Fecha', required= False)
+    class Meta:
+        model= DiaReserva
+        fields = ['fechaReserva','horaInicio','horaFin','estado']
+        widgets = {
+               'fechaReserva':forms.DateInput(
+                    format= '%Y-%m-%d',
+                    attrs ={
+                         'type': 'date',
+                         'class':'form-control',
+
+                    }
+               ),
+               'horaInicio':forms.DateInput(
+                    format= '%H:%M:%s',
+                    attrs={
+                         'type': 'time',
+                         'class':'form-control',
+
+                    }
+               ),
+               'horaFin':forms.DateInput(
+                    format= '%H:%M:%s',
+                    attrs={
+                         'type': 'time',
+                         'class':'form-control',
+
+                    }
+               ),
+                'estado':forms.Select(
+                    attrs={
+                        'type':'select',
+                         'class':'form-control',
+
+                    }
+               )
+          } 
+        
+
