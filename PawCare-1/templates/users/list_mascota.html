@@ -8,18 +8,19 @@
 <link href="{% static 'css/tarjetacuidador.css' %}" type="text/css" rel="stylesheet">
 <script  src="{% static 'js/mascota.js' %} "></script> 
 
+<br>
 <div>
     
-  <p class="mb-4"><span class="text-primary font-italic me-1">Mis mascotas </span> 
+  <p class="mb-4"><span class="titulo me-1">Mis mascotas </span> 
   </p>
     <hr>
     <!--Tarjetas-->
     <div class="container ">
-      <a href="{% url 'users_app:crear_mascota' %}" class="btn btn-primary">+</a> <br>
+      <a href="{% url 'users_app:crear_mascota' %}" class="btn btn-primary btn-info btn-info-hover">Registrar Mascota</a> <br>
         <div class="row">
           
         </div>
-        
+        <br>
         <div class="row row-cols-6 row-cols-md-12 g-12">
           {%if user.is_authenticated %}
             {% for c in lista_mascota %}
@@ -29,7 +30,7 @@
                     <div class="card-body">
                       <p class="mb-4"><span class="text-primary font-italic me-1">{{c.nombre_de_mascota}} </span> 
                         <div class="accordion-body"><strong>Quien soy: </strong> {{c.descripccion}}</div>
-                        <div class="accordion-body"> <strong>Poose Chip: </strong> {{c.chip}} </div>
+                        <div class="accordion-body"> <strong>Posee Chip: </strong> {{c.chip}} </div>
                         <div class="accordion-body"> <strong>Mi numero de Chip es : </strong> {{c.n_chip}} </div>
                         <div class="accordion-body"> <strong>Especie : </strong> {{c.especies}} </div>
                     </div>
