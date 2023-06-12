@@ -181,3 +181,4 @@ class ModificarMascota(UpdateView):
 class MascotaDeleteView(DeleteView):
     model = Mascota
     success_url=reverse_lazy('users_app:mascota')
+
