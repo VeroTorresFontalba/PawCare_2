@@ -3,73 +3,71 @@
 {% block content %} 
 
 {% load static %}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 
-{% comment %} {% for c in calendario %}
+<!--{% comment %} {% for c in calendario %}
 <td>{{c.fechaReserva}}</td>
 <td>{{c.horaInicio}}</td>
 <td>{{c.horaFin}}</td>
 <td>{{c.estado}}</td>
 
-{%endfor%} {% endcomment %}
+{%endfor%} {% endcomment %}-->
 
 
 <div class="container">
+
+    <div id="horas-container">
+      <div class="select-container">
+        <form action="#" method="POST">
+          {% csrf_token %}
+      
+          {{ form.as_p }}
+
+          <button id="agregar-btn">+</button>
+          <!--<div class="d-grid">
+            <button type="submit" class="btn btn-info">Registrar</button>
+          </div>-->
+          <br>
+        </form>
+      </div>
+    </div>
   
-  <form action="#" method="POST">
-    {% csrf_token %}
 
-    {{ form.as_p }}
-    <div class="d-grid">
-      <button type="submit" class="btn btn-info">Registrar</button>
-  </div>
-  <br>
-
-     
-
-</form>
-
-  <h2>Lista de horas para calendario</h2><br><br>
+    <div>
+      <h2>Lista de horas para calendario</h2>
+      <table class="table"> 
+          <thead>
+              <tr>
+                  <th>Fecha</th>
+                  <th>Hora Inicio</th>
+                  <th>Hora Fin</th>
+                  <th>Estado</th>
 
 
-  {% comment %} <a href="{% url 'admin_app:crear_colaborador' %}" class="btn btn-primary">+</a> <br> {% endcomment %}
-  <table class="table"> <br>
-      <thead>
-          <tr>
-              <th>Fecha</th>
-              <th>Hora Inicio</th>
-              <th>Hora Fin</th>
-              <th>Estado</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for c in calendario %}
+              <tr>
+                <td>{{c.fechaReserva}}</td>
+                <td>{{c.horaInicio}}</td>
+                <td>{{c.horaFin}}</td>
+                <td>{{c.estado}}</td>
 
-              {% comment %} <th>Estado</th>  {% endcomment %}
+
+                    {% if c.image %}
+                    <img src="{{c.image.url}}" width="100px" height="100px" alt="">
+                    {% endif %}
+              </tr>
+              {%endfor%}
+          </tbody>
+      </table>
+
+    </div>
+</div>
 
 
-          </tr>
-      </thead>
-      <tbody>
-        {% for c in calendario %}
-          <tr>
-            <td>{{c.fechaReserva}}</td>
-            <td>{{c.horaInicio}}</td>
-            <td>{{c.horaFin}}</td>
-            <td>{{c.estado}}</td>
-              {% comment %} <td>{{c.published}}</td> {% endcomment %}
-              {% comment %} <td>
-                {% if c.image %}
-                <img src="{{c.image.url}}" width="100px" height="100px" alt="">
-                {% endif %}
-              </td> {% endcomment %}
-              {% comment %} <td><a href="{% url 'admin_app:colaborador_modificar' c.id %}" class="btn btn-primary">Modificar</a></td> {% endcomment %}
-              {% comment %} <td><a href="#" class="btn btn-danger">Eliminar</a></td> {% endcomment %}
-          </tr>
-          {%endfor%}
-      </tbody>
-  </table><br>
-</div><br><br>
 
-<html lang='en'>
-  <head>
-    <meta charset='utf-8' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
     <script>
 
       document.addEventListener('DOMContentLoaded', function() {
@@ -99,13 +97,53 @@
 
       });
 
+      function agregarFila(){
+
+        var contadorFilas = 1;
+        var nuevaFila = '<div class="select-container">' +
+                                    '<form id="hora-form-' + contadorFilas + '" method="POST" action="">' +
+                                        '{% csrf_token %}' +
+                                        '{{ form.as_p }}' +
+                                        '<button class="eliminar-btn">-</button>' +
+                                    '</form>' +
+                                '</div>';
+
+        $('#horas-container').append(nuevaFila);
+
+        contadorFilas++;
+
+        actualizarIDs();
+      }
+
+                  // Eliminar la fila correspondiente al botón presionado
+      function eliminarFila(btn) {
+        $(btn).parent('.select-container').remove();
+
+            // Actualizar los IDs únicos de los formularios y botones
+          actualizarIDs();
+      }
+
+      // Actualizar los IDs únicos de los formularios y botones
+      function actualizarIDs() {
+          $('.select-container').each(function(index) {
+              var formID = 'hora-form-' + (index + 1);
+              var btnID = 'eliminar-' + (index + 1);
+              $(this).find('form').attr('id', formID);
+              $(this).find('.eliminar-btn').attr('id', btnID);
+          });
+      }
+
+      // Manejador de evento para el botón "Agregar"
+      $('#agregar-btn').on('click', function() {
+          agregarFila();
+      });
+
+      // Manejador de evento para el botón "Eliminar"
+      $(document).on('click', '.eliminar-btn', function() {
+          eliminarFila(this);
+      });
+
     </script>
-  </head>
-  <body>
-    <div class="container">
-    <div id='calendar'></div>
-    </div>
-  </body>
-</html>
+
 
 {% endblock %}

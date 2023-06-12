@@ -4,12 +4,9 @@
 
 {% load static %}
 
-
-
-
-
 <link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
 <link href="{% static 'css/tarjetacuidador.css' %}" type="text/css" rel="stylesheet">
+<script  src="{% static 'js/mascota.js' %} "></script> 
 
 <div>
     
@@ -36,56 +33,21 @@
                         <div class="accordion-body"> <strong>Mi numero de Chip es : </strong> {{c.n_chip}} </div>
                         <div class="accordion-body"> <strong>Especie : </strong> {{c.especies}} </div>
                     </div>
-
-                    <button  class="button" data-open="modal">Modificar</button>
-
-
-                    {% comment %} <a href="{% url 'users_app:mascota_modificar' c.id %}" class="btn btn-primary">Modificar</a> {% endcomment %}
-                     {% comment %} <button type="button" class="btn btn-primary" onclick="abrir_modal_edicion('{% url 'users_app:mascota_modificar' c.id %}');">Modificar</button>  {% endcomment %}
-                    <a href="{% url 'users_app:mascota_eliminar' c.id %}" class="btn btn-danger">Borrar</a>
-                    <div class="reveal" id="modal" data-reveal style="width: 500px">
-                      <h1 class="lead">Modificar Mascota</h1>
-                      <form class="grid-x grid-margin-x" method="POST" action="('{% url 'users_app:mascota_modificar' c.id %}')"> {% csrf_token %}
-                        <div class="cell small-12">
-                          {{ form.nombre_de_mascota }}
-                        </div>
-            
-            
-            
-                      </form>
-            
-                    </div>
+                   <!-- <a href="{% url 'users_app:mascota_modificar' c.id %}" class="btn btn-primary">Modificar</button>-->
+                   <!-- <button type="button" class="btn btn-primary" onclick="abrir_modal_edicion('{% url 'users_app:mascota_modificar' c.id %}');">Modificar</button>-->
+                    <button type="button" class="btn btn-primary" onclick="abrir_modal_edicion2('{% url 'users_app:mascota_modificar' c.id %}');">Modificar</button>
+                    <button type="button" class="btn btn-danger" onclick="abrir_modal_eliminar('{% url 'users_app:mascota_eliminar' c.id %}');">Eliminar</button>
+ <!--                <a href="{% url 'users_app:mascota_eliminar' c.id %}" class="btn btn-danger">Borrar</a>-->
                 </div>
             </div> 
-
-
-
             {% endfor %}
             {% endif%}
-            
         </div>
+        <div id="edicion"></div>
+        <div id="eliminar"></div>
 
-        <!--Para modal-->
-
-
-        {% comment %} <div class= "modal fade" id="edicion" role="dialog"> {% endcomment %}
-
-        </div>
-       
     </div>
 
 </div>
- {% comment %} <script type="text/javascript">
-  var $ = jQuery.noConflict();
-  function abrir_modal_edicion(url){
-    $('#edicion').load(url, function(){
-        $(this).modal('show');
-    });
-}
-</script>  {% endcomment %}
-
-
-  
-
 
 {% endblock %}
