@@ -3,71 +3,72 @@
 {% block content %} 
 
 {% load static %}
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 
-<!--{% comment %} {% for c in calendario %}
+{% comment %} {% for c in calendario %}
 <td>{{c.fechaReserva}}</td>
 <td>{{c.horaInicio}}</td>
 <td>{{c.horaFin}}</td>
 <td>{{c.estado}}</td>
 
-{%endfor%} {% endcomment %}-->
+{%endfor%} {% endcomment %}
 
 
 <div class="container">
 
-    <div id="horas-container">
-      <div class="select-container">
-        <form action="#" method="POST">
-          {% csrf_token %}
-      
-          {{ form.as_p }}
+  <div id="horas-container">
+    <div class="select-container">
+      <form action="#" method="POST">
+        {% csrf_token %}
+    
+        {{ form.as_p }}
 
-          <button id="agregar-btn">+</button>
-          <!--<div class="d-grid">
-            <button type="submit" class="btn btn-info">Registrar</button>
-          </div>-->
-          <br>
-        </form>
-      </div>
+        <button  id="agregar-btn">+</button>
+        <!--<div class="d-grid">
+          <button type="submit" class="btn btn-info">Registrar</button>
+        </div>-->
+        <br>
+      </form>
     </div>
-  
-
-    <div>
-      <h2>Lista de horas para calendario</h2>
-      <table class="table"> 
-          <thead>
-              <tr>
-                  <th>Fecha</th>
-                  <th>Hora Inicio</th>
-                  <th>Hora Fin</th>
-                  <th>Estado</th>
+  </div>
 
 
-              </tr>
-          </thead>
-          <tbody>
-            {% for c in calendario %}
-              <tr>
-                <td>{{c.fechaReserva}}</td>
-                <td>{{c.horaInicio}}</td>
-                <td>{{c.horaFin}}</td>
-                <td>{{c.estado}}</td>
+  <div>
+    <h2>Lista de horas para calendario</h2>
+    <table class="table"> 
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora Inicio</th>
+                <th>Hora Fin</th>
+                <th>Estado</th>
 
 
-                    {% if c.image %}
-                    <img src="{{c.image.url}}" width="100px" height="100px" alt="">
-                    {% endif %}
-              </tr>
-              {%endfor%}
-          </tbody>
-      </table>
+            </tr>
+        </thead>
+        <tbody>
+          {% for c in calendario %}
+            <tr>
+              <td>{{c.fechaReserva}}</td>
+              <td>{{c.horaInicio}}</td>
+              <td>{{c.horaFin}}</td>
+              <td>{{c.estado}}</td>
 
-    </div>
+
+                  {% if c.image %}
+                  <img src="{{c.image.url}}" width="100px" height="100px" alt="">
+                  {% endif %}
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+
+  </div>
 </div>
 
-
-
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
     <script>
 
       document.addEventListener('DOMContentLoaded', function() {
@@ -96,7 +97,6 @@
         calendar.setOptions('locale', 'es');
 
       });
-
       function agregarFila(){
 
         var contadorFilas = 1;
@@ -145,5 +145,13 @@
 
     </script>
 
+    </script>
+  </head>
+  <body>
+    <div class="container">
+    <div id='calendar'></div>
+    </div>
+  </body>
+</html>
 
 {% endblock %}
