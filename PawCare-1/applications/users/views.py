@@ -154,7 +154,7 @@ class AddMascota(FormView):
         Mascota.objects.create(
 
             nombre_de_mascota=form.cleaned_data['nombre_de_mascota'],
-            chip=False,
+            chip=form.cleaned_data['chip'],
             n_chip=form.cleaned_data['n_chip'],
             image=form.cleaned_data['image'],
             descripccion=form.cleaned_data['descripccion'],
@@ -167,7 +167,7 @@ class AddMascota(FormView):
 class ModificarMascota(UpdateView):
     model= Mascota
     form_class= MascotaForm 
-    template_name='users/mascotaModificar.html'
+    template_name='users/mascota_modificar.html'
     # template_name='users/mascota.html'
     success_url=reverse_lazy('users_app:mascota')
 
@@ -181,3 +181,4 @@ class ModificarMascota(UpdateView):
 class MascotaDeleteView(DeleteView):
     model = Mascota
     success_url=reverse_lazy('users_app:mascota')
+
