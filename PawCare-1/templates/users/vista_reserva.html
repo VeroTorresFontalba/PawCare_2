@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+{% load static %}
+
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+
+<br>
+<div>
+    <h1>Vista Reserva Cliente</h1>
+</div>
+
+<div>
+    <h2></h2>
+    <table class="table"> 
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora Inicio</th>
+                <th>Hora Fin</th>
+                <th>Estado</th>
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+          {% for c in reserva %}
+            <tr id="{{c.id}}">
+               <td>{{c.fechaReserva}}</td>
+               <td>{{c.horaInicio}}</td>
+               <td>{{c.horaFin}}</td>
+               <td>{{c.estado}}</td>
+               {% if c.estado == "Reservado" %}
+               <td><p>Reservado</p></td>
+               {% else %}
+                    {% if user.is_authenticated %}
+                    <td>
+                    <form method="post" action="{% url 'users_app:vista_actualizar' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-info btn-info-hover">Reservar</button>
+                    </form>
+                    </td>
+                    {% else %}
+                        <td><a href="{% url 'users_app:user_login'  %}" class="btn btn-primary  btn-info btn-info-hover">Inicia Sesión</a></td>
+                    {% endif %}
+                {% endif %}
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+<hr>
+<br>
+{% endblock %}

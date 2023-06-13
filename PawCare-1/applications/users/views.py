@@ -182,3 +182,17 @@ class MascotaDeleteView(DeleteView):
     model = Mascota
     success_url=reverse_lazy('users_app:mascota')
 
+class ClienteResevarView(ListView):
+    context_object_name= 'reserva'
+    template_name='users/vista_reserva.html'
+    def get_queryset(self):
+        return DiaReserva.objects.all()
+    
+class ClienteReservaUpdate(UpdateView):
+    def Reserva(request, pk):
+        DiaReserva.objects.get(pk=pk)
+        DiaReserva.estado = 'Reservado'
+        DiaReserva.save()
+        return
+    success_url=reverse_lazy('users_app:vista_reserva')
+        
