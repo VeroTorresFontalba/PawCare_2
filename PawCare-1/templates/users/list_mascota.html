@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+{% load static %}
+
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/tarjetacuidador.css' %}" type="text/css" rel="stylesheet">
+<script  src="{% static 'js/mascota.js' %} "></script> 
+
+<br>
+<div>
+    
+  <p class="mb-4"><span class="titulo me-1">Mis mascotas </span> 
+  </p>
+    <hr>
+    <!--Tarjetas-->
+    <div class="container ">
+      <a href="{% url 'users_app:crear_mascota' %}" class="btn btn-primary btn-info btn-info-hover">Registrar Mascota</a> <br>
+        <div class="row">
+          
+        </div>
+        <br>
+        <div class="row row-cols-6 row-cols-md-12 g-12">
+          {%if user.is_authenticated %}
+            {% for c in lista_mascota %}
+            <div class="col" width="240px">
+                <div class="card" width="240px">
+                    <img class="card-img-top" src="{{c.image.url}}" width="240px">
+                    <div class="card-body">
+                      <p class="mb-4"><span class="text-primary font-italic me-1">{{c.nombre_de_mascota}} </span> 
+                        <div class="accordion-body"><strong>Quien soy: </strong> {{c.descripccion}}</div>
+                        <div class="accordion-body"> <strong>Posee Chip: </strong> {{c.chip}} </div>
+                        <div class="accordion-body"> <strong>Mi numero de Chip es : </strong> {{c.n_chip}} </div>
+                        <div class="accordion-body"> <strong>Especie : </strong> {{c.especies}} </div>
+                    </div>
+                   <!-- <a href="{% url 'users_app:mascota_modificar' c.id %}" class="btn btn-primary">Modificar</button>-->
+                   <!-- <button type="button" class="btn btn-primary" onclick="abrir_modal_edicion('{% url 'users_app:mascota_modificar' c.id %}');">Modificar</button>-->
+                    <button type="button" class="btn btn-primary" onclick="abrir_modal_edicion2('{% url 'users_app:mascota_modificar' c.id %}');">Modificar</button>
+                    <button type="button" class="btn btn-danger" onclick="abrir_modal_eliminar('{% url 'users_app:mascota_eliminar' c.id %}');">Eliminar</button>
+ <!--                <a href="{% url 'users_app:mascota_eliminar' c.id %}" class="btn btn-danger">Borrar</a>-->
+                </div>
+            </div> 
+            {% endfor %}
+            {% endif%}
+        </div>
+        <div id="edicion"></div>
+        <div id="eliminar"></div>
+
+    </div>
+
+</div>
+
+{% endblock %}

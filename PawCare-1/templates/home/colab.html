@@ -5,18 +5,17 @@
 <link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
 <link href="{% static 'css/tarjetacuidador.css' %}" type="text/css" rel="stylesheet"> 
 
+<br>
 <div>
-    
-    <div><h1 class="titulo">Colaboradores</h1></div>
+    <div>
+        <h1 class="titulo">Colaboradores</h1>
+    </div>
     <hr>
     <!--Tarjetas-->
     <div class="container ">
-
-        
         <div class="row row-cols-3 row-cols-md-3 g-3">
             {% for c in lista_colaboradores %}
-
-        <div class="col">
+            <div class="col">
                 <div class="card">
                     {% if c.image %}
                     <img src="{{c.image.url}}" alt="Card image cap">
@@ -36,11 +35,11 @@
                         </div>
                         {% else %}
 
-                        <center><a class="btn btn-danger" href="{% url 'users_app:user_register' %}">Registrarte para obtener descuentos</a></center> 
+                        <center><a class="btn btn-danger btn-info btn-info-hover" href="{% url 'users_app:user_register' %}">Registrarte para obtener descuentos</a></center> 
                         {% endif %}
 
                         <br>
-                        <center><a class="btn btn-primary" href="{{c.url}}">Visita Nuestra pagina</a></center>
+                        <center><a class="btn btn-primary btn-info btn-info-hover" href="{{c.url}}">Visita Nuestra pagina</a></center>
                     </div>
                 </div>
             </div> 
@@ -50,6 +49,7 @@
     </div>
 
 </div>
+<br>
 
 
 

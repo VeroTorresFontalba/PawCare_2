@@ -1,27 +1,157 @@
+{% extends 'base.html' %}
 
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>jQuery UI Datepicker - Default functionality</title>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-  <script>
-  $( function() {
-    $( "#datepicker" ).datepicker({
-        beforeShowDay: $.datepicker.noWeekends,
-        dateFormat: "dd-mm",
-        
+{% block content %} 
+
+{% load static %}
+
+{% comment %} {% for c in calendario %}
+<td>{{c.fechaReserva}}</td>
+<td>{{c.horaInicio}}</td>
+<td>{{c.horaFin}}</td>
+<td>{{c.estado}}</td>
+
+{%endfor%} {% endcomment %}
+
+
+<div class="container">
+
+  <div id="horas-container">
+    <div class="select-container">
+      <form action="#" method="POST">
+        {% csrf_token %}
+    
+        {{ form.as_p }}
+
+        <button  id="agregar-btn">+</button>
+        <!--<div class="d-grid">
+          <button type="submit" class="btn btn-info">Registrar</button>
+        </div>-->
+        <br>
+      </form>
+    </div>
+  </div>
+
+
+  <div>
+    <h2>Lista de horas para calendario</h2>
+    <table class="table"> 
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora Inicio</th>
+                <th>Hora Fin</th>
+                <th>Estado</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+          {% for c in calendario %}
+            <tr>
+              <td>{{c.fechaReserva}}</td>
+              <td>{{c.horaInicio}}</td>
+              <td>{{c.horaFin}}</td>
+              <td>{{c.estado}}</td>
+
+
+                  {% if c.image %}
+                  <img src="{{c.image.url}}" width="100px" height="100px" alt="">
+                  {% endif %}
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+
+  </div>
+</div>
+
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          locale:'es',
+          headerToolbar:{
+            left:'prev,next,today',
+            center:'title',
+            right:'dayGridMonth,timeGridWeek,listWeek',
+          },
+          events: [
+            {% for c in calendario %}
+              {
+                title: "{{ c.estado }} / {{ c.horaInicio}} - {{ c.horaFin}}",
+                start: '{{ c.fechaReserva  | date:"Y-m-d" }}',
+
+              },
+            {%endfor%}
+          ]
+            
+
+        });
+        calendar.render();
+        calendar.setOptions('locale', 'es');
+
       });
-  });
-  </script>
-</head>
-<body>
- 
-<p>Date: <input type="text" id="datepicker"></p>
+      function agregarFila(){
 
-</body>
+        var contadorFilas = 1;
+        var nuevaFila = '<div class="select-container">' +
+                                    '<form id="hora-form-' + contadorFilas + '" method="POST" action="">' +
+                                        '{% csrf_token %}' +
+                                        '{{ form.as_p }}' +
+                                        '<button class="eliminar-btn">-</button>' +
+                                    '</form>' +
+                                '</div>';
+
+        $('#horas-container').append(nuevaFila);
+
+        contadorFilas++;
+
+        actualizarIDs();
+      }
+
+                  // Eliminar la fila correspondiente al botón presionado
+      function eliminarFila(btn) {
+        $(btn).parent('.select-container').remove();
+
+            // Actualizar los IDs únicos de los formularios y botones
+          actualizarIDs();
+      }
+
+      // Actualizar los IDs únicos de los formularios y botones
+      function actualizarIDs() {
+          $('.select-container').each(function(index) {
+              var formID = 'hora-form-' + (index + 1);
+              var btnID = 'eliminar-' + (index + 1);
+              $(this).find('form').attr('id', formID);
+              $(this).find('.eliminar-btn').attr('id', btnID);
+          });
+      }
+
+      // Manejador de evento para el botón "Agregar"
+      $('#agregar-btn').on('click', function() {
+          agregarFila();
+      });
+
+      // Manejador de evento para el botón "Eliminar"
+      $(document).on('click', '.eliminar-btn', function() {
+          eliminarFila(this);
+      });
+
+    </script>
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+    <div id='calendar'></div>
+    </div>
+  </body>
 </html>
+
+{% endblock %}

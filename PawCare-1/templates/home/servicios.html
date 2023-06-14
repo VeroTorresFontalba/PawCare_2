@@ -5,10 +5,14 @@
 
 <link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
 <link href="{% static 'css/tarjetacuidador.css' %}" type="text/css" rel="stylesheet">
+<script  src="{% static 'js/calificacion.js' %} "></script> 
+<script  src="{% static 'js/reserva.js' %} "></script> 
 
+<br>
 <div>
-    
-    <div><h1 class="titulo">Cuidadores</h1></div>
+    <div>
+        <h1 class="titulo">Cuidadores</h1>
+    </div>
     <hr>
     <!--Tarjetas-->
     <div class="container ">
@@ -18,23 +22,38 @@
         
         <div class="row row-cols-2 row-cols-md-4 g-4">
             {% for c in lista_cuidadores %}
+
             <div class="col" width="240px">
                 <div class="card" width="240px">
                     <img class="card-img-top" src="{{c.profile.picture.url}}" width="240px">
                     <div class="card-body">
                         <h5>{{c.nombres}} {{c.apellidos}}</h5>
                         <p class="card-text">{{c.profile.descripcion}}</p>
-                        <div>ESTRELLITAS</div>
+                        {% for servicios in c.profile.servicios.all %}
+                        <span class="badge bg-primary">{{ servicios.nombre  | upper }}</span>
+                      {% endfor %} 
+
+                        <div>{{c.promediocalificacion}}</div>
+                        <div id="calificacion_estrellas">
+                            <script>
+                                document.write(generarEstrellas({{c.promediocalificacion}}));
+                            </script>
+                        </div>
+                        <br>
+                        <div>
+                            <button type="button" class="btn btn-primary" onclick="abrir_modal3('{% url 'users_app:vista_reserva' c.id %}');">Reservar</button>
+                        </div>
 
                     </div>
                 </div>
+                <div id="reservar"></div>
             </div> 
             {% endfor %}
         </div>
-       
+        
     </div>
 
 </div>
-
+<br>
 
 {% endblock %}
