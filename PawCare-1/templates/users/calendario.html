@@ -4,6 +4,8 @@
 
 {% load static %}
 
+<script  src="{% static 'js/calendario.js' %} "></script>
+
 {% comment %} {% for c in calendario %}
 <td>{{c.fechaReserva}}</td>
 <td>{{c.horaInicio}}</td>
@@ -22,17 +24,17 @@
     
         {{ form.as_p }}
 
-        <button  id="agregar-btn">+</button>
-        <!--<div class="d-grid">
-          <button type="submit" class="btn btn-info">Registrar</button>
-        </div>-->
+        {% comment %} <button id="agregar-btn">+</button> {% endcomment %}
+        <div class="container ">
+          <button type="button" id="agregar-btn" class="btn btn-primary" onclick="abrir_modal_creacion('{% url 'users_app:horas'  %}');">+</button><div class="row"> 
+         </div>
         <br>
       </form>
     </div>
   </div>
 
 
-  <div>
+  {% comment %} <div>
     <h2>Lista de horas para calendario</h2>
     <table class="table"> 
         <thead>
@@ -49,9 +51,16 @@
           {% for c in calendario %}
             <tr>
               <td>{{c.fechaReserva}}</td>
-              <td>{{c.horaInicio}}</td>
-              <td>{{c.horaFin}}</td>
+              <td>{{c.horas.horaInicio}}</td>
+              <td>{{c.horas.horaFin}}</td>
               <td>{{c.estado}}</td>
+              
+              
+
+
+
+
+              
 
 
                   {% if c.image %}
@@ -63,7 +72,7 @@
     </table>
 
   </div>
-</div>
+</div> {% endcomment %}
 
 <html lang='en'>
   <head>
@@ -84,8 +93,9 @@
           events: [
             {% for c in calendario %}
               {
-                title: "{{ c.estado }} / {{ c.horaInicio}} - {{ c.horaFin}}",
+                title: '{{ c.estado  }}  / {{ c.horas.horaInicio}} - {{c.horas.horaFin}}',
                 start: '{{ c.fechaReserva  | date:"Y-m-d" }}',
+                
 
               },
             {%endfor%}
@@ -150,8 +160,16 @@
   <body>
     <div class="container">
     <div id='calendar'></div>
+
+    <div id='hora'></div>
+
     </div>
   </body>
+
+
+
 </html>
+
+
 
 {% endblock %}

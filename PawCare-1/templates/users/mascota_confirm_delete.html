@@ -4,11 +4,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Título del modal</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{mascota}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST">
+                <form action="{% url 'users_app:mascota_eliminar' object.id %}" method="POST">
                     {% csrf_token %}
             
                     <div class="mt-5">
@@ -22,10 +22,11 @@
                                 <hr>
                                 <div class="text-center">
                             
-                                    <input class="btn btn-success" type="submit" value="SI, BORRAR ">
-                                    <button class="btn btn-warning" type="button" >
-                                        <a href="{% url 'users_app:mascota' %}"> Cancelar</a>
-                                    </button>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <input class="btn btn-primary" type="submit" value="SI, BORRAR ">
+                                    </div>
+
             
                                 </div>
                             </div>
@@ -33,10 +34,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar cambios</button>
-            </div>
+
         </div>
     </div>
 </div>

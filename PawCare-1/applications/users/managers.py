@@ -33,13 +33,22 @@ class UserManager(BaseUserManager,models.Manager):
     
 
     
-class HoraManager(models.Manager):
+class MascotaManager(models.Manager):
 
-    def listar_horas(self):
+    def mascota_por_user(self,usuario):
 
         return self.filter(
-            estado__reservaEstado='Reservar'
+            user=usuario,
         )
+    
+class HorasManager(models.Manager):
+
+    def horas_por_user(self,usuario):
+
+        return self.filter(
+            user=usuario,
+        )
+
 
 
 

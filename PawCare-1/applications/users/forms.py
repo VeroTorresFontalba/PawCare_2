@@ -2,9 +2,9 @@ from django import forms
 from django.forms import ValidationError
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm , SetPasswordForm
-from .models import User, Servicio
-from .models import User, Categoria
-from .models import User, Servicio, Profile,Mascota, Especies, DiaReserva
+# from .models import Cronograma, User, Servicio
+# from .models import User, Categoria
+from .models import User, Servicio, Profile,Mascota, Cronograma,Especies,Hora
 # , Categoria, Profile, 
 
 
@@ -280,11 +280,10 @@ class MascotaForm(forms.ModelForm):
         }
 
 
-
-class FechaForm(forms.ModelForm):
+class CronogramaForm(forms.ModelForm):
     class Meta:
-        model= DiaReserva
-        fields = ['fechaReserva','horaInicio','horaFin','estado']
+        model = Cronograma
+        fields = ('fechaReserva','horas')
         widgets = {
                'fechaReserva':forms.DateInput(
                     format= '%Y-%m-%d',
@@ -294,29 +293,14 @@ class FechaForm(forms.ModelForm):
 
                     }
                ),
-               'horaInicio':forms.DateInput(
-                    format= '%H:%M:%s',
-                    attrs={
-                         'type': 'time',
-                         'class':'form-control',
+               'horas':forms.Select(
+                   attrs={
+                       'class': 'form-control',
+                }
+             ),
+        }
 
-                    }
-               ),
-               'horaFin':forms.DateInput(
-                    format= '%H:%M:%s',
-                    attrs={
-                         'type': 'time',
-                         'class':'form-control',
 
-                    }
-               ),
-                'estado':forms.Select(
-                    attrs={
-                        'type':'select',
-                         'class':'form-control',
 
-                    }
-               )
-          } 
-        
+
 

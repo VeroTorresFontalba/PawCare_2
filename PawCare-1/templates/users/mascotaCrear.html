@@ -1,14 +1,19 @@
-{% extends 'base.html' %}
 
-{% block content %} 
+<div class="modal fade" id="myModalCreate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar información</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
 
-{% load static %}
-
- <div class="content">
+ {% comment %} <div class="content">
     <div class="col-md-4">
         <a href="{% url 'users_app:mascota' %}"> Volver</a>
     </div>
-</div> 
+</div>  {% endcomment %}
 
 <div class="container">
     <div class="row">
@@ -17,7 +22,7 @@
     <br>
 
         <div class="row">
-            <form method="POST" action="#" id="formulario" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'users_app:crear_mascota' %}" id="formulario" enctype="multipart/form-data">
                 {% csrf_token %}
 
                 
@@ -62,7 +67,7 @@
                 <div class="row">
                     <div class="col-md">
 
-                        <input type="submit" class="btn btn-primary" value="Crear">
+                        <input type="submit"  class="btn btn-primary" value="Crear">
                         <input type="reset" class="btn btn-danger" value="Limpiar">
                         {% comment %} <a href="{% url 'admin_app:colaboradores_admin' form.id %}" class="btn btn-info">Volver</a> {% endcomment %}
                         
@@ -71,5 +76,7 @@
                 
             </form>
         </div>
+    </div>
+</div>
+
 </div> <br><br>
-{% endblock %}

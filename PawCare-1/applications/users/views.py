@@ -1,5 +1,10 @@
 import dataclasses
 from django.forms.models import BaseModelForm
+
+from rest_framework.generics import (
+    ListAPIView
+)
+
 from django.shortcuts import render,get_object_or_404,redirect
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
@@ -23,12 +28,12 @@ from django.views.generic.edit import (
     FormView
 )
 
+from .serializers import MascotaSerializers
 
+from .forms import CronogramaForm, MascotaForm, UserRegisterForm, LoginForm,PerfilForm
+# , ServiciosForm ,PerfilForm,EditarProfileForm,
 
-from .forms import MascotaForm, UserRegisterForm, LoginForm,PerfilForm,FechaForm
-# , ServiciosForm ,PerfilForm,EditarProfileForm
-
-from .models import User,Profile ,Mascota,DiaReserva
+from .models import User,Profile,Cronograma ,Mascota ,ReservaCliente,Hora
 #, Servicio ,
 
 
@@ -110,29 +115,41 @@ class PerfilUpdateView(UpdateView):
     
     def get_success_url(self):
         return reverse_lazy('users_app:update',args=[self.object.id]) + '?ok'
-    
 
+#Cronograma    
+
+    
 class CalendarioView(ListView):
     context_object_name= 'calendario'
     template_name = 'users/calendario.html'
     def get_queryset(self):
-        return DiaReserva.objects.all()
-        # return DiaReserva.objects.listar_horas()
-class AddFechaView(CreateView):
-    template_name='users/calendario.html'
-    form_class= FechaForm
-    success_url=reverse_lazy('users_app:calendario')
+        usuario= self.request.user
+        return Cronograma.objects.horas_por_user(usuario)
 
+class Addhoras(FormView):
+    template_name='users/horas.html'
+    form_class = CronogramaForm
+    success_url=reverse_lazy('users_app:calendario')
+    def form_valid(self, form):
+
+        Cronograma.objects.create(
+            user = self.request.user,
+            fechaReserva=form.cleaned_data['fechaReserva'],
+            horas=form.cleaned_data['horas'],
+            
+        )
+        return super(Addhoras, self).form_valid(form)
     
 
-
+#Macota
 class ListMascotas(ListView):
     context_object_name= 'lista_mascota'
     template_name= 'users/list_mascota.html'
 
 
     def get_queryset(self):
-        return Mascota.objects.all()
+        usuario= self.request.user
+        return Mascota.objects.mascota_por_user(usuario)
         # return Mascota.objects.listar_mascotas()
     
 
@@ -140,10 +157,10 @@ class ListMascotas2(ListView):
     context_object_name= 'lista_mascota'
     template_name= 'users/list_mascota.html'
 
-
     def get_queryset(self):
-        return Mascota.objects.all()
-        return Mascota.objects.listar_mascotas()
+        usuario= self.request.user
+        return Mascota.objects.mascota_por_user(usuario)
+        # return Mascota.objects.listar_mascotas()
     
 class AddMascota(FormView):
     template_name= 'users/mascotaCrear.html'
@@ -152,7 +169,7 @@ class AddMascota(FormView):
 
     def form_valid(self, form):
         Mascota.objects.create(
-
+            user = self.request.user,
             nombre_de_mascota=form.cleaned_data['nombre_de_mascota'],
             chip=False,
             n_chip=form.cleaned_data['n_chip'],
@@ -177,7 +194,24 @@ class ModificarMascota(UpdateView):
     def get_success_url(self):
         return reverse_lazy('users_app:mascota',args=[self.object.id]) 
     
-
 class MascotaDeleteView(DeleteView):
     model = Mascota
     success_url=reverse_lazy('users_app:mascota')
+
+class ClienteResevarView(ListView):
+    context_object_name= 'reserva'
+    template_name='users/vista_reserva.html'
+    def get_queryset(self):
+        return ReservaCliente.objects.all()
+
+
+#api de mascota
+
+class ListMascotaUser(ListAPIView):
+    serializer_class= MascotaSerializers
+
+    def get_queryset(self):
+        print('para recuperar el usuer')
+        print(self.request.user)
+        return Mascota.objects.all()
+

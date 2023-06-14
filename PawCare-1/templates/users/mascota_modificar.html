@@ -16,12 +16,12 @@
 
     <div class="container">
         <div class="row">
-            <h2>Modificar Mascota</h2> 
+            <h2>Modificar Mascota {{object}}</h2> 
         </div>
         <br>
 
             <div class="row">
-                <form method="POST" action="#" id="formulario" enctype="multipart/form-data">
+                <form method="POST" action="{% url 'users_app:mascota_modificar' object.id %}" id="formulario" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group">
                         {{ form.image.label }}
@@ -56,21 +56,23 @@
                     <br>
                     <div class="row">
                         <div class="col-md">
-
-                            <input type="submit" class="btn btn-primary" value="Modificar">
-                            {% comment %} <a href="{% url 'admin_app:colaboradores_admin' id %}" class="btn btn-info">Volver</a> {% endcomment %}
+                            <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="Guardar cambios">
+                            <button class="btn btn-danger" type="button" data-bs-dismiss="modal" >Cancelar</button>
+                        </div>
+                            {% comment %} <a href="{% url 'admin_app:colaboradores_admin' id %}" class="btn btn-info">Volver</a> 
                             
                         </div>
-                    </div>
+                    </div> {% endcomment %}
                     
                 </form>
             </div>
     </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            
+                {% comment %} <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary">Guardar cambios</button>
-            </div>
+            {% endcomment %}
         </div>
     </div>
 </div>
