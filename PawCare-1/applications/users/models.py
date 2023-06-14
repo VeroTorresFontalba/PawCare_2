@@ -172,5 +172,12 @@ class Mascota(models.Model):
     def __str__(self):
         return  self.nombre_de_mascota
 
-                                         
-
+class ReservaCliente(models.Model):
+    id= models.AutoField(primary_key=True)
+    idCuidador=models.IntegerField(unique=True ,null=True, blank=True)
+    cuidador=models.CharField(max_length=16, null=True, blank=True)
+    idCliente=models.IntegerField(unique=True ,null=True, blank=True)
+    cliente=models.CharField(max_length=16, null=True, blank=True)
+    idReserva= models.IntegerField(unique=True ,null=True, blank=True)
+    fechaReserva=models.DateField(null=True,blank=True)
+    estado=models.CharField(max_length=15,null=True,blank=True)  

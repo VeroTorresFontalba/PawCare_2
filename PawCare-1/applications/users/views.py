@@ -28,7 +28,7 @@ from django.views.generic.edit import (
 from .forms import MascotaForm, UserRegisterForm, LoginForm,PerfilForm,FechaForm
 # , ServiciosForm ,PerfilForm,EditarProfileForm
 
-from .models import User,Profile ,Mascota,DiaReserva
+from .models import User,Profile ,Mascota,DiaReserva,ReservaCliente
 #, Servicio ,
 
 
@@ -186,7 +186,7 @@ class ClienteResevarView(ListView):
     context_object_name= 'reserva'
     template_name='users/vista_reserva.html'
     def get_queryset(self):
-        return DiaReserva.objects.all()
+        return ReservaCliente.objects.all()
     
 class ClienteReservaUpdate(UpdateView):
     def Reserva(request, pk):

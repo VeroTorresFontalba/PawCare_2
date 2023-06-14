@@ -16,9 +16,10 @@
     <table class="table"> 
         <thead>
             <tr>
-                <th>Fecha</th>
-                <th>Hora Inicio</th>
-                <th>Hora Fin</th>
+                <th>Cuidador</th>
+                <th>Cliente</th>
+                <th>Reserva</th>
+                <th>Fecha Reserva</th>
                 <th>Estado</th>
                 <th></th>
 
@@ -28,9 +29,10 @@
         <tbody>
           {% for c in reserva %}
             <tr id="{{c.id}}">
+               <td>{{c.cuidador}}</td>
+               <td>{{c.cliente}}</td>
+               <td>{{c.idReserva.id}}</td>
                <td>{{c.fechaReserva}}</td>
-               <td>{{c.horaInicio}}</td>
-               <td>{{c.horaFin}}</td>
                <td>{{c.estado}}</td>
                {% if c.estado == "Reservado" %}
                <td><p>Reservado</p></td>
