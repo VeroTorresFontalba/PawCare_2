@@ -84,6 +84,12 @@ class ListCuidadores(ListView):
     def get_queryset(self):
         return User.objects.listar_cuidadores()
     
+   # def get_queryset(self):
+    #    queryset = super().get_queryset()
+     #   for cuidador in queryset:
+     #       cuidador.star_ratings = cuidador.get_star_ratings()
+     #   return queryset
+    
 
 class PerfilDetailView(DetailView):
     model = Profile

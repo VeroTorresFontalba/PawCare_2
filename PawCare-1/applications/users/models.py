@@ -35,6 +35,25 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
         return self.username
     def get_full_name(self):
         return self.nombres+" "+self.apellidos
+    
+    def get_star_ratings(self):
+        full_stars = int(self.promediocalificacion)
+        empty_stars = 5 - full_stars 
+        return [True] * full_stars + [False] * empty_stars 
+    
+  #  def get_star_ratings(self):
+   #     full_stars = int(self.promediocalificacion)  # Parte entera de la calificación
+    #    decimal_part = self.promediocalificacion - full_stars  # Parte decimal de la calificación
+#
+ #       if decimal_part >= 0.6:
+  #          full_stars += 1  # Si la parte decimal es mayor o igual a 0.6, se agrega una estrella completa
+   #     elif decimal_part >= 0.1:
+    #        half_star = True  # Si la parte decimal está entre 0.1 y 0.5, se agrega media estrella
+     #   else:
+      #      half_star = False  # Si la parte decimal es menor a 0.1, no se agrega media estrella
+
+#        empty_stars = 5 - full_stars - half_star  # Calcula el número de estrellas vacías
+ #       return [True] * full_stars + [0.5] * half_star + [False] * empty_stars
 
 #Modelo de Tipos de servicios
 
