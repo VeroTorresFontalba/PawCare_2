@@ -10,6 +10,7 @@ admin.site.register(DiaReserva)
 admin.site.register(Especies)
 admin.site.register(Mascota)
 admin.site.register(ReservaCliente)
+admin.site.register(Calificacion)
 
 
 
