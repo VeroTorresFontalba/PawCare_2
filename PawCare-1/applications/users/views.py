@@ -193,12 +193,5 @@ class ClienteResevarView(ListView):
     template_name='users/vista_reserva.html'
     def get_queryset(self):
         return ReservaCliente.objects.all()
-    
-class ClienteReservaUpdate(UpdateView):
-    def Reserva(request, pk):
-        DiaReserva.objects.get(pk=pk)
-        DiaReserva.estado = 'Reservado'
-        DiaReserva.save()
-        return
-    success_url=reverse_lazy('users_app:vista_reserva')
+
         

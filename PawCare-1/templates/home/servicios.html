@@ -6,6 +6,7 @@
 <link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
 <link href="{% static 'css/tarjetacuidador.css' %}" type="text/css" rel="stylesheet">
 <script  src="{% static 'js/calificacion.js' %} "></script> 
+<script  src="{% static 'js/reserva.js' %} "></script> 
 
 <br>
 <div>
@@ -37,15 +38,19 @@
                             <script>
                                 document.write(generarEstrellas({{c.promediocalificacion}}));
                             </script>
-     
+                        </div>
+                        <br>
+                        <div>
+                            <button type="button" class="btn btn-primary" onclick="abrir_modal3('{% url 'users_app:vista_reserva' c.id %}');">Reservar</button>
                         </div>
 
                     </div>
                 </div>
+                <div id="reservar"></div>
             </div> 
             {% endfor %}
         </div>
-       
+        
     </div>
 
 </div>

@@ -37,8 +37,7 @@ urlpatterns = [
     path('calendario/',CalendarioView.as_view(), name= 'calendario'),
     path('calendario2/',AddFechaView.as_view(), name= 'calendario'),
 
-    path('vista_reserva/',ClienteResevarView.as_view(), name= 'vista_reserva'),
-    path('vista_actualizar/',ClienteResevarView.as_view(), name= 'vista_actualizar'),
+    path('vista_reserva/<int:pk>',ClienteResevarView.as_view(), name= 'vista_reserva'),
 
     #MASCOTAS
     # path('lista_mascota/', ListMascotas.as_view(), name='mascotas'),

@@ -1,58 +1,18 @@
-{% extends 'base.html' %}
-
-{% block content %} 
-
-{% load static %}
-
-<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
-
-<br>
-<div>
-    <h1>Vista Reserva Cliente</h1>
+<div class="modal fade" id="MyModalReserva" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Título del modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h1>Hola</h1>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Guardar cambios">
+                <button class="btn btn-danger" type="button" data-bs-dismiss="modal" >Cancelar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div>
-    <h2></h2>
-    <table class="table"> 
-        <thead>
-            <tr>
-                <th>Cuidador</th>
-                <th>Cliente</th>
-                <th>Reserva</th>
-                <th>Fecha Reserva</th>
-                <th>Estado</th>
-                <th></th>
-
-
-            </tr>
-        </thead>
-        <tbody>
-          {% for c in reserva %}
-            <tr id="{{c.id}}">
-               <td>{{c.cuidador}}</td>
-               <td>{{c.cliente}}</td>
-               <td>{{c.idReserva.id}}</td>
-               <td>{{c.fechaReserva}}</td>
-               <td>{{c.estado}}</td>
-               {% if c.estado == "Reservado" %}
-               <td><p>Reservado</p></td>
-               {% else %}
-                    {% if user.is_authenticated %}
-                    <td>
-                    <form method="post" action="{% url 'users_app:vista_actualizar' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary btn-info btn-info-hover">Reservar</button>
-                    </form>
-                    </td>
-                    {% else %}
-                        <td><a href="{% url 'users_app:user_login'  %}" class="btn btn-primary  btn-info btn-info-hover">Inicia Sesión</a></td>
-                    {% endif %}
-                {% endif %}
-            </tr>
-            {%endfor%}
-        </tbody>
-    </table>
-</div>
-<hr>
-<br>
-{% endblock %}
