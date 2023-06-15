@@ -4,6 +4,8 @@
 
 {% load static %}
 
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+
 {% comment %} para menu de administracion
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -17,12 +19,12 @@
   </div> {% endcomment %}
 
   
-
+<br>
 <div class="container">
-    <h2>Lista de Colaboradores</h2><br><br>
-    <center><img src="{% static 'img/logoup.png' %}" width="600" height="400" alt=""></center>
+    <h2 class="titulo">Lista de Colaboradores</h2><br><br>
+
   
-    <a href="{% url 'admin_app:crear_colaborador' %}" class="btn btn-primary">+</a> <br>
+    <a href="{% url 'admin_app:crear_colaborador' %}" class="btn btn-primary btn-info btn-info-hover">Agregar Colaborador</a> <br>
     <table class="table"> <br>
         <thead>
             <tr>
@@ -31,7 +33,8 @@
                 <th>Codigo de descuento</th>
                 <th>Link de Patrocinador</th>
                 <th>Ingreso</th>
-                {% comment %} <th>Estado</th>  {% endcomment %}
+                <th>Se encuentra Publicado</th> 
+                
                 <th>Foto de la marca</th>
   
             </tr>
@@ -44,19 +47,21 @@
                 <td>{{c.descuento}}</td>
                 <td>{{c.url}}</td>
                 <td>{{c.created}}</td>
-                {% comment %} <td>{{c.published}}</td> {% endcomment %}
+                <td>{{c.published}}</td>
                 <td>
                   {% if c.image %}
-                  <img src="{{c.image.url}}" width="100px" height="100px" alt="">
+                  <img class="imagen-colab" src="{{c.image.url}}" width="100px" height="100px" alt="">
                   {% endif %}
                 </td>
-                <td><a href="{% url 'admin_app:colaborador_modificar' c.id %}" class="btn btn-primary">Modificar</a></td>
+                <td><a href="{% url 'admin_app:colaborador_modificar' c.id %}" class="btn btn-primary  btn-info btn-info-hover">Modificar</a></td>
                 {% comment %} <td><a href="#" class="btn btn-danger">Eliminar</a></td> {% endcomment %}
             </tr>
             {% endfor %}
         </tbody>
     </table><br>
   </div><br><br>
+
+  
  
 
 

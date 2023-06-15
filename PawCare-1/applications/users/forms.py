@@ -2,9 +2,9 @@ from django import forms
 from django.forms import ValidationError
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm , SetPasswordForm
-from .models import User, Servicio
-from .models import User, Categoria
-from .models import User, Servicio, Profile
+# from .models import Cronograma, User, Servicio
+# from .models import User, Categoria
+from .models import User, Servicio, Profile,Mascota, Cronograma,Especies,Hora
 # , Categoria, Profile, 
 
 
@@ -57,9 +57,11 @@ class UserRegisterForm(forms.ModelForm):
             'apellidos',
             'telefono',
             'categoria',
+            'is_active',
             )
         
         labels={
+             'is_active':'Bajar cuenta',
              'categoria':'Tipo de Usuario',
         }
 
@@ -124,6 +126,7 @@ class UserRegisterForm(forms.ModelForm):
                   'id': 'categoria',
              }
              )
+             
         }
 
     
@@ -220,7 +223,7 @@ class ServiciosForm(forms.ModelForm):
                          'placeholder':'Ingrese el numero del nuevo servicio'
                     }
                ),
-               'nombre':forms.Textarea(
+               'nombre':forms.TextInput(
                     attrs={
                          'class':'form-control',
                          'placeholder':'Ingrese el nombre del nuevo servicio'
@@ -234,6 +237,31 @@ class ServiciosForm(forms.ModelForm):
                )
           }
 
+class EspeciesForm(forms.ModelForm):
+     class Meta:
+          model = Especies
+          fields = ['id','nombre']
+          labels = {
+               'id': 'Identificador del la especie',
+               'nombre':'Nombre de la especie',
+
+          }
+          widgets = {
+               'id':forms.TextInput(
+                    attrs ={
+                         'class':'form-control',
+                         'placeholder':'Ingrese el numero de la nueva especie'
+                    }
+               ),
+               'nombre':forms.TextInput(
+                    attrs={
+                         'class':'form-control',
+                         'placeholder':'Ingrese el nombre de la nueva especie'
+                    }
+               ),
+          }
+
+
 
 class PerfilForm(forms.ModelForm):
 
@@ -243,7 +271,7 @@ class PerfilForm(forms.ModelForm):
 
     picture = forms.ImageField(label='Nueva foto de perfil',required=False, widget=forms.FileInput(attrs={'class':'form-control'}))
 
-    descripcion = forms.CharField(label= 'Ingresa una breve descripción',widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=260, required=False)
+    descripcion = forms.CharField(label= 'Ingresa una breve descripción',widget=forms.Textarea(attrs={'class': 'form-control'}), max_length=260, required=False)
 
     servicios = forms.ModelMultipleChoiceField(
          queryset= None,
@@ -254,123 +282,53 @@ class PerfilForm(forms.ModelForm):
          super(PerfilForm, self).__init__(*args,**kwargs)
          self.fields['servicios'].queryset = Servicio.objects.all() 
 
-  
+class MascotaForm(forms.ModelForm):
+
+    class Meta:
+        model= Mascota
+        fields = ['nombre_de_mascota','chip','n_chip','image','descripccion','especies']
+        labels = {
+            # 'dueño':'Dueños de Mascota',
+            'nombre_de_mascota':'Nombre de la mascota',
+            'chip':'Poose chip',
+            'n_chip':'Ingrese el numero de Chip',
+            'image':'Ingrese una foto de su mascota',
+            'descripccion':'Detalle una descripccion de su mascota',
+            'especies':'A que especie pertenece su mascota',
+        }
+        widgets = {
+            # 'dueño':forms.TextInput(attrs={'class':'form-control'}),
+            'nombre_de_mascota':forms.TextInput(attrs={'class':'form-control'}),
+            'n_chip':forms.TextInput(attrs={'class':'form-control'}),
+            'image':forms.ClearableFileInput(attrs={'class':'form-control'}),
+            'descripccion':forms.Textarea(attrs={'class':'form-control'}),
+            'especies': forms.Select(attrs={'class': 'form-control',
+             }
+             )
+        }
+
+
+class CronogramaForm(forms.ModelForm):
+    class Meta:
+        model = Cronograma
+        fields = ('fechaReserva','horas')
+        widgets = {
+               'fechaReserva':forms.DateInput(
+                    format= '%Y-%m-%d',
+                    attrs ={
+                         'type': 'date',
+                         'class':'form-control',
+
+                    }
+               ),
+               'horas':forms.Select(
+                   attrs={
+                       'class': 'form-control',
+                }
+             ),
+        }
 
 
 
 
 
-
-
-
-
-# class PerfilForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = ('picture','descripcion','servicios')
-#         label = {
-#             'picture':'Imagen',
-#             'descripcion': 'Bibliogrfia',
-#             'servicios': 'Tipos de servicios'
-#         }
-#         widgets = {
-#             'descripcion': forms.TextInput(
-#                 attrs = {
-#                     'class': 'form-control',
-#                     'placeholder': 'Ingrese una breve descripción'
-#                 }
-#             ),
-#             'servicios': forms.SelectMultiple(
-#                 attrs = {
-#                     'class':'form-control',
-#                     'type':'checkbox'
-#                 }
-#             ),
-#             'picture': forms.ImageField(
-#                 attrs = {
-#                     'class':'form-control'
-#                 }
-#             ),
-#         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #     email = forms.EmailField(
-    #     label='Correo',
-    #     required= False,
-    #     widget= forms.EmailField(
-    #         attrs={
-    #             'class': 'form-control',
-    #             'placeholder': 'Ingrese un correo',
-    #         }
-    #     )
-    # );
-    #     telefono = forms.TextInput(
-    #     label='Telefono',
-    #     required= False,
-    #     widget= forms.TextInput(
-    #         attrs={
-    #             'class': 'form-control',
-    #             'placeholder': 'Ingrese un telefono',
-    #         }
-    #     )
-    # )
-    #     picture = forms.ImageField(
-    #          label='Profile picture',
-    #          required= False,
-    #          widget= forms.FileInput(
-                  
-    #          )
-    #     )
-    #     descripcion = forms.CharField(
-    #     label='descripcion',
-    #     widget= forms.TextInput(
-    #         attrs={
-    #             'class': 'form-control',
-    #         }
-    #     )
-    # )
-     
-    #     username = forms.CharField(
-    #     label='Nombre de usuario',
-    #     required= True,
-    #     widget= forms.TextInput(
-    #         attrs={
-    #             'class': 'form-control',
-    #             'placeholder': 'Ingrese su usuario',
-    #             'style': '{margin: 10}',
-    #         }
-    #     )
-    # )
-    #     password = forms.CharField(
-    #     label='Contraseña',
-    #     required= True,
-    #     widget= forms.PasswordInput(
-    #         attrs={
-    #             'class': 'form-control',
-    #             'placeholder': 'Ingrese su contraseña',
-    #         }
-    #     )
-    # )

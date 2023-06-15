@@ -1,8 +1,8 @@
 .titulo{
-    color: black;
+    color:#ff7d00 ;
     text-indent: 50px;
     font-size: 2.5em;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 
@@ -21,3 +21,23 @@
     border-radius: 10px;
     border: 0; 
 }
+
+.buttonnf{
+    color: white;
+    text-decoration: none;
+}
+
+.buttonnf-hover:hover{
+    color: white;
+    text-decoration: none;
+}
+
+.imagen-colab{
+    width: 350px;
+    height: 250px;
+}
+
+.estrella {
+    color: #fad905;
+    font-size: 30px; 
+  }

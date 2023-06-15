@@ -1,9 +1,8 @@
 .Sub1{
-    color: black;
-    text-indent: 50px;
-    /* text-shadow: 1px 2px 2px rgba(0,0,0,0.5); */
-    font-size: 2.5em;
-    font-family: 'Times New Roman', Times, serif;
+  color:#ff7d00 ;
+  text-indent: 50px;
+  font-size: 50px;
+  font-family: 'Roboto', sans-serif;
 }
 
 hr{
@@ -38,3 +37,17 @@ hr{
     text-align: center;
   }
 
+  .titulo{
+    font-size: 30px;
+    font-family:'Roboto', sans-serif;
+  }
+
+  .texto{
+    font-size: 18px;
+    font-family:'Roboto', sans-serif;
+  }
+
+  .imagen-carta{
+    width: 350px;
+    height: 250px;
+  }

@@ -1,0 +1,82 @@
+
+<div class="modal fade" id="myModalCreate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar información</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+
+ {% comment %} <div class="content">
+    <div class="col-md-4">
+        <a href="{% url 'users_app:mascota' %}"> Volver</a>
+    </div>
+</div>  {% endcomment %}
+
+<div class="container">
+    <div class="row">
+        <h2>Ingresar Tu mascota</h2> 
+    </div>
+    <br>
+
+        <div class="row">
+            <form method="POST" action="{% url 'users_app:crear_mascota' %}" id="formulario" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                
+
+                <div class="form-group">
+                    {{ form.nombre_de_mascota.label }}
+                    {{ form.nombre_de_mascota }}
+                </div>
+                <div class="form-group">
+                    {{ form.chip.label }} 
+                    {{ form.chip }}
+                  </div> 
+    
+                  <div class="form-group">
+                    {{ form.n_chip.label }}
+                    {{ form.n_chip }}
+                  </div>
+                 
+                <div class="form-group">
+                    {{ form.image.label }}
+                    {{ form.image }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.descripccion.label }}
+                    {{ form.descripccion }}
+                </div>
+
+                <div class="form-group">
+                  {{ form.especies.label }}
+                  {{ form.especies }}
+              </div>
+
+
+
+
+              {% comment %} <div class="form-group">
+                  
+                {{ Colaborador_Form.published }}
+            </div> {% endcomment %}
+                <br>
+                <div class="row">
+                    <div class="col-md">
+
+                        <input type="submit"  class="btn btn-primary" value="Crear">
+                        <input type="reset" class="btn btn-danger" value="Limpiar">
+                        {% comment %} <a href="{% url 'admin_app:colaboradores_admin' form.id %}" class="btn btn-info">Volver</a> {% endcomment %}
+                        
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+</div> <br><br>
