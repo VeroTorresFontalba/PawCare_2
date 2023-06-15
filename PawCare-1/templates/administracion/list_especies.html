@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+{% load static %}
+
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+
+<br>
+<div class="container">
+    <h2 class="titulo">Lista de Especies</h2><br><br>
+
+  
+    <a href="{% url 'users_app:crear_especie' %}" class="btn btn-primary btn-info btn-info-hover">Agregar Especie</a> <br>
+    <table class="table"> <br>
+        <thead>
+            <tr>
+                <th>Identificador</th>
+                <th>Nombre de la especie</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in lista_especies %}
+            <tr>
+                <td>{{e.id}}</td>
+                <td>{{e.nombre}}</td>
+
+                <td><a href="{% url 'users_app:especie_modificar' e.id %}" class="btn btn-primary  btn-info btn-info-hover">Modificar</a></td>
+                <td><a href="{% url 'users_app:especie_eliminar' e.id %}" class="btn btn-danger">Eliminar</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+  </div><br><br>
+
+  
+ 
+
+
+{% endblock %}
+
+
+

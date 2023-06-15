@@ -28,18 +28,27 @@ class UserManager(BaseUserManager,models.Manager):
     def listar_cuidadores(self):
    
         return self.filter(
-            categoria__name = 'Cuidador' 
+            categoria = 2 
         )
     
 
     
-class HoraManager(models.Manager):
+class MascotaManager(models.Manager):
 
-    def listar_horas(self):
+    def mascota_por_user(self,usuario):
 
         return self.filter(
-            estado__reservaEstado='Reservar'
+            user=usuario,
         )
+    
+class HorasManager(models.Manager):
+
+    def horas_por_user(self,usuario):
+
+        return self.filter(
+            user=usuario,
+        )
+
 
 
 

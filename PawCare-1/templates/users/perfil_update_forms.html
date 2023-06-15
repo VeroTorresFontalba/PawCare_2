@@ -42,10 +42,13 @@
                                     {{ form.descripcion}}
                                     
                                 </div>
+                                {%if request.user.categoria == '2' %}
                                 <div class="form-group">
                                     {{ form.servicios.label}}
                                     {{ form.servicios}}
                                 </div> 
+                                {%endif%}
+                                
                             </div>
                         </div>
                        

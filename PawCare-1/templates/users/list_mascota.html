@@ -16,7 +16,8 @@
     <hr>
     <!--Tarjetas-->
     <div class="container ">
-      <a href="{% url 'users_app:crear_mascota' %}" class="btn btn-primary btn-info btn-info-hover">Registrar Mascota</a> <br>
+      {% comment %} <a href="{% url 'users_app:crear_mascota' %}" class="btn btn-primary">+</a> <br> {% endcomment %}
+      <button type="button" class="btn btn-primary" onclick="abrir_modal_creacion('{% url 'users_app:crear_mascota'  %}');">+</button>
         <div class="row">
           
         </div>
@@ -44,6 +45,7 @@
             {% endfor %}
             {% endif%}
         </div>
+        <div id="creacion"></div>
         <div id="edicion"></div>
         <div id="eliminar"></div>
 

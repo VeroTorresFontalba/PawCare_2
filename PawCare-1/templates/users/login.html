@@ -32,6 +32,7 @@
             <form action="#" method="POST">
                 {% csrf_token %}
 
+                <input type="hidden" value="{{id}}" id="id_usuario">
                 {{ form.as_p }}
               <!--  <div class="mb-4">
                     <div class="cell medium-12">

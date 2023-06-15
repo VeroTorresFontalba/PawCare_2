@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+{% load static %}
+
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+<br>
+<div class="container">
+    <h2 class="titulo">Lista de Usuarios</h2><br><br>
+    <table class="table"> <br>
+        <thead>
+            <tr>
+                <th>identificador</th>
+                <th>Nombre de Usuario</th>
+                <th>Correo electronico</th>
+                <th>Rut</th>
+                <th>Nombre</th>
+                <th>Apellido</th> 
+                <th>Telefono</th> 
+                <th>Tipo de usuario</th> 
+                <th>Cuenta Activa</th>   
+  
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in lista_user %}
+            <tr>
+                <td>{{user.id}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.rut}}</td>
+                <td>{{user.nombres}}</td>
+                <td>{{user.apellidos}}</td>
+                <td>{{user.telefono}}</td>
+                <td>{{user.categoria}}</td>
+                <td>{{user.is_active}}</td>
+                <td><a href="{% url 'users_app:user_modificar' user.id %}" class="btn btn-primary  btn-info btn-info-hover">Modificar</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+  </div><br><br>
+
+  
+ 
+
+
+{% endblock %}
+
+
+

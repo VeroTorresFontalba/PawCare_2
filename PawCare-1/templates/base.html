@@ -17,7 +17,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'fontawesome-free-6.4.0-web/css/all.min.css' %}">
 
-
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+ {% endcomment %}
 
 
 
@@ -37,14 +39,16 @@
                             <a class=" resaltar nav-link" id="inicio" href="{% url 'home_app:home' %}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="resaltar1 nav-link" id="somos" href="{% url 'home_app:somos' %}"#>Quienes somos</a>
+                            <a class="resaltar1 nav-link" id="somos" href="{% url 'home_app:somos' %}">Quienes somos</a>
                         </li>
                         <li class="nav-item">
                             <a class=" resaltar nav-link" id="colaboradores" href="{% url 'admin_app:colaboradores' %}">Colaboradores</a>
                         </li>
+                        {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class=" resaltar1 nav-link" id="servicios" href="{% url 'home_app:servicios' %}">Servicios</a>
                         </li>
+                        {% endif %}
 
                         <!--AGREGUE ESTE BLOQUE PARA LOGIN-->
                         
@@ -60,10 +64,35 @@
                             <a class="nav-link"  href="{% url 'users:profile' user.username %}">Bienvenido {{user.username | upper}} :)</a>   
 
                         </li>
+
+                        {%if request.user.categoria == '2' %}
                         <li class= "nav-item">   
-                            <a class="nav-link"  href="{% url 'admin_app:colaboradores_admin'  %}">Administracion </a>   
+                            <a class="nav-link"  href="{% url 'users:calendario'  %}">Cronograma</a>   
 
                         </li>
+                        {% endif %}
+
+                        {%if request.user.categoria == '3' %}
+                        {% comment %} <li class= "nav-item">   
+                            <a class="nav-link"  href="{% url 'admin_app:colaboradores_admin'  %}">Administracion </a>  
+
+                        </li> {% endcomment %}
+                        <div class="btn-group" >
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                    Administracion
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="{% url 'admin_app:colaboradores_admin'  %}">Ad_Colaboradores</a></li>
+                                <li><a class="dropdown-item" href="{% url 'users_app:usuarios_admin'  %}">Ad_Usuarios</a></li>
+                                <li><a class="dropdown-item" href="{% url 'users_app:servicios_admin'  %}">Ad_Servicios</a></li>
+                                <li><a class="dropdown-item" href="{% url 'users_app:especie_admin'  %}">Ad_Especies</a></li>
+
+                                </ul>
+                            </div>
+                          <div>
+
+                        {% endif %}
 
                         {% else %}
 
@@ -109,21 +138,21 @@
                             <ul style="list-style: none;">
                                 <li>
                                     <h7 class="text-uppercase text-center fw-bold mb-4">
-                                        <i class="fas fa-gem me-3"></i>
+                                        
                                             <a href="/" class="nolink nolinkh">PawCare</a>
                                     </h7>
                                 </li>
                                 <br>
                                 <li>
                                     <h7 class="text-uppercase text-center fw-bold mb-4">
-                                        <i class="fas fa-gem me-3"></i>
+                                       
                                         <a href="{% url 'home_app:somos' %}" class="nolink nolinkh">Quienes Somos</a>
                                     </h7>
                                 </li>
                                 <br>
                                 <li>
                                     <h7 class="text-uppercase text-center fw-bold mb-4">
-                                        <i class="fas fa-gem me-3"></i>
+                                        
                                         <a href="{% url 'home_app:servicios' %}" class="nolink nolinkh">Servicios</a>
                                     </h7>
                                 </li>        
