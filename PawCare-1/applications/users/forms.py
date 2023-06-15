@@ -57,9 +57,11 @@ class UserRegisterForm(forms.ModelForm):
             'apellidos',
             'telefono',
             'categoria',
+            'is_active',
             )
         
         labels={
+             'is_active':'Bajar cuenta',
              'categoria':'Tipo de Usuario',
         }
 
@@ -124,6 +126,7 @@ class UserRegisterForm(forms.ModelForm):
                   'id': 'categoria',
              }
              )
+             
         }
 
     
@@ -220,7 +223,7 @@ class ServiciosForm(forms.ModelForm):
                          'placeholder':'Ingrese el numero del nuevo servicio'
                     }
                ),
-               'nombre':forms.Textarea(
+               'nombre':forms.TextInput(
                     attrs={
                          'class':'form-control',
                          'placeholder':'Ingrese el nombre del nuevo servicio'
@@ -233,6 +236,31 @@ class ServiciosForm(forms.ModelForm):
                     }
                )
           }
+
+class EspeciesForm(forms.ModelForm):
+     class Meta:
+          model = Especies
+          fields = ['id','nombre']
+          labels = {
+               'id': 'Identificador del la especie',
+               'nombre':'Nombre de la especie',
+
+          }
+          widgets = {
+               'id':forms.TextInput(
+                    attrs ={
+                         'class':'form-control',
+                         'placeholder':'Ingrese el numero de la nueva especie'
+                    }
+               ),
+               'nombre':forms.TextInput(
+                    attrs={
+                         'class':'form-control',
+                         'placeholder':'Ingrese el nombre de la nueva especie'
+                    }
+               ),
+          }
+
 
 
 class PerfilForm(forms.ModelForm):

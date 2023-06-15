@@ -28,7 +28,7 @@ class UserManager(BaseUserManager,models.Manager):
     def listar_cuidadores(self):
    
         return self.filter(
-            categoria__name = 'Cuidador' 
+            categoria = 2 
         )
     
 

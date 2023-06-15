@@ -14,13 +14,13 @@ from applications.categoria.models import Categoria
 class User (AbstractBaseUser, PermissionsMixin, models.Model ):
 
     # TIPO DE USUARIOS
-    ADMINISTRADOR = '0'
-    CLIENTE = '1'
+    CLIENTE = '1' 
     CUIDADOR = '2'
+    ADMINISTRADOR= '3'
     TIPOUSER_CHOICES = [
-        (ADMINISTRADOR, 'Administrador'),
         (CLIENTE, 'Cliente'),
         (CUIDADOR, 'Cuidador'),
+        (ADMINISTRADOR, 'Administrador'),
     ]
 
     username = models.CharField(max_length=16, unique=True)
@@ -29,8 +29,9 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
     nombres= models.CharField(max_length=100)
     apellidos= models.CharField(max_length=100)
     telefono= models.CharField(max_length=9,null = True)
-    tipodeusuario=models.CharField(max_length=2,choices=TIPOUSER_CHOICES,null=True)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True,default=1)
+    # tipodeusuario=models.CharField(max_length=2,choices=TIPOUSER_CHOICES,null=True,default=2)
+    # categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True)
+    categoria = models.CharField(max_length=2,choices=TIPOUSER_CHOICES,null=True,default=1)
     promediocalificacion = models.DecimalField(max_digits=3, decimal_places=2, null=True)
  
     #
@@ -121,7 +122,7 @@ class Hora(models.Model):
     # estado= models.ForeignKey(EstadoReserva,on_delete=models.CASCADE,related_name='Estado',null=True,default=1)
 
     def __str__(self):
-        return str(self.id) + " - " + str(self.horaInicio) + " - " +str(self.horaFin) 
+        return  str(self.horaInicio) + " - " +str(self.horaFin) 
     
 class Cronograma(models.Model):
      id= models.AutoField(primary_key=True)

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+{% load static %}
+
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+
+{% comment %} para menu de administracion
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown button
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <a class="dropdown-item" href="#">Something else here</a>
+    </div>
+  </div> {% endcomment %}
+
+  
+<br>
+<div class="container">
+    <h2 class="titulo">Lista de Servicios</h2><br><br>
+
+  
+    <a href="{% url 'users_app:crear_servicio' %}" class="btn btn-primary btn-info btn-info-hover">Agregar Servicio</a> <br>
+    <table class="table"> <br>
+        <thead>
+            <tr>
+                <th>Identificador</th>
+                <th>Nombre</th>
+                <th>Informacion</th>
+  
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in lista_servicios %}
+            <tr>
+                <td>{{s.id}}</td>
+                <td>{{s.nombre}}</td>
+                <td>{{s.informacion}}</td>
+
+  
+                <td><a href="{% url 'users_app:servicio_modificar' s.id %}" class="btn btn-primary  btn-info btn-info-hover">Modificar</a></td>
+                <td><a href="{% url 'users_app:servicio_eliminar' s.id %}" class="btn btn-danger">Eliminar</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+  </div><br><br>
+
+  
+ 
+
+
+{% endblock %}
+
+
+
