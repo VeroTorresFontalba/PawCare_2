@@ -94,6 +94,29 @@ class ListCuidadores(LoginRequiredMixin,ListView):
         return User.objects.listar_cuidadores()
     
 
+# class ListCuidadores2(LoginRequiredMixin,ListView):
+#     model= User
+#     context_object_name= 'lista_cuidadores'
+#     template_name= 'users/vista_reserva.html'
+#     login_url = reverse_lazy('users_app:user_login')
+
+#     def get_queryset(self):
+     
+#         return User.objects.listar_cuidadores()
+    
+class ListCuidadores3(LoginRequiredMixin,ListView):
+    
+    context_object_name= 'lista_cuidadores'
+    template_name= 'users/prueba.html'
+    login_url = reverse_lazy('users_app:user_login')
+
+    def get_queryset(self):
+        return Cronograma.objects.listar_cuidadores_horas(21)
+     
+
+
+    
+
 class PerfilDetailView(LoginRequiredMixin,DetailView):
     model = Profile
     template_name = 'users/detail.html'
@@ -145,6 +168,7 @@ class Addhoras(LoginRequiredMixin,FormView):
             user = self.request.user,
             fechaReserva=form.cleaned_data['fechaReserva'],
             horas=form.cleaned_data['horas'],
+            # horas= Hora.objects.all['horas'],
             
         )
         return super(Addhoras, self).form_valid(form)
@@ -218,6 +242,8 @@ class ClienteResevarView(LoginRequiredMixin,ListView):
     login_url = reverse_lazy('users_app:user_login')
     def get_queryset(self):
         return Cronograma.objects.all()
+    
+    
 
 
 #api de mascota
@@ -348,14 +374,14 @@ class ModificarEspecie_admin(LoginRequiredMixin,UpdateView):
     model= Especies
     form_class= EspeciesForm 
     template_name='administracion/especieModificar.html'
-    success_url =reverse_lazy('users_app:especie_admin_s') 
+    success_url =reverse_lazy('users_app:especie_modificar') 
     login_url = reverse_lazy('users_app:user_login')
 
     def form_invalid(self, form):
         return super().form_invalid(form)
     
     def get_success_url(self):
-        return reverse_lazy('users_app:especie_admin_s',args=[self.object.id]) 
+        return reverse_lazy('users_app:especie_modificar',args=[self.object.id]) + '?ok'
 
 
 class EspecieDeleteView(LoginRequiredMixin,DeleteView):

@@ -33,6 +33,28 @@
                         <span class="badge bg-primary">{{ servicios.nombre  | upper }}</span>
                       {% endfor %} 
 
+                      {% for cronograma in c.cronograma.all %}
+<!--                      <span class="badge bg-primary">{{ cronograma.fechaReserva  | upper }}</span>
+                      <span class="badge bg-primary">{{ cronograma.horas  | upper }}</span> 
+                      <table class="table">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col">Fecha:</th>
+                            <th scope="col">{{ cronograma.fechaReserva  | upper }}</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Horas:</th>
+                            <td>{{ cronograma.horas.horaInicio  | upper }}-{{ cronograma.horas.horaFin  | upper }}</td>
+
+                          </tr>
+                        </table> -->
+                      {% endfor %}
+
+
+
                         <div>{{c.promediocalificacion}}</div>
                         <div id="calificacion_estrellas">
                             <script>
@@ -40,9 +62,17 @@
                             </script>
                         </div>
                         <br>
-                        <div>
-                            <button type="button" class="btn btn-primary" onclick="abrir_modal3('{% url 'users_app:vista_reserva' c.id %}');">Reservar</button>
+                        {%if request.user.categoria == '1' %}
+             <!--           <div>
+                            <button type="button" class="btn btn-primary" onclick="abrir_modal3('{% url 'users_app:vista_reserva'  %}');">Reservar</button>
+                            
                         </div>
+                        <br> -->
+                        <div>
+                            <a type="button" class="btn btn-primary" href="{% url 'users_app:cuidadores3' c.id %}">Reservar</a>
+                        </div> 
+                        {% endif%}
+
 
                     </div>
                 </div>

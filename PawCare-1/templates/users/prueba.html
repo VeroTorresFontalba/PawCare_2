@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+{% load static %}
+
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/tarjetacuidador.css' %}" type="text/css" rel="stylesheet">
+<script  src="{% static 'js/calificacion.js' %} "></script> 
+<script  src="{% static 'js/reserva.js' %} "></script> 
+
+  
+<div >
+    <a  class="fa-solid fa-caret-left fa-sm"  href="{% url 'users:cuidadores'  %}">Volver</a> 
+<div>
+
+ <div class="container">
+    
+
+<br>
+   
+    <!--  <a href="{% url 'admin_app:crear_colaborador' %}" class="btn btn-primary btn-info btn-info-hover">Agregar Colaborador</a> <br>-->
+    
+ 
+   <!-- <h5>{{c.nombres}}-{{c.apellidos}}</h5> -->
+    <h1>Agenda de reserva</h1>
+    {% for c in lista_cuidadores %}
+    <table class="table"> <br>
+        <thead>
+            <tr>
+             <!--   <th>Nombre del Cuidador</th> -->
+                <th>Dia</th>
+                <th>Hora Inicio</th>
+                <th>Hora Fin</th>
+
+                {% comment %} <th>{{c.id}}</th>
+                <th>{{c.fechaReserva}}</th>
+                <th>{{c.fechaReserva}}</th> {% endcomment %}
+
+  
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+               {% comment %} <td>{{c.nombres}}-{{c.apellidos}}</td>  {% endcomment %}
+               <td>{{c.fechaReserva | upper}}</td>
+               <td>{{c.horas.horaInicio}}</td>
+               <td>{{c.horas.horaFin}}</td>
+               <td>{{c.horaFin}}</td>
+
+                {% comment %} {% for cronograma in c.cronograma.all %}
+                <td>{{ cronograma.fechaReserva  | upper }}</td>
+                <td>{{ cronograma.horas.horaInicio   | upper }}</td>
+                <td>{{ cronograma.horas.horaFin | upper }}</td>
+                {% endfor %} {% endcomment %}
+
+                <td><a href="#" class="btn btn-primary  btn-info btn-info-hover">Reservar</a></td>
+                 <!-- <td><a href="#" class="btn btn-danger">Eliminar</a></td> -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
