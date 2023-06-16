@@ -135,7 +135,14 @@ class Cronograma(models.Model):
      objects = HorasManager()
 
      def __str__(self):
-        return str(self.fechaReserva) + " - " +str(self.user)
+        return str(self.fechaReserva) + " - " +str(self.id)
+     
+class ReservaCliente(models.Model):
+    id= models.AutoField(primary_key=True)
+    cliente= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='Cliente', null=True)
+    cuidador=models.ForeignKey(Cronograma,on_delete=models.CASCADE,related_name='Cuidador',null=True)
+
+     
 
 # def create_user_cronograma(sender, instance, created, **kwargs):
 #     if created:
@@ -231,12 +238,16 @@ class Mascota(models.Model):
         return  str(self.nombre_de_mascota)+"/"+str(self.user)
 
                                          
-class ReservaCliente(models.Model):
-    id= models.AutoField(primary_key=True)
-    idCuidador=models.IntegerField(unique=True ,null=True, blank=True)
-    cuidador=models.CharField(max_length=16, null=True, blank=True)
-    idCliente=models.IntegerField(unique=True ,null=True, blank=True)
-    cliente=models.CharField(max_length=16, null=True, blank=True)
-    idReserva= models.IntegerField(unique=True ,null=True, blank=True)
-    fechaReserva=models.DateField(null=True,blank=True)
-    estado=models.CharField(max_length=15,null=True,blank=True)  
+# class ReservaCliente(models.Model):
+#     id= models.AutoField(primary_key=True)
+#     idCuidador=models.IntegerField(unique=True ,null=True, blank=True)
+#     cuidador=models.CharField(max_length=16, null=True, blank=True)
+#     idCliente=models.IntegerField(unique=True ,null=True, blank=True)
+#     cliente=models.CharField(max_length=16, null=True, blank=True)
+#     idReserva= models.IntegerField(unique=True ,null=True, blank=True)
+#     fechaReserva=models.DateField(null=True,blank=True)
+#     estado=models.CharField(max_length=15,null=True,blank=True)  
+
+
+    
+

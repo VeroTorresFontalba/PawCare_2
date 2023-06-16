@@ -327,6 +327,14 @@ class CronogramaForm(forms.ModelForm):
                 }
              ),
         }
+    # horas = forms.ModelMultipleChoiceField(
+    #      queryset= None,
+    #      required=False,
+    #      widget=forms.CheckboxSelectMultiple()
+    # )
+    # def __init__(self,*args,**kwargs):
+    #      super(CronogramaForm, self).__init__(*args,**kwargs)
+    #      self.fields['horas'].queryset = Hora.objects.all() 
 
 
 

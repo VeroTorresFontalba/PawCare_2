@@ -1,7 +1,9 @@
 from django.db import models
 from django.db.models import Q
 
-from django.contrib.auth.models import BaseUserManager,AbstractBaseUser ,PermissionsMixin 
+from django.contrib.auth.models import BaseUserManager,AbstractBaseUser ,PermissionsMixin
+
+
 
 class UserManager(BaseUserManager,models.Manager):
 
@@ -31,6 +33,15 @@ class UserManager(BaseUserManager,models.Manager):
             categoria = 2 
         )
     
+    def listar_cuidadores_user(self,usuario):
+   
+        return self.filter(
+            categoria = 2,
+            user=usuario,
+        )
+    
+
+    
 
     
 class MascotaManager(models.Manager):
@@ -48,6 +59,15 @@ class HorasManager(models.Manager):
         return self.filter(
             user=usuario,
         )
+    
+    def listar_cuidadores_horas(self,horas):
+   
+        return self.filter(
+            user__id=horas
+        ).order_by('fechaReserva')
+    
+
+
 
 
 
