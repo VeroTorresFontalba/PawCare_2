@@ -16,6 +16,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login, logout
 from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 
+from django.core.mail import send_mail
+
 from django.views.generic import (
     View,
     CreateView,
@@ -362,3 +364,27 @@ class EspecieDeleteView(LoginRequiredMixin,DeleteView):
     model = Especies
     success_url=reverse_lazy('users_app:especie_admin')
     login_url = reverse_lazy('users_app:user_login')
+
+
+def send_email_cuidador(request):
+    subject = "Confirmación Reserva"
+    message = "Su hora con fecha:.... ha sido reservada con exito por:...."
+    from_email = "pawcare3@gmail.com"
+
+    user = request.user
+    recipient_list = [ user.email ]
+    
+    send_mail (subject , message, from_email, recipient_list)
+
+
+def send_email_cliente(request):
+    subject = "Confirmación Reserva"
+    message = "Su hora con fecha:.... , con:... ha sido reservada con exito."
+    from_email = "pawcare3@gmail.com"
+    
+    user = get_user_model(User, username=username)
+    recipient_list = [ user.email ]
+    
+    send_mail (subject , message, from_email, recipient_list)
+
+    return HttpResponse("Notificación fue enviada con exito")

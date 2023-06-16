@@ -26,7 +26,7 @@ urlpatterns = [
     path('mascota_eliminar/<int:pk>', MascotaDeleteView.as_view(),name='mascota_eliminar'),
     path('update/<int:pk>', PerfilUpdateView.as_view(),name='update'),
     path('servicios/', ListCuidadores.as_view(),name='cuidadores'),
-    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html', form_class=UserPasswordResetForm), name='password_reset'),
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html', form_class=UserPasswordResetForm, html_email_template_name ='users/password_reset_email.html'), name='password_reset'),
     path('api/mascota/por-usuario/', ListMascotaUser.as_view(),name='mascota-mascota-by-user'),
     path('vista_reserva/<int:pk>',ClienteResevarView.as_view(), name= 'vista_reserva'),
 
