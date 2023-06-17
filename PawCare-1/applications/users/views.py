@@ -15,7 +15,8 @@ User = get_user_model()
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login, logout
 from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
-
+from django.db.models import Q
+from django.db.models import Subquery
 from django.views.generic import (
     View,
     CreateView,
@@ -34,8 +35,9 @@ from .serializers import MascotaSerializers
 from .forms import CronogramaForm, MascotaForm, UserRegisterForm, LoginForm,PerfilForm,ServiciosForm ,EspeciesForm ,ReservaForm
 # , ServiciosForm ,PerfilForm,EditarProfileForm, 
 
-from .models import User,Profile,Cronograma ,Mascota ,Servicio,ReservaCliente,Hora, Especies 
+from .models import User,Profile,Cronograma ,Mascota ,Servicio,ReservaCliente,Hora, Especies, EstadoReserva
 #, Servicio , 
+
 
 
 
@@ -179,6 +181,15 @@ class CalendarioView(LoginRequiredMixin,ListView):
     def get_queryset(self):
         usuario= self.request.user
         return Cronograma.objects.horas_por_user(usuario)
+        #estado_disponible = EstadoReserva.objects.get(pk=1)
+        #reservas = Cronograma.objects.filter(
+        #    user = usuario,
+        #    estado = estado_disponible
+        #).values('horas__pk')
+
+        #horas_reservadas = [reserva['horas__pk'] for reserva in reservas]
+        #return Hora.objects.exclude(pk__in = horas_reservadas)
+        
 
 class Addhoras(LoginRequiredMixin,FormView):
     template_name='users/horas.html'
@@ -411,3 +422,31 @@ class EspecieDeleteView(LoginRequiredMixin,DeleteView):
     model = Especies
     success_url=reverse_lazy('users_app:especie_admin')
     login_url = reverse_lazy('users_app:user_login')
+
+def reservar_cuidador(request, cronograma_id):
+    cronograma = Cronograma.objects.get(id=cronograma_id)
+
+    estado_reservada = EstadoReserva.objects.get(pk=2) #reservada id 2
+    cronograma.estado = estado_reservada
+
+    cronograma.save()
+
+    reserva = ReservaCliente()
+    reserva.idCronograma = cronograma
+    reserva.idCliente = request.user.id
+    reserva.idCuidador = cronograma.user.id
+    reserva.correocliente = cronograma.user.email
+    reserva.correocuidaor = request.user.email
+    reserva.nombreCliente = request.user.get_full_name()
+    reserva.nombreCuidador = cronograma.user.get_full_name()
+    reserva.fechareserva = cronograma.fechaReserva
+    reserva.horasInicio = cronograma.horas.horaInicio
+    reserva.horasFin = cronograma.horas.horaFin
+
+
+
+    reserva.save()
+
+   # return redirect('users_app:reservar_cuidador', cronograma_id)
+
+    return redirect(request.META.get('HTTP_REFERER', ''))
