@@ -31,11 +31,11 @@ from django.views.generic.edit import (
 
 from .serializers import MascotaSerializers
 
-from .forms import CronogramaForm, MascotaForm, UserRegisterForm, LoginForm,PerfilForm,ServiciosForm ,EspeciesForm
-# , ServiciosForm ,PerfilForm,EditarProfileForm,
+from .forms import CronogramaForm, MascotaForm, UserRegisterForm, LoginForm,PerfilForm,ServiciosForm ,EspeciesForm ,ReservaForm
+# , ServiciosForm ,PerfilForm,EditarProfileForm, 
 
-from .models import User,Profile,Cronograma ,Mascota ,Servicio,ReservaCliente,Hora, Especies
-#, Servicio ,
+from .models import User,Profile,Cronograma ,Mascota ,Servicio,ReservaCliente,Hora, Especies 
+#, Servicio , 
 
 
 
@@ -61,6 +61,29 @@ class UserRegisterView(FormView):
         )
 
         return super(UserRegisterView, self).form_valid(form)
+    
+
+class ReservaRegisterView(FormView):
+    template_name='users/prueba.html'
+    form_class=ReservaForm
+    success_url=reverse_lazy('users_app:cuidadores')
+
+    def form_valid(self, form ):
+
+        ReservaCliente.objects.create_user(
+            correocuidaor=form.cleaned_data['correocuidaor'],
+            correocliente=form.cleaned_data['correocliente'],
+            idCuidador=form.cleaned_data['idCuidador'],
+            idCliente = form.cleaned_data['idCliente'],
+            nombreCliente = form.cleaned_data['nombreCliente'],
+            nombreCuidador = form.cleaned_data['nombreCuidador'],
+            fechareserva = form.cleaned_data['fechareserva'],
+            horasInicio = form.cleaned_data['horasInicio'],
+            horasFin = form.cleaned_data['horasFin'],
+            
+        )
+
+        return super(ReservaRegisterView, self).form_valid(form)
     
 class LoginUser(FormView):
     template_name='users/login.html'

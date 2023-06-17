@@ -29,7 +29,7 @@ urlpatterns = [
 
     path('servicios/<id>', ListCuidadores3.as_view(),name='cuidadores3'),
     
-
+    path('servicios/<id>', ReservaRegisterView.as_view(),name='cuidadores3'),
 
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html', form_class=UserPasswordResetForm), name='password_reset'),
     path('api/mascota/por-usuario/', ListMascotaUser.as_view(),name='mascota-mascota-by-user'),
