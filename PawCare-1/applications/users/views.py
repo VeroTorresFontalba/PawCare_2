@@ -15,6 +15,8 @@ User = get_user_model()
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login, logout
 from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
+from django.db.models import Q
+from django.db.models import Subquery
 
 from django.core.mail import send_mail
 
@@ -33,11 +35,12 @@ from django.views.generic.edit import (
 
 from .serializers import MascotaSerializers
 
-from .forms import CronogramaForm, MascotaForm, UserRegisterForm, LoginForm,PerfilForm,ServiciosForm ,EspeciesForm
-# , ServiciosForm ,PerfilForm,EditarProfileForm,
+from .forms import CronogramaForm, MascotaForm, UserRegisterForm, LoginForm,PerfilForm,ServiciosForm ,EspeciesForm ,ReservaForm
+# , ServiciosForm ,PerfilForm,EditarProfileForm, 
 
-from .models import User,Profile,Cronograma ,Mascota ,Servicio,ReservaCliente,Hora, Especies
-#, Servicio ,
+from .models import User,Profile,Cronograma ,Mascota ,Servicio,ReservaCliente,Hora, Especies, EstadoReserva
+#, Servicio , 
+
 
 
 
@@ -63,6 +66,29 @@ class UserRegisterView(FormView):
         )
 
         return super(UserRegisterView, self).form_valid(form)
+    
+
+class ReservaRegisterView(FormView):
+    template_name='users/prueba.html'
+    form_class=ReservaForm
+    success_url=reverse_lazy('users_app:cuidadores')
+
+    def form_valid(self, form ):
+
+        ReservaCliente.objects.create_user(
+            correocuidaor=form.cleaned_data['correocuidaor'],
+            correocliente=form.cleaned_data['correocliente'],
+            idCuidador=form.cleaned_data['idCuidador'],
+            idCliente = form.cleaned_data['idCliente'],
+            nombreCliente = form.cleaned_data['nombreCliente'],
+            nombreCuidador = form.cleaned_data['nombreCuidador'],
+            fechareserva = form.cleaned_data['fechareserva'],
+            horasInicio = form.cleaned_data['horasInicio'],
+            horasFin = form.cleaned_data['horasFin'],
+            
+        )
+
+        return super(ReservaRegisterView, self).form_valid(form)
     
 class LoginUser(FormView):
     template_name='users/login.html'
@@ -94,6 +120,29 @@ class ListCuidadores(LoginRequiredMixin,ListView):
 
     def get_queryset(self):
         return User.objects.listar_cuidadores()
+    
+
+# class ListCuidadores2(LoginRequiredMixin,ListView):
+#     model= User
+#     context_object_name= 'lista_cuidadores'
+#     template_name= 'users/vista_reserva.html'
+#     login_url = reverse_lazy('users_app:user_login')
+
+#     def get_queryset(self):
+     
+#         return User.objects.listar_cuidadores()
+    
+class ListCuidadores3(LoginRequiredMixin,ListView):
+    
+    context_object_name= 'lista_cuidadores'
+    template_name= 'users/prueba.html'
+    login_url = reverse_lazy('users_app:user_login')
+
+    def get_queryset(self):
+        return Cronograma.objects.listar_cuidadores_horas(21)
+     
+
+
     
 
 class PerfilDetailView(LoginRequiredMixin,DetailView):
@@ -135,6 +184,15 @@ class CalendarioView(LoginRequiredMixin,ListView):
     def get_queryset(self):
         usuario= self.request.user
         return Cronograma.objects.horas_por_user(usuario)
+        #estado_disponible = EstadoReserva.objects.get(pk=1)
+        #reservas = Cronograma.objects.filter(
+        #    user = usuario,
+        #    estado = estado_disponible
+        #).values('horas__pk')
+
+        #horas_reservadas = [reserva['horas__pk'] for reserva in reservas]
+        #return Hora.objects.exclude(pk__in = horas_reservadas)
+        
 
 class Addhoras(LoginRequiredMixin,FormView):
     template_name='users/horas.html'
@@ -147,6 +205,7 @@ class Addhoras(LoginRequiredMixin,FormView):
             user = self.request.user,
             fechaReserva=form.cleaned_data['fechaReserva'],
             horas=form.cleaned_data['horas'],
+            # horas= Hora.objects.all['horas'],
             
         )
         return super(Addhoras, self).form_valid(form)
@@ -220,6 +279,8 @@ class ClienteResevarView(LoginRequiredMixin,ListView):
     login_url = reverse_lazy('users_app:user_login')
     def get_queryset(self):
         return Cronograma.objects.all()
+    
+    
 
 
 #api de mascota
@@ -350,20 +411,49 @@ class ModificarEspecie_admin(LoginRequiredMixin,UpdateView):
     model= Especies
     form_class= EspeciesForm 
     template_name='administracion/especieModificar.html'
-    success_url =reverse_lazy('users_app:especie_admin_s') 
+    success_url =reverse_lazy('users_app:especie_modificar') 
     login_url = reverse_lazy('users_app:user_login')
 
     def form_invalid(self, form):
         return super().form_invalid(form)
     
     def get_success_url(self):
-        return reverse_lazy('users_app:especie_admin_s',args=[self.object.id]) 
+        return reverse_lazy('users_app:especie_modificar',args=[self.object.id]) + '?ok'
 
 
 class EspecieDeleteView(LoginRequiredMixin,DeleteView):
     model = Especies
     success_url=reverse_lazy('users_app:especie_admin')
     login_url = reverse_lazy('users_app:user_login')
+
+def reservar_cuidador(request, cronograma_id):
+    cronograma = Cronograma.objects.get(id=cronograma_id)
+
+    estado_reservada = EstadoReserva.objects.get(pk=2) #reservada id 2
+    cronograma.estado = estado_reservada
+
+    cronograma.save()
+
+    reserva = ReservaCliente()
+    reserva.idCronograma = cronograma
+    reserva.idCliente = request.user.id
+    reserva.idCuidador = cronograma.user.id
+    reserva.correocliente = cronograma.user.email
+    reserva.correocuidaor = request.user.email
+    reserva.nombreCliente = request.user.get_full_name()
+    reserva.nombreCuidador = cronograma.user.get_full_name()
+    reserva.fechareserva = cronograma.fechaReserva
+    reserva.horasInicio = cronograma.horas.horaInicio
+    reserva.horasFin = cronograma.horas.horaFin
+
+
+
+    reserva.save()
+
+   # return redirect('users_app:reservar_cuidador', cronograma_id)
+
+    return redirect(request.META.get('HTTP_REFERER', ''))
+
 
 
 def send_email_cuidador(request):

@@ -6,8 +6,8 @@ from django.contrib.auth import views as auth_views
 from .views import *
 
 from .forms import UserPasswordResetForm
-
-from .views import *
+from .views import View
+from . import views
 app_name ="users_app"
 
 
@@ -26,9 +26,15 @@ urlpatterns = [
     path('mascota_eliminar/<int:pk>', MascotaDeleteView.as_view(),name='mascota_eliminar'),
     path('update/<int:pk>', PerfilUpdateView.as_view(),name='update'),
     path('servicios/', ListCuidadores.as_view(),name='cuidadores'),
+
+    path('servicios/<id>', ListCuidadores3.as_view(),name='cuidadores3'),
+    
+    path('servicios/<id>', ReservaRegisterView.as_view(),name='cuidadores3'),
+
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html', form_class=UserPasswordResetForm, html_email_template_name ='users/password_reset_email.html'), name='password_reset'),
     path('api/mascota/por-usuario/', ListMascotaUser.as_view(),name='mascota-mascota-by-user'),
-    path('vista_reserva/<int:pk>',ClienteResevarView.as_view(), name= 'vista_reserva'),
+
+    path('vista_reserva/',ClienteResevarView.as_view(), name= 'vista_reserva'),
 
     path('list_user_admin/', ListUser.as_view(), name='usuarios_admin'),
     path('list_user_admin/<id>', ListUser2.as_view(), name='usuarios_admin_s'),
@@ -46,6 +52,8 @@ urlpatterns = [
     path('crear_especie/',AddEspecies_admin.as_view(), name='crear_especie'),
     path('especie_modificar/<int:pk>', ModificarEspecie_admin.as_view(),name='especie_modificar'),
     path('especie_eliminar/<int:pk>', EspecieDeleteView.as_view(),name='especie_eliminar'),
+
+    path('reservar_cuidador/<int:cronograma_id>', views.reservar_cuidador, name='reservar_cuidador'),
 
 
 ]

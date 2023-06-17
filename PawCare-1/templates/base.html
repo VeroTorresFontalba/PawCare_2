@@ -67,12 +67,14 @@
 
                         {%if request.user.categoria == '2' %}
                         <li class= "nav-item">   
-                            <a class="nav-link"  href="{% url 'users:calendario'  %}">Cronograma</a>   
+                            
+                            <a class="nav-link fa-solid fa-calendar-days fa-2xl"  href="{% url 'users:calendario'  %}"></a>   
 
                         </li>
                         {% endif %}
+                      
 
-                        {%if request.user.categoria == '3' %}
+                         {%if request.user.categoria == '3' %} 
                         {% comment %} <li class= "nav-item">   
                             <a class="nav-link"  href="{% url 'admin_app:colaboradores_admin'  %}">Administracion </a>  
 
@@ -92,7 +94,7 @@
                             </div>
                           <div>
 
-                        {% endif %}
+                         {% endif %} 
 
                         {% else %}
 
