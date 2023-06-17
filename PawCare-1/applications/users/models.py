@@ -137,10 +137,7 @@ class Cronograma(models.Model):
      def __str__(self):
         return str(self.fechaReserva) + " - " +str(self.id)
      
-class ReservaCliente(models.Model):
-    id= models.AutoField(primary_key=True)
-    cliente= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='Cliente', null=True)
-    cuidador=models.ForeignKey(Cronograma,on_delete=models.CASCADE,related_name='Cuidador',null=True)
+
 
      
 
@@ -238,15 +235,30 @@ class Mascota(models.Model):
         return  str(self.nombre_de_mascota)+"/"+str(self.user)
 
                                          
-# class ReservaCliente(models.Model):
-#     id= models.AutoField(primary_key=True)
-#     idCuidador=models.IntegerField(unique=True ,null=True, blank=True)
-#     cuidador=models.CharField(max_length=16, null=True, blank=True)
-#     idCliente=models.IntegerField(unique=True ,null=True, blank=True)
-#     cliente=models.CharField(max_length=16, null=True, blank=True)
-#     idReserva= models.IntegerField(unique=True ,null=True, blank=True)
-#     fechaReserva=models.DateField(null=True,blank=True)
-#     estado=models.CharField(max_length=15,null=True,blank=True)  
+class ReservaCliente(models.Model):
+    id= models.AutoField(primary_key=True)
+    correocuidaor=models.CharField(max_length=100,null=True, blank=True)
+    correocliente=models.CharField(max_length=100,null=True, blank=True)
+    idCuidador=models.CharField(max_length=100,null=True, blank=True)
+    idCliente=models.CharField(max_length=100, null=True, blank=True)
+    nombreCliente=models.CharField(max_length=100, null=True, blank=True)
+    nombreCuidador=models.CharField(max_length=100, null=True, blank=True)
+    fechareserva=models.CharField( max_length=100,null=True, blank=True)
+    horasInicio=models.CharField(max_length=100, null=True, blank=True)
+    horasFin=models.CharField( max_length=100,null=True, blank=True)
+
+
+    def __str__(self):
+        return  str(self.nombreCuidador)+"/"+str(self.nombreCliente)
+
+
+    # idCuidador=models.IntegerField(unique=True ,null=True, blank=True)
+    # cuidador=models.CharField(max_length=16, null=True, blank=True)
+    # idCliente=models.IntegerField(unique=True ,null=True, blank=True)
+    # cliente=models.CharField(max_length=16, null=True, blank=True)
+    # idReserva= models.IntegerField(unique=True ,null=True, blank=True)
+    # fechaReserva=models.DateField(null=True,blank=True)
+    # estado=models.CharField(max_length=15,null=True,blank=True)  
 
 
     

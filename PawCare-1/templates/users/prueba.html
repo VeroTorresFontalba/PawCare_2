@@ -13,46 +13,91 @@
     <a  class="fa-solid fa-caret-left fa-sm"  href="{% url 'users:cuidadores'  %}">Volver</a> 
 <div>
 
- <div class="container">
+<div class="container">
     
-
-<br>
-   
     <!--  <a href="{% url 'admin_app:crear_colaborador' %}" class="btn btn-primary btn-info btn-info-hover">Agregar Colaborador</a> <br>-->
     
  
    <!-- <h5>{{c.nombres}}-{{c.apellidos}}</h5> -->
+
+
+
+
     <h1>Agenda de reserva</h1>
-    {% for c in lista_cuidadores %}
-    <table class="table"> <br>
+
         <thead>
             <tr>
-             <!--   <th>Nombre del Cuidador</th> -->
+             <!--   <th>Nombre del Cuidador</th> 
+                <th>Id_cronograma_cuidador</th>
+                <th>Id_usuario_cuidador</th>
                 <th>Dia</th>
                 <th>Hora Inicio</th>
                 <th>Hora Fin</th>
+                <th>Correo Usuario Conectado</th>
+                <th>Correo Usuario Cuidador</th>
+                
 
-                {% comment %} <th>{{c.id}}</th>
-                <th>{{c.fechaReserva}}</th>
-                <th>{{c.fechaReserva}}</th> {% endcomment %}
+
+
 
   
-            </tr>
+            </tr> -->
         </thead>
+
+
+    {% for c in lista_cuidadores %}
+    <table class="table"> <br>
+
+
+
+
+        <form id="formulario_hidden" action="#" method="POST">
+            {% csrf_token %}
+
+            
+
+             <input type="hidden" value="{{c.id| upper }}"> 
+            <input type="hidden" value="{{c.user.id| upper }}">
+            <input type="hidden" value="{{c.fechaReserva| upper }}">
+            <input type="hidden" value="{{c.horas.horaInicio| upper }}">
+            <input type="hidden" value="{{c.horas.horaFin| upper }}">
+            <input type="hidden" value="{{c.horaFin| upper }}"> 
+            
+            
+
+
+            <!-- <div class="d-grid">
+                <button type="submit" class="btn btn-info">Agendar</button>
+            </div> -->
+            
+        </form>  
+
         <tbody>
             
             <tr>
-               {% comment %} <td>{{c.nombres}}-{{c.apellidos}}</td>  {% endcomment %}
+                <!-- <form action="#" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </form> -->
+              
+
+               <td>{{c.id }}</td>
+               <td>{{c.user.id }}</td>
                <td>{{c.fechaReserva | upper}}</td>
                <td>{{c.horas.horaInicio}}</td>
                <td>{{c.horas.horaFin}}</td>
-               <td>{{c.horaFin}}</td>
+               <!-- <td>{{c.horaFin}}</td> 
+               <th>{{user.email}}</th>
+               <th>{{c.user.email}}</th>
 
-                {% comment %} {% for cronograma in c.cronograma.all %}
+                <!-{% for cronograma in c.cronograma.all %}
                 <td>{{ cronograma.fechaReserva  | upper }}</td>
                 <td>{{ cronograma.horas.horaInicio   | upper }}</td>
                 <td>{{ cronograma.horas.horaFin | upper }}</td>
-                {% endfor %} {% endcomment %}
+                {% endfor %} -->
+
+
+                
 
                 <td><a href="#" class="btn btn-primary  btn-info btn-info-hover">Reservar</a></td>
                  <!-- <td><a href="#" class="btn btn-danger">Eliminar</a></td> -->

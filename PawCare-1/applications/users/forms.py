@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm , SetPasswordForm
 # from .models import Cronograma, User, Servicio
 # from .models import User, Categoria
-from .models import User, Servicio, Profile,Mascota, Cronograma,Especies,Hora
-# , Categoria, Profile, 
+from .models import User, Servicio, Profile,Mascota, Cronograma,Especies,Hora,ReservaCliente
+# , Categoria, Profile, ReservaCliente
 
 
 
@@ -337,6 +337,92 @@ class CronogramaForm(forms.ModelForm):
     #      self.fields['horas'].queryset = Hora.objects.all() 
 
 
+class ReservaForm(forms.ModelForm):
+    class Meta:
+        model = ReservaCliente
+        fields = ('correocuidaor','correocliente','idCuidador','idCliente','nombreCliente','nombreCuidador','fechareserva','horasInicio','horasFin')
+        widgets = {
+               'correocuidaor':forms.TextInput(
+                    # attrs ={
+                    #      'class':'form-control',
+                    #      'type':'hidden'
+                         
+                    # }
+               ),
+                'correocliente':forms.TextInput(
+                    # attrs ={
+                    #      'class':'form-control',
+                    #       'type':'hidden'
+                         
+                    # }
+               ),
+                'idCuidador':forms.TextInput(
+                    # attrs ={
+                    #      'class':'form-control',
+                    #       'type':'hidden'
+                         
+                    # }
+               ),
+                'idCliente':forms.TextInput(
+                    # attrs ={
+                    #      'class':'form-control',
+                    #       'type':'hidden'
+                        
+                    # }
+               ),
+                'nombreCliente':forms.TextInput(
+                    # attrs ={
+                    #      'class':'form-control',
+                    #       'type':'hidden'
+                         
+                    # }
+               ),
+                'nombreCuidador':forms.TextInput(
+                    # attrs ={
+                    #      'class':'form-control',
+                    #       'type':'hidden'
+                         
+                    # }
+               ),
+                'fechareserva':forms.TextInput(
+                    # attrs ={
+                    #      'class':'form-control',
+                    #       'type':'hidden'
+                   
+                    # }
+               ),
+                'horasInicio':forms.TextInput(
+                    # attrs ={
+                    #      'class':'form-control',
+                    #       'type':'hidden'
+                         
+                    # }
+               ),
+                'horasFin':forms.TextInput(
+                #     attrs ={
+                #          'class':'form-control',
+                #           'type':'hidden'
+                         
+                #     }
+               ),
 
+        }
+
+
+        #           widgets = {
+        #        'id':forms.TextInput(
+        #             attrs ={
+        #                  'class':'form-control',
+
+        #                  'placeholder':'Ingrese el numero de la nueva especie'
+        #             }
+        #        ),
+        #        'nombre':forms.TextInput(
+        #             attrs={
+        #                  'class':'form-control',
+        #                  'placeholder':'Ingrese el nombre de la nueva especie'
+        #             }
+        #        ),
+        #   }
 
 
