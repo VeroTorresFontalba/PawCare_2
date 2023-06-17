@@ -6,8 +6,8 @@ from django.contrib.auth import views as auth_views
 from .views import *
 
 from .forms import UserPasswordResetForm
-
-from .views import *
+from .views import View
+from . import views
 app_name ="users_app"
 
 
@@ -52,6 +52,8 @@ urlpatterns = [
     path('crear_especie/',AddEspecies_admin.as_view(), name='crear_especie'),
     path('especie_modificar/<int:pk>', ModificarEspecie_admin.as_view(),name='especie_modificar'),
     path('especie_eliminar/<int:pk>', EspecieDeleteView.as_view(),name='especie_eliminar'),
+
+    path('reservar_cuidador/<int:cronograma_id>', views.reservar_cuidador, name='reservar_cuidador'),
 
 
 ]

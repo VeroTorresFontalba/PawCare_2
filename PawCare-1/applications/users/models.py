@@ -237,6 +237,7 @@ class Mascota(models.Model):
                                          
 class ReservaCliente(models.Model):
     id= models.AutoField(primary_key=True)
+    idCronograma = models.ForeignKey(Cronograma, on_delete=models.CASCADE,related_name='reservas',null=True,blank=True)
     correocuidaor=models.CharField(max_length=100,null=True, blank=True)
     correocliente=models.CharField(max_length=100,null=True, blank=True)
     idCuidador=models.CharField(max_length=100,null=True, blank=True)
