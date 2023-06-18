@@ -11,10 +11,10 @@ from django.views.generic.base import TemplateView
 from .models import Colaboradores
 from .forms import ColaboradorForm
 # Create your views here.
-class ListColaboradores(LoginRequiredMixin,ListView):
+class ListColaboradores(ListView):
     context_object_name= 'lista_colaboradores'
     template_name= 'home/colab.html'
-    login_url = reverse_lazy('users_app:user_login')
+    
 
     def get_queryset(self):
         return Colaboradores.objects.listar_colaboradores()

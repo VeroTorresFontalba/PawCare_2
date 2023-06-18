@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+{% load static %}
+
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/tarjetacuidador.css' %}" type="text/css" rel="stylesheet">
+<script  src="{% static 'js/calificacion.js' %} "></script> 
+<script  src="{% static 'js/reserva.js' %} "></script> 
+
+  
+<div >
+    <a  class="fa-solid fa-caret-left fa-sm"  href="{% url 'users:cuidadores'  %}">Volver</a> 
+<div>
+
+<div class="container">
+    
+    <h1>Agenda de reserva</h1>
+
+
+
+
+    <table class="table"> <br>
+
+        <thead>
+            <tr>
+                <th>c.id</th> 
+                <th>c.user.id</th>
+                <th>c.fechareserva</th>
+                <th>c.horas.horainicio</th>
+                <th>c.horas.horafin</th>
+            </tr> 
+        </thead>
+
+
+        {% for c in lista_cuidadores %}
+       <!-- <form id="formulario_hidden" action="#" method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{c.id| upper }}"> 
+            <input type="hidden" value="{{c.user.id| upper }}">
+            <input type="hidden" value="{{c.fechaReserva| upper }}">
+            <input type="hidden" value="{{c.horas.horaInicio| upper }}">
+            <input type="hidden" value="{{c.horas.horaFin| upper }}">
+            <input type="hidden" value="{{c.horaFin| upper }}"> 
+            
+        </form> --> 
+
+        <tbody>
+            
+            <tr>
+               <td>{{c.id }}</td>
+               <td>{{c.user.id }}</td>
+               <td>{{c.fechaReserva | upper}}</td>
+               <td>{{c.horas.horaInicio}}</td>
+               <td>{{c.horas.horaFin}}</td>
+               <!-- <td>{{c.horaFin}}</td> 
+               <th>{{user.email}}</th>
+               <th>{{c.user.email}}</th>
+
+                <!-{% for cronograma in c.cronograma.all %}
+                <td>{{ cronograma.fechaReserva  | upper }}</td>
+                <td>{{ cronograma.horas.horaInicio   | upper }}</td>
+                <td>{{ cronograma.horas.horaFin | upper }}</td>
+                {% endfor %} -->
+
+
+                
+
+                <td><a href="{% url 'users_app:reservar_cuidador' cronograma_id=c.id %}" class="btn btn-primary  btn-info btn-info-hover">Reservar</a></td>
+                 <!-- <td><a href="#" class="btn btn-danger">Eliminar</a></td> -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
