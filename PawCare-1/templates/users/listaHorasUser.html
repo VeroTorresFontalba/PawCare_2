@@ -29,7 +29,7 @@
                           <div class="timetable-item-time">{{hora.horasInicio}} - {{hora.horasFin}}</div>
                           <div class="timetable-item-name">{{hora.nombreCuidador}}</div>
                         <!--  <div class="timetable-item-name">{{hora}}</div> aqui tiene que ir el servicio que escogio -->
-                          <td><a href="#" class="btn btn-primary  btn-info btn-info-hover">Realizado</a></td>
+                          <td><a href="{% url 'users_app:finalizar_reserva' idReserva=hora.id %}" class="btn btn-primary  btn-info btn-info-hover">Realizado</a></td>
                           <td><a href="{% url 'users_app:cancelar_cuidador' idReserva=hora.id %}" class="btn btn-danger  btn-danger btn-danger-hover">Cancelar Hora</a></td> 
             
 

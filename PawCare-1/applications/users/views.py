@@ -499,3 +499,18 @@ def cancelar_cuidador(request, idReserva):
 
     return redirect(request.META.get('HTTP_REFERER', ''))
 
+
+def finalizar_reserva(request, idReserva):
+    try:
+        reserva = ReservaCliente.objects.get(id=idReserva)
+    except ReservaCliente.DoesNotExist:
+        return HttpResponse("La reserva de cliente no existe.")
+
+    cronograma = reserva.idCronograma  # Accede al objeto de cronograma asociado a la reserva
+
+    estado_realizado = EstadoReserva.objects.get(pk=4)  # Realizado id 4
+    cronograma.estado = estado_realizado
+    cronograma.save()
+
+    return redirect(request.META.get('HTTP_REFERER', ''))
+

@@ -56,6 +56,7 @@ urlpatterns = [
     path('reservar_cuidador/<int:cronograma_id>', views.reservar_cuidador, name='reservar_cuidador'),
     path('list_horas_user/', HorasporUserList.as_view(), name='horas_user'),
     path('cancelar_cuidador/<int:idReserva>', views.cancelar_cuidador, name='cancelar_cuidador'),
+    path('finalizar_reserva/<int:idReserva>', views.finalizar_reserva, name='finalizar_reserva'),
 
 
 ]
