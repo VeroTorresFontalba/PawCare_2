@@ -60,11 +60,33 @@
                             <a type="button" class="btn btn-outline-danger me-2"  href="{% url 'users_app:user_logout' %}">Cerrar Sesión</a>
                         </li>
 
-                        <li class= "nav-item">   
+    <!--                    <li class= "nav-item">   
                             <a class="nav-link"  href="{% url 'users:profile' user.username %}">Bienvenido {{user.username | upper}} :)</a>   
 
-                        </li>
+                        </li> -->
 
+                        <div class="btn-group" >
+                            <div class="dropdown">
+                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                    Bienvenido {{user.username | upper}} :)
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class=" resaltar1 nav-link dropdown-item fa-solid fa-user" href="{% url 'users:profile' user.username  %}">Mi Perfil</a></li>
+                                
+                                
+                                {%if request.user.categoria == '1' %}
+                                
+                                <li><a class="resaltar1 nav-link dropdown-item fa-solid fa-paw" href="{% url 'users:mascota'  %}">Mis Mascotas</a></li>
+                               
+                                <li><a class="resaltar1 nav-link dropdown-item fa-solid fa-clock " href="{% url 'users:horas_user'  %}">Mis reservas</a></li>
+                                
+                                {% endif %}   
+                                </ul>
+                                
+                                
+                            </div>
+                          <div>
+                          
                         {%if request.user.categoria == '2' %}
                         <li class= "nav-item">   
                             
@@ -81,15 +103,18 @@
                         </li> {% endcomment %}
                         <div class="btn-group" >
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                                     Administracion
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="{% url 'admin_app:colaboradores_admin'  %}">Ad_Colaboradores</a></li>
-                                <li><a class="dropdown-item" href="{% url 'users_app:usuarios_admin'  %}">Ad_Usuarios</a></li>
-                                <li><a class="dropdown-item" href="{% url 'users_app:servicios_admin'  %}">Ad_Servicios</a></li>
-                                <li><a class="dropdown-item" href="{% url 'users_app:especie_admin'  %}">Ad_Especies</a></li>
-
+                                <li><a class="resaltar1 nav-link dropdown-item fa-solid fa-user-group" href="{% url 'admin_app:colaboradores_admin'  %}">Admin_Colaboradores</a></li>
+                
+                                <li><a class="resaltar1 nav-link dropdown-item fa-solid fa-user-group" href="{% url 'users_app:usuarios_admin'  %}">Admin_Usuarios</a></li>
+                                
+                                <li><a class="resaltar1 nav-link dropdown-item  fa-solid fa-bell-concierge" href="{% url 'users_app:servicios_admin'  %}">Admin_Servicios</a></li>
+                                
+                                <li><a class="resaltar1 nav-link dropdown-item fa-solid fa-dog" href="{% url 'users_app:especie_admin'  %}">Admin_Especies</a></li>
+                             
                                 </ul>
                             </div>
                           <div>

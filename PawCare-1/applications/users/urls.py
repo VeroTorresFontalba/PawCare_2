@@ -54,6 +54,9 @@ urlpatterns = [
     path('especie_eliminar/<int:pk>', EspecieDeleteView.as_view(),name='especie_eliminar'),
 
     path('reservar_cuidador/<int:cronograma_id>', views.reservar_cuidador, name='reservar_cuidador'),
+    path('list_horas_user/', HorasporUserList.as_view(), name='horas_user'),
+    path('cancelar_cuidador/<int:idReserva>', views.cancelar_cuidador, name='cancelar_cuidador'),
+    path('finalizar_reserva/<int:idReserva>', views.finalizar_reserva, name='finalizar_reserva'),
     #path('rating_modal/', views.rating_modal , name='rating_modal'),
     path('rating_modal/', Calificacion.as_view() , name='rating_modal'),
 

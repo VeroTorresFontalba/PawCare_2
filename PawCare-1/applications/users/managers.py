@@ -63,11 +63,19 @@ class HorasManager(models.Manager):
     def listar_cuidadores_horas(self,horas):
    
         return self.filter(
-            user__id=horas
+            user__id=horas,
+            estado = 1,
         ).order_by('fechaReserva')
     
 
+class HorasSolicitadasManager(models.Manager):
 
+    def horas_por_user_solicitadas(self,usuario):
+
+        return self.filter(
+            clienteusername=usuario,
+            idCronograma__estado=2
+        ).order_by('-id')
 
 
 

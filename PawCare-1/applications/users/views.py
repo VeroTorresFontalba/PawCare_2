@@ -423,8 +423,26 @@ class EspecieDeleteView(LoginRequiredMixin,DeleteView):
     success_url=reverse_lazy('users_app:especie_admin')
     login_url = reverse_lazy('users_app:user_login')
 
+# def mi_funcion(pk):
+#     # Obtener objeto del PrimerModelo usando la clave primaria (pk)
+#     primer_objeto = get_object_or_404(PrimerModelo, pk=pk)
+    
+#     # Obtener la clave primaria del objeto
+#     clave_primaria = primer_objeto.pk
+    
+#     # Crear un nuevo objeto del SegundoModelo
+#     segundo_objeto = SegundoModelo()
+    
+#     # Establecer la clave primaria en el nuevo objeto del SegundoModelo
+#     segundo_objeto.clave_foranea = clave_primaria
+    
+#     # Guardar el nuevo objeto del SegundoModelo
+#     segundo_objeto.save()    
+
 def reservar_cuidador(request, cronograma_id):
+
     cronograma = Cronograma.objects.get(id=cronograma_id)
+    
 
     estado_reservada = EstadoReserva.objects.get(pk=2) #reservada id 2
     cronograma.estado = estado_reservada
@@ -432,6 +450,8 @@ def reservar_cuidador(request, cronograma_id):
     cronograma.save()
 
     reserva = ReservaCliente()
+    
+    reserva.clienteusername=request.user
     reserva.idCronograma = cronograma
     reserva.idCliente = request.user.id
     reserva.idCuidador = cronograma.user.id
@@ -446,10 +466,54 @@ def reservar_cuidador(request, cronograma_id):
 
 
     reserva.save()
+    print(reserva.idCronograma)
 
-   # return redirect('users_app:reservar_cuidador', cronograma_id)
+
 
     return redirect(request.META.get('HTTP_REFERER', ''))
+   # return redirect('users_app:reservar_cuidador', cronograma_id)
+
+
+class HorasporUserList(ListView):
+    context_object_name='horas_por_user'
+    template_name='users/listaHorasUser.html'
+
+    def get_queryset(self):
+        usuario= self.request.user
+        return ReservaCliente.objects.horas_por_user_solicitadas(usuario)
+    
+
+
+
+def cancelar_cuidador(request, idReserva):
+    try:
+        reserva = ReservaCliente.objects.get(id=idReserva)
+    except ReservaCliente.DoesNotExist:
+        return HttpResponse("La reserva de cliente no existe.")
+
+    cronograma = reserva.idCronograma  # Accede al objeto de cronograma asociado a la reserva
+
+    estado_cancelado = EstadoReserva.objects.get(pk=3)  # Cancelado id 3
+    cronograma.estado = estado_cancelado
+    cronograma.save()
+
+    return redirect(request.META.get('HTTP_REFERER', ''))
+
+
+def finalizar_reserva(request, idReserva):
+    try:
+        reserva = ReservaCliente.objects.get(id=idReserva)
+    except ReservaCliente.DoesNotExist:
+        return HttpResponse("La reserva de cliente no existe.")
+
+    cronograma = reserva.idCronograma  # Accede al objeto de cronograma asociado a la reserva
+
+    estado_realizado = EstadoReserva.objects.get(pk=4)  # Realizado id 4
+    cronograma.estado = estado_realizado
+    cronograma.save()
+
+    return redirect(request.META.get('HTTP_REFERER', ''))
+
 
 
 
