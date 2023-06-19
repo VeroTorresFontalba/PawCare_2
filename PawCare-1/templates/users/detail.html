@@ -5,6 +5,8 @@
 
 {% load static %}
 <link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/rating.css' %}">
+
 <section style ="background-color: #fff;">
     <div class="container py-5">
       <div class="row">
@@ -25,7 +27,14 @@
                   <a class="btn btn-info float-end" href="{% url 'users:mascota'  %}">Mascotas</a>
                </a>  
                {% endif %}
+
+               <div>
+                  <a href="nav-link" href="#">
+                    <!--<a class="btn btn-info float-end" value="4" id="open-rating-modal" href="" onclick="abrir_modal_ratings('{% url 'users_app:rating_modal'%}')">Modal</a>-->
+                  </a>
+                  <button type="button" class="btn btn-primary" onclick="abrir_modal_ratings('{% url 'users_app:rating_modal' %} ')">MODAL</button>
                 
+               </div>
 
               </div>
             </div>
@@ -113,11 +122,6 @@
                   </div>
                 </div>
               </div>
-
-{% comment %} Aqui van las mascotas {% endcomment %}
- 
-
-
                       </div>
                       
                       </div>
@@ -128,11 +132,41 @@
             </div>
           </div>
         </div>
+        <div id="div_modal_rating"> 
+          <div class="modal fade" id="myModalRatings" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Calificar Servicio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="stars">
+                                   <!-- <span class="star" data-rating="1"><i class="far fa-star"></i></span>
+                                    <span class="star" data-rating="2"><i class="far fa-star"></i></span>
+                                    <span class="star" data-rating="3"><i class="far fa-star"></i></span>
+                                    <span class="star" data-rating="4"><i class="far fa-star"></i></span>
+                                    <span class="star" data-rating="5"><i class="far fa-star"></i></span>-->
+                                </div>
+                                  <button id="save-rating" class="btn btn-primary">Guardar Calificación</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div>
       </div>
+
     </div>
+
+
   </section>
 
-
+  <script src="{% static 'js/rating.js' %}"></script>
 
   
 

@@ -450,3 +450,44 @@ def reservar_cuidador(request, cronograma_id):
    # return redirect('users_app:reservar_cuidador', cronograma_id)
 
     return redirect(request.META.get('HTTP_REFERER', ''))
+
+
+
+
+#def rating_modal(request):
+   # if request.method == 'POST':
+    #    rating = request.POST.get('rating')
+        # Aquí puedes realizar la lógica para guardar la calificación en tu modelo
+        # Por ejemplo, guardarla en un objeto Rating asociado al usuario actual
+
+        # Retornar una respuesta JSON indicando que la calificación se ha guardado exitosamente
+       # return JsonResponse({'message': 'Calificación guardada exitosamente'})
+
+    # En caso de que la petición no sea de tipo POST, puedes realizar alguna acción adicional
+    # como renderizar una plantilla para el modal de calificación
+   # return JsonResponse({'message': 'Método no permitido'})
+   #pass
+
+def rating_modal(request):
+    if request.method == 'POST':
+        # Aquí puedes procesar la calificación enviada por el usuario
+        # y realizar cualquier otra acción necesaria
+        #print('Calificación guardada:', request.POST.get('rating'))
+        print('Estoy en views')
+    return HttpResponse()  # Devuelve una respuesta vacía
+
+class Calificacion(CreateView):
+    model= ReservaCliente
+    form_class= ReservaForm 
+    template_name='users/rating_modal.html'
+    # template_name='users/mascota.html'
+    success_url=reverse_lazy('users_app:profile')
+    login_url = reverse_lazy('users_app:user_login')
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('users_app:profile',args=[self.object.id]) 
+
+

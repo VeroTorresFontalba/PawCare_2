@@ -340,7 +340,7 @@ class CronogramaForm(forms.ModelForm):
 class ReservaForm(forms.ModelForm):
     class Meta:
         model = ReservaCliente
-        fields = ('correocuidaor','correocliente','idCuidador','idCliente','nombreCliente','nombreCuidador','fechareserva','horasInicio','horasFin')
+        fields = ('correocuidaor','correocliente','idCuidador','idCliente','nombreCliente','nombreCuidador','fechareserva','horasInicio','horasFin','calificacion')
         widgets = {
                'correocuidaor':forms.TextInput(
                     # attrs ={
@@ -405,6 +405,13 @@ class ReservaForm(forms.ModelForm):
                          
                 #     }
                ),
+                'calificacion' : forms.TextInput(
+                    attrs ={
+                          'class':'form-control',
+                #           'type':'hidden'
+                         
+                    }
+                )
 
         }
 

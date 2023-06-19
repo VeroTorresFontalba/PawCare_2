@@ -12,62 +12,57 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
-
-    <div class="container">
-        <div class="row">
-            <h2>Modificar Mascota {{object}}</h2> 
-        </div>
-        <br>
-
-            <div class="row">
-                <form method="POST" action="{% url 'users_app:mascota_modificar' object.id %}" id="formulario" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        {{ form.image.label }}
-                        {{ form.image }}
-                    </div>
-
-                    <div class="form-group">
-                        {{ form.nombre_de_mascota.label }}
-                        {{ form.nombre_de_mascota }}
-                    </div>
-                    
-
-                    <div class="form-group">
-                        {{ form.descripccion.label }}
-                        {{ form.descripccion }}
-                    </div>
-
-                    <div class="form-group">
-                    {{ form.chip.label }}
-                    {{ form.chip }}
+            <div class="container">
+                <div class="row">
+                    <h2>Modificar Mascota {{object}}</h2> 
                 </div>
-                <div class="form-group">
-                    {{ form.n_chip.label }}
-                    {{ form.n_chip }}
-                </div>
-                <div class="form-group">
-                    {{ form.especies.label }} 
-                    {{ form.especies }}
-                </div> 
+                <br>
 
-
-                    <br>
                     <div class="row">
-                        <div class="col-md">
-                            <div class="modal-footer">
-                            <input type="submit" class="btn btn-primary" value="Guardar cambios">
-                            <button class="btn btn-danger" type="button" data-bs-dismiss="modal" >Cancelar</button>
-                        </div>
-                            {% comment %} <a href="{% url 'admin_app:colaboradores_admin' id %}" class="btn btn-info">Volver</a> 
+                        <form method="POST" action="{% url 'users_app:mascota_modificar' object.id %}" id="formulario" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.image.label }}
+                                {{ form.image }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.nombre_de_mascota.label }}
+                                {{ form.nombre_de_mascota }}
+                            </div>
                             
+
+                            <div class="form-group">
+                                {{ form.descripccion.label }}
+                                {{ form.descripccion }}
+                            </div>
+
+                            <div class="form-group">
+                            {{ form.chip.label }}
+                            {{ form.chip }}
                         </div>
-                    </div> {% endcomment %}
-                    
-                </form>
+                        <div class="form-group">
+                            {{ form.n_chip.label }}
+                            {{ form.n_chip }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.especies.label }} 
+                            {{ form.especies }}
+                        </div> 
+
+
+                            <br>
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="modal-footer">
+                                    <input type="submit" class="btn btn-primary" value="Guardar cambios">
+                                    <button class="btn btn-danger" type="button" data-bs-dismiss="modal" >Cancelar</button>
+                                </div>
+                            </div> 
+                            
+                        </form>
+                    </div>
             </div>
-    </div>
             </div>
             
                 {% comment %} <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

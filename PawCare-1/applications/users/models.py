@@ -247,6 +247,7 @@ class ReservaCliente(models.Model):
     fechareserva=models.CharField( max_length=100,null=True, blank=True)
     horasInicio=models.CharField(max_length=100, null=True, blank=True)
     horasFin=models.CharField( max_length=100,null=True, blank=True)
+    calificacion=models.CharField(max_length=10, null=True, blank=True)
 
 
     def __str__(self):

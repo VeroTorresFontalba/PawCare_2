@@ -1,7 +1,3 @@
-$( document ).ready(function(){
-     console.log("hola")}
-);
-
 
 function abrir_modal_creacion(url) {
   // activarBoton();
