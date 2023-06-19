@@ -26,9 +26,12 @@ urlpatterns = [
     path('mascota_eliminar/<int:pk>', MascotaDeleteView.as_view(),name='mascota_eliminar'),
     path('update/<int:pk>', PerfilUpdateView.as_view(),name='update'),
     path('servicios/', ListCuidadores.as_view(),name='cuidadores'),
+
     path('servicios/<id>', ListCuidadores3.as_view(),name='cuidadores3'),
+    
     path('servicios/<id>', ReservaRegisterView.as_view(),name='cuidadores3'),
-    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html', form_class=UserPasswordResetForm, html_email_template_name ='users/password_reset_email.html'), name='password_reset'),
+
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html', form_class=UserPasswordResetForm), name='password_reset'),
     path('api/mascota/por-usuario/', ListMascotaUser.as_view(),name='mascota-mascota-by-user'),
 
     path('vista_reserva/',ClienteResevarView.as_view(), name= 'vista_reserva'),
@@ -51,6 +54,12 @@ urlpatterns = [
     path('especie_eliminar/<int:pk>', EspecieDeleteView.as_view(),name='especie_eliminar'),
 
     path('reservar_cuidador/<int:cronograma_id>', views.reservar_cuidador, name='reservar_cuidador'),
+
+    path('list_horas_user/', HorasporUserList.as_view(), name='horas_user'),
+
+    # path('cancelar_cuidador/<int:cronograma_id>', views.cancelar_cuidador, name='cancelar_cuidador'),
+
+    path('cancelar_cuidador/<int:idReserva>', views.cancelar_cuidador, name='cancelar_cuidador'),
 
 
 ]

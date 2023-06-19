@@ -53,6 +53,12 @@
                <td>{{c.fechaReserva | upper}}</td>
                <td>{{c.horas.horaInicio}}</td>
                <td>{{c.horas.horaFin}}</td>
+
+
+
+
+
+
                <!-- <td>{{c.horaFin}}</td> 
                <th>{{user.email}}</th>
                <th>{{c.user.email}}</th>
@@ -66,13 +72,14 @@
 
                 
 
-                <td><a href="{% url 'users_app:reservar_cuidador' cronograma_id=c.id %}" class="btn btn-primary  btn-info btn-info-hover">Reservar</a></td>
+                <td><a href="{% url 'users_app:reservar_cuidador' cronograma_id=c.id %}"  class="btn btn-primary  btn-info btn-info-hover">Reservar</a></td>
                  <!-- <td><a href="#" class="btn btn-danger">Eliminar</a></td> -->
+
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
 
-
+<script  src="{% static 'js/reserva.js' %} "></script> 
 {% endblock %}

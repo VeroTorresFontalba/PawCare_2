@@ -17,9 +17,6 @@ from django.contrib.auth import authenticate,login, logout
 from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from django.db.models import Q
 from django.db.models import Subquery
-
-from django.core.mail import send_mail
-
 from django.views.generic import (
     View,
     CreateView,
@@ -426,8 +423,26 @@ class EspecieDeleteView(LoginRequiredMixin,DeleteView):
     success_url=reverse_lazy('users_app:especie_admin')
     login_url = reverse_lazy('users_app:user_login')
 
+# def mi_funcion(pk):
+#     # Obtener objeto del PrimerModelo usando la clave primaria (pk)
+#     primer_objeto = get_object_or_404(PrimerModelo, pk=pk)
+    
+#     # Obtener la clave primaria del objeto
+#     clave_primaria = primer_objeto.pk
+    
+#     # Crear un nuevo objeto del SegundoModelo
+#     segundo_objeto = SegundoModelo()
+    
+#     # Establecer la clave primaria en el nuevo objeto del SegundoModelo
+#     segundo_objeto.clave_foranea = clave_primaria
+    
+#     # Guardar el nuevo objeto del SegundoModelo
+#     segundo_objeto.save()    
+
 def reservar_cuidador(request, cronograma_id):
+
     cronograma = Cronograma.objects.get(id=cronograma_id)
+    
 
     estado_reservada = EstadoReserva.objects.get(pk=2) #reservada id 2
     cronograma.estado = estado_reservada
@@ -435,6 +450,8 @@ def reservar_cuidador(request, cronograma_id):
     cronograma.save()
 
     reserva = ReservaCliente()
+    
+    reserva.clienteusername=request.user
     reserva.idCronograma = cronograma
     reserva.idCliente = request.user.id
     reserva.idCuidador = cronograma.user.id
@@ -449,32 +466,93 @@ def reservar_cuidador(request, cronograma_id):
 
 
     reserva.save()
+    print(reserva.idCronograma)
 
+
+
+    return redirect(request.META.get('HTTP_REFERER', ''))
    # return redirect('users_app:reservar_cuidador', cronograma_id)
+
+
+class HorasporUserList(ListView):
+    context_object_name='horas_por_user'
+    template_name='users/listaHorasUser.html'
+
+    def get_queryset(self):
+        usuario= self.request.user
+        return ReservaCliente.objects.horas_por_user_solicitadas(usuario)
+    
+
+
+
+# def cancelar_cuidador(request, idReserva):
+   
+#  #   cronograma = Cronograma.objects.get(idCronograma=idCronograma)
+#     # reserva = ReservaCliente.objects.get(id=idReserva)
+#     cronograma = Cronograma.objects.get(id=idReserva)
+#     estado_cancelado = EstadoReserva.objects.get(pk=3) #cancelado id 3
+#     cronograma.estado = estado_cancelado
+
+#     cronograma.save()
+
+#     # reserva = ReservaCliente()
+    
+#     # reserva.clienteusername=request.user
+#     # reserva.idCronograma = cronograma
+#     # reserva.idCliente = request.user.id
+#     # reserva.idCuidador = cronograma.user.id
+#     # reserva.correocliente = cronograma.user.email
+#     # reserva.correocuidaor = request.user.email
+#     # reserva.nombreCliente = request.user.get_full_name()
+#     # reserva.nombreCuidador = cronograma.user.get_full_name()
+#     # reserva.fechareserva = cronograma.fechaReserva
+#     # reserva.horasInicio = cronograma.horas.horaInicio
+#     # reserva.horasFin = cronograma.horas.horaFin
+
+
+
+#     # reserva.save()
+
+
+
+#     return redirect(request.META.get('HTTP_REFERER', ''))
+
+def cancelar_cuidador(request, idReserva):
+
+    cronograma = Cronograma.objects.get(id=idReserva)
+
+    estado_cancelado = EstadoReserva.objects.get(pk=3) #Cancelado id 3
+    cronograma.estado = estado_cancelado
+
+    cronograma.save()
 
     return redirect(request.META.get('HTTP_REFERER', ''))
 
+    # cronograma = Cronograma.objects.get(id=cronograma_id)
+    # estado_reservada = EstadoReserva.objects.get(pk=3) #Cancelado id 3
+    # cronograma.estado = estado_reservada
+
+    # cronograma.save()
+
+    # return redirect(request.META.get('HTTP_REFERER', ''))
 
 
-def send_email_cuidador(request):
-    subject = "Confirmación Reserva"
-    message = "Su hora con fecha:.... ha sido reservada con exito por:...."
-    from_email = "pawcare3@gmail.com"
+#     print(reserva.idCronograma)
 
-    user = request.user
-    recipient_list = [ user.email ]
+    # reserva = ReservaCliente()
     
-    send_mail (subject , message, from_email, recipient_list)
+    # reserva.clienteusername=request.user
+    # reserva.idCronograma = cronograma
+    # reserva.idCliente = request.user.id
+    # reserva.idCuidador = cronograma.user.id
+    # reserva.correocliente = cronograma.user.email
+    # reserva.correocuidaor = request.user.email
+    # reserva.nombreCliente = request.user.get_full_name()
+    # reserva.nombreCuidador = cronograma.user.get_full_name()
+    # reserva.fechareserva = cronograma.fechaReserva
+    # reserva.horasInicio = cronograma.horas.horaInicio
+    # reserva.horasFin = cronograma.horas.horaFin
 
 
-def send_email_cliente(request):
-    subject = "Confirmación Reserva"
-    message = "Su hora con fecha:.... , con:... ha sido reservada con exito."
-    from_email = "pawcare3@gmail.com"
-    
-    user = get_user_model(User, username=username)
-    recipient_list = [ user.email ]
-    
-    send_mail (subject , message, from_email, recipient_list)
 
-    return HttpResponse("Notificación fue enviada con exito")
+    # reserva.save()
