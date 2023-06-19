@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser ,PermissionsMixin
 from django.db.models.signals import post_save 
 
-from .managers import UserManager ,MascotaManager,HorasManager
+from .managers import UserManager ,MascotaManager,HorasManager,HorasSolicitadasManager
 
 from applications.categoria.models import Categoria
 
@@ -113,7 +113,7 @@ class EstadoReserva(models.Model):
     id=models.AutoField(primary_key=True)
     reservaEstado= models.CharField(max_length=15)
     def __str__(self):
-        return self.reservaEstado 
+        return str(self.id) + "-" +str(self.reservaEstado) 
     
 class Hora(models.Model):
     id=models.AutoField(primary_key=True)
@@ -122,7 +122,7 @@ class Hora(models.Model):
     # estado= models.ForeignKey(EstadoReserva,on_delete=models.CASCADE,related_name='Estado',null=True,default=1)
 
     def __str__(self):
-        return  str(self.horaInicio) + " - " +str(self.horaFin) 
+        return  str(self.id) + " - " +str(self.horaInicio) + " - " +str(self.horaFin) 
     
 class Cronograma(models.Model):
      id= models.AutoField(primary_key=True)
@@ -135,7 +135,11 @@ class Cronograma(models.Model):
      objects = HorasManager()
 
      def __str__(self):
-        return str(self.fechaReserva) + " - " +str(self.user)
+        return str(self.fechaReserva) +"/"+ str(self.user)+"/"+ str(self.estado)
+     
+
+
+     
 
 # def create_user_cronograma(sender, instance, created, **kwargs):
 #     if created:
@@ -233,10 +237,32 @@ class Mascota(models.Model):
                                          
 class ReservaCliente(models.Model):
     id= models.AutoField(primary_key=True)
-    idCuidador=models.IntegerField(unique=True ,null=True, blank=True)
-    cuidador=models.CharField(max_length=16, null=True, blank=True)
-    idCliente=models.IntegerField(unique=True ,null=True, blank=True)
-    cliente=models.CharField(max_length=16, null=True, blank=True)
-    idReserva= models.IntegerField(unique=True ,null=True, blank=True)
-    fechaReserva=models.DateField(null=True,blank=True)
-    estado=models.CharField(max_length=15,null=True,blank=True)  
+    clienteusername=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='Usuario',null=True,blank=True)
+    idCronograma = models.ForeignKey(Cronograma, on_delete=models.CASCADE,related_name='reservas',null=True,blank=True)
+    correocuidaor=models.CharField(max_length=100,null=True, blank=True)
+    correocliente=models.CharField(max_length=100,null=True, blank=True)
+    idCuidador=models.CharField(max_length=100,null=True, blank=True)
+    idCliente=models.CharField(max_length=100, null=True, blank=True)
+    nombreCliente=models.CharField(max_length=100, null=True, blank=True)
+    nombreCuidador=models.CharField(max_length=100, null=True, blank=True)
+    fechareserva=models.CharField( max_length=100,null=True, blank=True)
+    horasInicio=models.CharField(max_length=100, null=True, blank=True)
+    horasFin=models.CharField( max_length=100,null=True, blank=True)
+
+    objects = HorasSolicitadasManager()
+
+    def __str__(self):
+        return  str(self.nombreCuidador)+"/"+str(self.nombreCliente)
+
+#str(self.nombreCuidador)+"/"+str(self.nombreCliente)
+    # idCuidador=models.IntegerField(unique=True ,null=True, blank=True)
+    # cuidador=models.CharField(max_length=16, null=True, blank=True)
+    # idCliente=models.IntegerField(unique=True ,null=True, blank=True)
+    # cliente=models.CharField(max_length=16, null=True, blank=True)
+    # idReserva= models.IntegerField(unique=True ,null=True, blank=True)
+    # fechaReserva=models.DateField(null=True,blank=True)
+    # estado=models.CharField(max_length=15,null=True,blank=True)  
+
+
+    
+
