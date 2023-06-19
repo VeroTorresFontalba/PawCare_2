@@ -17,6 +17,7 @@ from django.contrib.auth import authenticate,login, logout
 from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from django.db.models import Q
 from django.db.models import Subquery
+from django.core.mail import send_mail
 from django.views.generic import (
     View,
     CreateView,
@@ -467,6 +468,19 @@ def reservar_cuidador(request, cronograma_id):
 
     reserva.save()
     print(reserva.idCronograma)
+
+    subject = "Confirmación Reserva"
+    message = "Su hora con fecha:.... ha sido reservada con exito por:...."
+    from_email = "pawcare3@gmail.com"
+    recipient_list = [reserva.correocliente]
+    send_mail (subject , message, from_email, recipient_list)
+
+    subject = "Confirmación Reserva"
+    message = "Su hora con fecha:.... , con:... ha sido reservada con exito."
+    from_email = "pawcare3@gmail.com" 
+    recipient_list = [reserva.correocuidaor]
+    
+    send_mail (subject , message, from_email, recipient_list)
 
 
 

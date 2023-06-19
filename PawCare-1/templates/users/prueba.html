@@ -9,13 +9,11 @@
 <script  src="{% static 'js/reserva.js' %} "></script> 
 
   
-<div >
-    <a  class="fa-solid fa-caret-left fa-sm"  href="{% url 'users:cuidadores'  %}">Volver</a> 
-<div>
+<br>
 
 <div class="container">
     
-    <h1>Agenda de reserva</h1>
+    <h1 class="titulo">Agenda de reserva</h1>
 
 
 
@@ -72,14 +70,41 @@
 
                 
 
-                <td><a href="{% url 'users_app:reservar_cuidador' cronograma_id=c.id %}"  class="btn btn-primary  btn-info btn-info-hover">Reservar</a></td>
+                <td><a href="{% url 'users_app:reservar_cuidador' cronograma_id=c.id %}" class="btn btn-primary btn-info btn-info-hover">Reservar</a></td>
                  <!-- <td><a href="#" class="btn btn-danger">Eliminar</a></td> -->
 
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    <div id="confirmarreserva"></div>
+    <a class=" btn btn-primary btn-info btn-info-hover" href="{% url 'home_app:servicios' %}">Volver</a>
+
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Launch static backdrop modal
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<br>
 
 <script  src="{% static 'js/reserva.js' %} "></script> 
 {% endblock %}
