@@ -136,7 +136,10 @@ class ListCuidadores3(LoginRequiredMixin,ListView):
     login_url = reverse_lazy('users_app:user_login')
 
     def get_queryset(self):
-        return Cronograma.objects.listar_cuidadores_horas(21)
+        id = self.kwargs['id']
+        return Cronograma.objects.listar_cuidadores_horas(id)
+    
+
      
 
 

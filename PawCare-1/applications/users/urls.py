@@ -27,7 +27,7 @@ urlpatterns = [
     path('update/<int:pk>', PerfilUpdateView.as_view(),name='update'),
     path('servicios/', ListCuidadores.as_view(),name='cuidadores'),
 
-    path('servicios/<id>', ListCuidadores3.as_view(),name='cuidadores3'),
+    path('servicios/<int:id>', ListCuidadores3.as_view(),name='cuidadores3'),
     
     path('servicios/<id>', ReservaRegisterView.as_view(),name='cuidadores3'),
 
