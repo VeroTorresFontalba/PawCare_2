@@ -1,0 +1,20 @@
+<!-- email_confirmacion_cuidador.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirmación de Reserva</title>
+</head>
+<body>
+    <h1>Confirmación de Reserva</h1>
+    <p>Hola, {{ reserva.nombreCliente }}</p>
+    <p>Tu reserva ha sido confirmada con el cuidador {{ reserva.nombreCuidador }}.</p>
+    <p>Detalles de la reserva:</p>
+    <ul>
+        <li>Fecha de reserva: {{ reserva.fechareserva }}</li>
+        <li>Hora de inicio: {{ reserva.horasInicio }}</li>
+        <li>Hora de fin: {{ reserva.horasFin }}</li>
+    </ul>
+    <p>Gracias por utilizar nuestros servicios.</p>
+</body>
+</html>

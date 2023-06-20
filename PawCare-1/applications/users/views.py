@@ -18,6 +18,7 @@ from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from django.db.models import Q
 from django.db.models import Subquery
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.views.generic import (
     View,
     CreateView,
@@ -468,19 +469,31 @@ def reservar_cuidador(request, cronograma_id):
 
     reserva.save()
     print(reserva.idCronograma)
-
-    subject = "Confirmación Reserva"
-    message = "Su hora con fecha:.... ha sido reservada con exito por:...."
-    from_email = "pawcare3@gmail.com"
-    recipient_list = [reserva.correocliente]
-    send_mail (subject , message, from_email, recipient_list)
-
-    subject = "Confirmación Reserva"
-    message = "Su hora con fecha:.... , con:... ha sido reservada con exito."
-    from_email = "pawcare3@gmail.com" 
-    recipient_list = [reserva.correocuidaor]
     
-    send_mail (subject , message, from_email, recipient_list)
+    subject = "Confirmación Reserva"
+    from_email = "pawcare3@gmail.com"
+    message='Hola'
+    recipient_list = [reserva.correocliente] #cuidador
+    context={'subject': subject,
+        'from_email': from_email,
+        'message': message,
+        'reserva': reserva}
+    html_message= render_to_string('users/email_confirmacion_cuidador.html', context=context)
+
+    send_mail (subject ,message, from_email, recipient_list, html_message=html_message)
+
+    subject = "Confirmación Reserva"
+    from_email = "pawcare3@gmail.com" 
+    recipient_list = [reserva.correocuidaor] #cliente
+    context={'subject': subject,
+        'from_email': from_email,
+        'message': message,
+        'reserva': reserva}
+    html_message= render_to_string('users/email_confirmacion_cliente.html', context=context)
+
+
+    
+    send_mail (subject ,message, from_email, recipient_list,html_message=html_message)
 
 
 
