@@ -11,6 +11,23 @@ from .managers import UserManager ,MascotaManager,HorasManager,HorasSolicitadasM
 from applications.categoria.models import Categoria
 
 # Create your models here.
+
+
+class Region(models.Model):
+    id=models.AutoField(primary_key=True)
+    nombre= models.CharField(max_length=80, unique= True,verbose_name='Region')
+
+    def __str__(self):
+        return self.nombre
+    
+
+class Comuna(models.Model):
+    id=models.AutoField(primary_key=True)
+    nombre= models.CharField(max_length=80, unique= True,verbose_name='Comuna')
+
+    def __str__(self):
+        return self.nombre
+
 class User (AbstractBaseUser, PermissionsMixin, models.Model ):
 
     # TIPO DE USUARIOS
@@ -33,6 +50,10 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
     # categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True)
     categoria = models.CharField(max_length=2,choices=TIPOUSER_CHOICES,null=True,default=1)
     promediocalificacion = models.DecimalField(max_digits=3, decimal_places=2, null=True)
+
+    region =  models.ForeignKey(Region,on_delete=models.CASCADE,related_name='Region',null=True,default=1)
+    comuna =  models.ForeignKey(Comuna,on_delete=models.CASCADE,related_name='Comuna',null=True,default=1)
+    direccion = models.CharField(max_length=100,verbose_name='Direccion',null=True)
  
     #
     is_staff = models.BooleanField(default=False) #para especificar si el usuario es administrador
@@ -60,6 +81,8 @@ class Servicio(models.Model):
     informacion=models.TextField(max_length=2000,blank=False,null=True, default='Sin description')
     estado = models.BooleanField('Estado', default = True)
 
+   
+
     class Meta:
         verbose_name = 'servicio'
         verbose_name_plural ='servicios'
@@ -85,14 +108,8 @@ class Profile(models.Model):
     descripcion= models.TextField(max_length=2000,null=True,blank=True)
     # servicios=models.ForeignKey(Tservicio,on_delete=models.CASCADE,null=True)
     servicios=models.ManyToManyField(Servicio,related_name='servicios',verbose_name='Tipos de servicios')
-
     def __str__(self):
         return self.user.username
-    
-
-    # def obtener_servicios(self):
-    #     servicio = str([servicios for servicios in self.servicios_id.all().values_list('nombre',flat = True)]).replace("[","").replace("]","").replace("'","")
-    #     return servicio
     
 
 def create_user_profile(sender, instance, created, **kwargs):
@@ -113,8 +130,8 @@ class EstadoReserva(models.Model):
     id=models.AutoField(primary_key=True)
     reservaEstado= models.CharField(max_length=15)
     def __str__(self):
-        return str(self.id) + "-" +str(self.reservaEstado) 
-    
+        return  str(self.reservaEstado) 
+    #str(self.id) + "-" +
 class Hora(models.Model):
     id=models.AutoField(primary_key=True)
     horaInicio=models.TimeField(verbose_name='inicio')
@@ -122,8 +139,8 @@ class Hora(models.Model):
     # estado= models.ForeignKey(EstadoReserva,on_delete=models.CASCADE,related_name='Estado',null=True,default=1)
 
     def __str__(self):
-        return  str(self.id) + " - " +str(self.horaInicio) + " - " +str(self.horaFin) 
-    
+        return str(self.horaInicio) + " - " +str(self.horaFin) 
+    # str(self.id) + " - " +
 class Cronograma(models.Model):
      id= models.AutoField(primary_key=True)
      user= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='cronograma', null=True)
@@ -184,9 +201,9 @@ class Cronograma(models.Model):
 
 
 
-class Calificacion(models.Model):
-    id=models.AutoField(primary_key=True)
-    rating=models.IntegerField()
+#class Calificacion(models.Model):
+ #   id=models.AutoField(primary_key=True)
+  #  rating=models.IntegerField()
 
 
 
@@ -232,7 +249,8 @@ class Mascota(models.Model):
     objects = MascotaManager()
     
     def __str__(self):
-        return  str(self.nombre_de_mascota)+"/"+str(self.user)
+        return  str(self.nombre_de_mascota)
+    #+"/"+str(self.user)
 
                                          
 class ReservaCliente(models.Model):
@@ -248,11 +266,13 @@ class ReservaCliente(models.Model):
     fechareserva=models.CharField( max_length=100,null=True, blank=True)
     horasInicio=models.CharField(max_length=100, null=True, blank=True)
     horasFin=models.CharField( max_length=100,null=True, blank=True)
+    servicios = models.TextField(null=True, blank=True)
+    calificacion=models.IntegerField(null=True, blank=True)
 
     objects = HorasSolicitadasManager()
 
     def __str__(self):
-        return  str(self.nombreCuidador)+"/"+str(self.nombreCliente)
+        return  str(self.nombreCuidador)+"/"+str(self.nombreCliente)+"/"+str(self.calificacion)+"/"+str(self.id)
 
 #str(self.nombreCuidador)+"/"+str(self.nombreCliente)
     # idCuidador=models.IntegerField(unique=True ,null=True, blank=True)

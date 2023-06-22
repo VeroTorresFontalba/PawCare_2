@@ -1,0 +1,23 @@
+/*.stars .star i.fas {
+    color: yellow;
+  }
+  
+  .stars .star:hover i.far,
+  .stars .star.filled i.far {
+    color: yellow;
+  }
+  
+  .stars .star.filled i.fas {
+    color: yellow;
+  }*/
+
+
+  .stars .star i.far {
+    color: gray;
+    border: none;
+  }
+  
+  .stars .star i.fas {
+    color: #fad905;
+    border: none;
+  }

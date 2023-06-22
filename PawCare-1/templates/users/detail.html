@@ -5,6 +5,8 @@
 
 {% load static %}
 <link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/rating.css' %}">
+
 <section style ="background-color: #fff;">
     <div class="container py-5">
       <div class="row">
@@ -18,6 +20,7 @@
               <div class="d-flex justify-content-center mb-2">
                 <a class="nav-link"  href="#">
                     <a class="btn btn-info float-end" href="{% url 'users:update' profile.id %}">Editar</a>
+               
                 </a>
                 <br>
                 {%if request.user.categoria == '1' %}
@@ -25,7 +28,14 @@
                   <a class="btn btn-info float-end" href="{% url 'users:mascota'  %}">Mascotas</a>
                </a>   -->
                {% endif %}
+
+               <div>
+                <!--  <a href="nav-link" href="#">
+                    <a class="btn btn-info float-end" value="4" id="open-rating-modal" href="" onclick="abrir_modal_ratings('{% url 'users_app:rating_modal'%}')">Modal</a
+                  </a>-->
+                  <button type="button" class="btn btn-primary" onclick="abrir_modal_ratings('{% url 'users_app:rating_modal' %} ')">MODAL</button>
                 
+               </div>
 
               </div>
             </div>
@@ -78,11 +88,51 @@
                   <p class="text-muted mb-0">{{profile.user.telefono}}</p>
                 </div>
               </div>
+
               <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Ciudad</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.user.region}}</p>
+                </div>
+              </div>
+
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Direccion</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0"> {{profile.user.comuna}}, {{profile.user.direccion}} </p>
+                </div>
+              </div>
+             <!--    <hr>
+           <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Ciudad</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.region}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Direccion</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.comuna}},{{profile.direccion}}</p>
+                </div>
+              </div> -->
+              
+              
 
 
               {%if user.is_authenticated and profile.user %}
               {%if request.user.categoria == '2' %}
+              <hr>
               <div class="row">
                 <div class="col-sm-3">
                   <p class="mb-0">Tipos de servicios:</p>
@@ -99,10 +149,11 @@
               <div class="modal fade" id="seleccionar" rol="servicios">
 
               </div>
+                  
+                  {%endif%}
+                  {%endif%}
+                  
                   <hr>
-                  {%endif%}
-                  {%endif%}
-
                   <div class="row">
                     <div class="col-sm-3">
                       <p class="mb-0">Descipccion</p>
@@ -111,13 +162,9 @@
                       <p class="text-muted mb-0">{{user.profile.descripcion}}</p>
                     </div>
                   </div>
+                  
                 </div>
               </div>
-
-{% comment %} Aqui van las mascotas {% endcomment %}
- 
-
-
                       </div>
                       
                       </div>
@@ -128,11 +175,19 @@
             </div>
           </div>
         </div>
+        <div id="div_modal_rating"> 
+         
+        </div>
+        
+        </div>
       </div>
+
     </div>
+
+
   </section>
 
-
+  <script src="{% static 'js/rating.js' %}"></script>
 
   
 

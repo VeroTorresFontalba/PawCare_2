@@ -25,9 +25,14 @@ urlpatterns = [
     path('mascota_modificar/<int:pk>', ModificarMascota.as_view(),name='mascota_modificar'),
     path('mascota_eliminar/<int:pk>', MascotaDeleteView.as_view(),name='mascota_eliminar'),
     path('update/<int:pk>', PerfilUpdateView.as_view(),name='update'),
+
+
+
     path('servicios/', ListCuidadores.as_view(),name='cuidadores'),
 
-    path('servicios/<id>', ListCuidadores3.as_view(),name='cuidadores3'),
+  
+
+    path('servicios/<int:id>', ListCuidadores3.as_view(),name='cuidadores3'),
     
     path('servicios/<id>', ReservaRegisterView.as_view(),name='cuidadores3'),
 
@@ -57,4 +62,10 @@ urlpatterns = [
     path('list_horas_user/', HorasporUserList.as_view(), name='horas_user'),
     path('cancelar_cuidador/<int:idReserva>', views.cancelar_cuidador, name='cancelar_cuidador'),
     path('finalizar_reserva/<int:idReserva>', views.finalizar_reserva, name='finalizar_reserva'),
+    #path('rating_modal/', views.rating_modal , name='rating_modal'),
+    path('rating_modal/', Calificacion.as_view() , name='rating_modal'),
+    path('finalizar_reserva/<int:idReserva>/', views.finalizar_reserva, name='finalizar_reserva'),
+
+    path('guardar_calificacion/', views.guardar_calificacion, name='guardar_calificacion'),
+    #path('calcular_promedio_calificacion/', views.calcular_promedio_calificacion, name='calcular_promedio_calificacion'),
 ]
