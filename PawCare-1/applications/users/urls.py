@@ -69,3 +69,4 @@ urlpatterns = [
     path('guardar_calificacion/', views.guardar_calificacion, name='guardar_calificacion'),
     #path('calcular_promedio_calificacion/', views.calcular_promedio_calificacion, name='calcular_promedio_calificacion'),
 ]
+
