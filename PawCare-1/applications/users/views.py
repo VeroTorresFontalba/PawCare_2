@@ -1,4 +1,4 @@
-import dataclasses
+import dataclasses, json
 from django.forms.models import BaseModelForm
 
 from rest_framework.generics import (
@@ -6,7 +6,7 @@ from rest_framework.generics import (
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.shortcuts import render,get_object_or_404,redirect
+from django.shortcuts import render,get_object_or_404,redirect, render
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 
@@ -38,7 +38,8 @@ from .forms import CronogramaForm, MascotaForm, UserRegisterForm, LoginForm,Perf
 from .models import User,Profile,Cronograma ,Mascota ,Servicio,ReservaCliente,Hora, Especies, EstadoReserva
 #, Servicio , 
 
-
+#para la solicitud ajax de guardarcalificacion
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
@@ -500,24 +501,6 @@ def cancelar_cuidador(request, idReserva):
     return redirect(request.META.get('HTTP_REFERER', ''))
 
 
-def finalizar_reserva(request, idReserva):
-    try:
-        reserva = ReservaCliente.objects.get(id=idReserva)
-    except ReservaCliente.DoesNotExist:
-        return HttpResponse("La reserva de cliente no existe.")
-
-    cronograma = reserva.idCronograma  # Accede al objeto de cronograma asociado a la reserva
-
-    estado_realizado = EstadoReserva.objects.get(pk=4)  # Realizado id 4
-    cronograma.estado = estado_realizado
-    cronograma.save()
-
-    return redirect(request.META.get('HTTP_REFERER', ''))
-
-
-
-
-
 #def rating_modal(request):
    # if request.method == 'POST':
     #    rating = request.POST.get('rating')
@@ -536,7 +519,7 @@ def rating_modal(request):
     if request.method == 'POST':
         # Aquí puedes procesar la calificación enviada por el usuario
         # y realizar cualquier otra acción necesaria
-        #print('Calificación guardada:', request.POST.get('rating'))
+        print('Calificación guardada:', request.POST.get('rating'))
         print('Estoy en views')
     return HttpResponse()  # Devuelve una respuesta vacía
 
@@ -555,3 +538,38 @@ class Calificacion(CreateView):
         return reverse_lazy('users_app:profile',args=[self.object.id]) 
 
 
+
+@csrf_exempt
+def guardar_calificacion(request):
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            reserva_id = data.get('reserva_id')
+            calificacion = data.get('calificacion')
+            
+            # Guardar la calificación en la reserva correspondiente
+            try:
+                reserva = ReservaCliente.objects.get(id=reserva_id)
+                reserva.calificacion = calificacion
+                reserva.save()
+                
+                return JsonResponse({'success': True})
+            except ReservaCliente.DoesNotExist:
+                return JsonResponse({'success': False, 'message': 'La reserva no existe.'})
+    
+    return JsonResponse({'success': False, 'message': 'Solicitud inválida.'})
+
+@csrf_exempt
+def finalizar_reserva(request, idReserva):
+    try:
+        reserva = ReservaCliente.objects.get(id=idReserva)
+    except ReservaCliente.DoesNotExist:
+        return HttpResponse("La reserva de cliente no existe.")
+
+    cronograma = reserva.idCronograma  # Accede al objeto de cronograma asociado a la reserva
+
+    estado_realizado = EstadoReserva.objects.get(pk=4)  # Realizado id 4
+    cronograma.estado = estado_realizado
+    cronograma.save()
+
+    return redirect(request.META.get('HTTP_REFERER', ''))

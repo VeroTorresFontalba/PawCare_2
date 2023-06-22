@@ -59,7 +59,8 @@ urlpatterns = [
     path('finalizar_reserva/<int:idReserva>', views.finalizar_reserva, name='finalizar_reserva'),
     #path('rating_modal/', views.rating_modal , name='rating_modal'),
     path('rating_modal/', Calificacion.as_view() , name='rating_modal'),
+    path('finalizar_reserva/<int:idReserva>/', views.finalizar_reserva, name='finalizar_reserva'),
 
-
-
+    path('guardar_calificacion/', views.guardar_calificacion, name='guardar_calificacion'),
+    #path('calcular_promedio_calificacion/', views.calcular_promedio_calificacion, name='calcular_promedio_calificacion'),
 ]

@@ -6,89 +6,89 @@
 
 <link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
 <link href="{% static 'css/agenda.css' %}" type="text/css" rel="stylesheet">
-
+<link href="{% static 'css/rating.css' %}" type="text/css" rel="stylesheet">
 <div class="idance">
-    <div class="schedule content-block">
-        <div class="container">
-            <h2 data-aos="zoom-in-up" class="titulo aos-init aos-animate">Mis horas</h2>
-            {% for hora in horas_por_user %}
-            <div class="timetable">
-        
-              <div class="tab-content">
-                <div class="tab-pane show active">
-                  <div class="row row-cols-10 row-cols-md-4 g-4 ">
-        
-                    <!-- Schedule Item 1 -->
-                    <div class="col-md-4">
-                      <div class="timetable-item">
-                        <div class="timetable-item-img">
-                            {{hora.fechareserva}}
-                          <img src="{% static 'img/agenda.png' %}" alt="Contemporary Dance"> 
-                        </div>
-                        <div class="timetable-item-main">
-                          <div class="timetable-item-time">{{hora.horasInicio}} - {{hora.horasFin}}</div>
-                          <div class="timetable-item-name">{{hora.nombreCuidador}}</div>
+  <div class="schedule content-block">
+      <div class="container">
+          <h2 data-aos="zoom-in-up" class="titulo aos-init aos-animate">Mis horas</h2>
+          
+          <div class="container">
+                <div class="row row-cols-10 row-cols-md-4 g-4 ">
+                  {% for hora in horas_por_user %}
+                  <!-- Schedule Item 1 -->
+                  <div class="col-md-4">
+                    <div class="timetable-item">
+                      <div class="timetable-item-img">
+                          {{hora.fechareserva}}
+                        <img src="{% static 'img/agenda.png' %}" alt="Contemporary Dance"> 
+                      </div>
+                      <div class="timetable-item-main">
+                        <div class="timetable-item-time">{{hora.horasInicio}} - {{hora.horasFin}}</div>
+                        <div class="timetable-item-name">{{hora.nombreCuidador}}</div>
                         <!--  <div class="timetable-item-name">{{hora}}</div> aqui tiene que ir el servicio que escogio -->
-                          <td><a href="{% url 'users_app:finalizar_reserva' idReserva=hora.id %}" class="btn btn-primary  btn-info btn-info-hover">Realizado</a></td>
-                          <td><a href="{% url 'users_app:cancelar_cuidador' idReserva=hora.id %}" class="btn btn-danger  btn-danger btn-danger-hover">Cancelar Hora</a></td> 
-            
+                   <!---    <td><a href="{% url 'users_app:finalizar_reserva' idReserva=hora.id %}" id="{{hora.id}}"class="btn btn-primary  btn-info btn-info-hover">Realizado</a></td>---> 
+                     <!--  <td><a href="{% url 'users_app:cancelar_cuidador' idReserva=hora.id %}" class="btn btn-danger  btn-danger btn-danger-hover">Cancelar Hora</a></td> ---> 
+                     <button id="realizadoBtn-{{hora.id}}" data-toggle="modal" data-target="#calificacionModal" value="{{hora.id}}">Realizado</button>
 
-                          <div class="timetable-item-like">
-                            <i class="fa fa-heart-o" aria-hidden="true"></i>
-                            <i class="fa fa-heart" aria-hidden="true"></i>
-                           
-                          </div>
+
+                        <div class="timetable-item-like">
+                          <i class="fa fa-heart-o" aria-hidden="true"></i>
+                          <i class="fa fa-heart" aria-hidden="true"></i>
+                          
                         </div>
                       </div>
                     </div>
-                    </div>
                   </div>
+                  {% endfor %}
                 </div>
               </div>
-              {% endfor %}
-            </div>
-          </div>
-         
+          
       </div>
-     
-  
+  </div>     
+</div>
+{% for hora in horas_por_user %}
+<div id="div_modal_rating">
 
+<div class="modal fade" id="calificacionModal-{{hora.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Calificar Servicio</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div class="container">
+                  <div class="row">
+                      <div class="stars">
+                        {% csrf_token %} 
+                        <input type="hidden" value="{{ reserva_id }}" id="reserva-id">
+                        <!--  <form action="#" method="POST">
+                              {% csrf_token %}
+
+                              <input type="hidden" value="{{id}}" id="id_usuario">
+                              {{ form.as_p }}
+              
+                          
+                              <div class="mb-4"></div>
+                          </form>-->
+                          <span class="star" data-rating="1"><i class="far fa-star"></i></span>
+                          <span class="star" data-rating="2"><i class="far fa-star"></i></span>
+                          <span class="star" data-rating="3"><i class="far fa-star"></i></span>
+                          <span class="star" data-rating="4"><i class="far fa-star"></i></span>
+                          <span class="star" data-rating="5"><i class="far fa-star"></i></span>
+                      </div>
+                      <button id="save-rating-{{hora.id}}" class="btn btn-primary" data-reserva-id="{{ hora.id }}">Guardar Calificación</button>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endfor %}
+
+</div>
+
+<script src="{% static 'js/rating.js' %}"></script>
 {% endblock %}
 
-<!--
-<h1 class="titulo ">Mis horas</h1>
-
-<table class="table"> <br>
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Nombre del Cuidador</th>
-            <th>Dia</th>
-            <th>Hora Inicio</th>
-            <th>Hora Fin</th>
-            <th>Usuario que solicito</th>
-            <th>Usuario conectado que solicito</th>
-            
-
-
-
-        </tr>
-    </thead>
-    <tbody>
-        {% for hora in horas_por_user %}
-        <tr>
-            <td>{{hora.nombreCuidador}}</td>
-            <td>{{hora.fechareserva}}</td>
-            <td>{{hora.horasInicio}}</td>
-            <td>{{hora.horasFin}}</td>
-            <td>{{hora.nombreCliente}}</td>
-            <td>{{hora.clienteusername}}</td>
-
-            <td><a href="#" class="btn btn-primary  btn-info btn-info-hover">Realizado</a></td>
-          <td><a href="#" class="btn btn-primary  btn-info btn-info-hover">Cancelar Hora</a></td> 
-            <td><a href="{% url 'users_app:cancelar_cuidador' cronograma_id=hora.id %}" class="btn btn-danger  btn-danger btn-danger-hover">
-                Cancelar Hora</a></td> 
-
-        </tr>
-        {% endfor %}
-    </tbody>
-</table><br> -->

@@ -10,4 +10,14 @@
   .stars .star.filled i.fas {
     color: yellow;
   }*/
+
+
+  .stars .star i.far {
+    color: gray;
+    border: none;
+  }
   
+  .stars .star i.fas {
+    color: #fad905;
+    border: none;
+  }
