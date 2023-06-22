@@ -201,9 +201,9 @@ class Cronograma(models.Model):
 
 
 
-class Calificacion(models.Model):
-    id=models.AutoField(primary_key=True)
-    rating=models.IntegerField()
+#class Calificacion(models.Model):
+ #   id=models.AutoField(primary_key=True)
+  #  rating=models.IntegerField()
 
 
 
@@ -267,12 +267,12 @@ class ReservaCliente(models.Model):
     horasInicio=models.CharField(max_length=100, null=True, blank=True)
     horasFin=models.CharField( max_length=100,null=True, blank=True)
     servicios = models.TextField(null=True, blank=True)
-   
+    calificacion=models.IntegerField(null=True, blank=True)
 
     objects = HorasSolicitadasManager()
 
     def __str__(self):
-        return  str(self.id)+"/"+str(self.nombreCuidador)+"/"+str(self.nombreCliente)
+        return  str(self.nombreCuidador)+"/"+str(self.nombreCliente)+"/"+str(self.calificacion)+"/"+str(self.id)
 
 #str(self.nombreCuidador)+"/"+str(self.nombreCliente)
     # idCuidador=models.IntegerField(unique=True ,null=True, blank=True)

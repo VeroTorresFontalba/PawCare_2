@@ -16,7 +16,7 @@ function abrir_modal_creacion(url) {
           $('#myModalCreateHora').modal('show');
           console.log(data)
         },
-        error: function (error) {
+        error: function () {
           console.log("Abrir modal error ")
             // notificacionError(error.responseJSON.mensaje);
             // mostrarErroresCreacion(error);
