@@ -103,6 +103,7 @@ const expresiones = {
     id_apellidos: /^[a-zA-ZÀ-ÿ\s]{1,50}$/, // Letras y espacios, pueden llevar acentos.
     id_telefono: /^\d{9}$/, // 9 numeros.
 	id_password1: /^.{4,12}$/, // 4 a 12 digitos.
+    id_direccion: /^[a-zA-Z0-9-ÿ\s\_\-]{1,50}$/,
 	
 	
 }
@@ -115,6 +116,7 @@ const campos = {
     id_apellidos: false,
     id_telefono: false,
     id_password1: false,
+    id_direccion:false,
 }
 
 const validarFormulario=(e) => {
@@ -130,6 +132,9 @@ const validarFormulario=(e) => {
     break;
     case "nombres":
         validarCampo(expresiones.id_nombres, e.target, 'nombres');
+    break;
+    case "direccion":
+        validarCampo(expresiones.id_direccion, e.target, 'direccion');
     break;
     case "apellidos":
         validarCampo(expresiones.id_apellidos, e.target, 'apellidos');
@@ -194,7 +199,7 @@ inputs.forEach((input)=>{
 formulario.addEventListener('submit',(e)=>{
    
 
-    if(campos.id_username && campos.id_email && campos.id_rut && campos.id_nombres && campos.id_apellidos && campos.id_telefono && campos.id_password1){
+    if(campos.id_username && campos.id_email && campos.id_rut && campos.id_nombres && campos.id_apellidos && campos.id_telefono && campos.id_password1 && campos.id_direccion){
         formulario.reset();
     }
 

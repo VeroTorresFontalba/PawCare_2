@@ -10,6 +10,16 @@
     <div>
         <h1 class="titulo">Colaboradores</h1>
     </div>
+
+
+    {% if user.is_authenticated %}
+    {% else %}
+        <center><a class="btn btn-danger" href="{% url 'users_app:user_register' %}">Registrarte para obtener descuentos</a></center>
+    {% endif %}
+    
+
+        
+   
     <hr>
     <!--Tarjetas-->
     <div class="container ">
@@ -35,7 +45,7 @@
                         </div>
                         {% else %}
 
-                        <center><a class="btn btn-danger" href="{% url 'users_app:user_register' %}">Registrarte para obtener descuentos</a></center> 
+<!--                        <center><a class="btn btn-danger" href="{% url 'users_app:user_register' %}">Registrarte para obtener descuentos</a></center>  -->
                         {% endif %}
 
                         <br>

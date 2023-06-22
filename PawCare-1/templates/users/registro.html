@@ -30,6 +30,16 @@
             </div>
             <h2 class="fw-bold text-center pt5 mb-5">Registro de usuario</h2>
 
+
+            <!-- {% if 'ok' in request.GET %} 
+            <div class="alert alert-success" role="alert">
+               Bienvenido tu Cuenta fue Creada con Exito 
+               <span>
+                   <a class="btn btn-sm btn-success" href="{% url 'users_app:user_login' %}" id="">Iniciar Sesion</a>
+               </span>
+           </div>
+             {% endif %}  -->
+
             <form action="" method="POST" class="formulario" id="formulario" > 
                 {% csrf_token %} 
                 <!-- Grupo: Usuario -->
@@ -101,6 +111,42 @@
                     <p class="formulario__input-error">El telefono solo puede contener 9 dígitos.</p>
                 </div>
 
+                <!-- Grupo: Region -->
+                <div class="formulario__grupo" id="grupo__region">
+                    <label for="id_region" class="formulario__label">Ciudad</label>
+                    <div class="formulario__grupo-input">
+                        <!--<input type="text" class="formulario__input" name="telefono" id="telefono" placeholder="4491234567" >-->
+                        {{ form.region }}
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error"></p>
+                </div>
+
+                <!-- Grupo: Comuna -->
+                <div class="formulario__grupo" id="grupo__comuna">
+                    <label for="id_comuna" class="formulario__label">Comuna</label>
+                    <div class="formulario__grupo-input">
+                        <!--<input type="text" class="formulario__input" name="telefono" id="telefono" placeholder="4491234567" >-->
+                        {{ form.comuna }}
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error"></p>
+                </div>
+
+                <!-- Grupo: Direccion -->
+                <div class="formulario__grupo" id="grupo__direccion">
+                    <label for="id_direccion" class="formulario__label">Direccion</label>
+                    <div class="formulario__grupo-input">
+                        <!--<input type="text" class="formulario__input" name="telefono" id="telefono" placeholder="4491234567" >-->
+                        {{ form.direccion }}
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Debe Ingresar una direccion</p>
+                </div>
+
+
+
+
                 <!-- Grupo: Tipo de usuario -->
 
                 <div class="formulario__grupo" id="grupo__tipousuario">
@@ -146,21 +192,18 @@
     
 
     
-<br><br><br>
+
     
                 <div class="formulario__mensaje" id="formulario__mensaje">
                     <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
                 </div>
-                <br><br>
+                <br>
                 <div class="formulario__grupo formulario__grupo-btn-enviar">
                     <button type="submit" class="formulario__btn">Registrarse</button>
-                    <br><br>
+                    <br><br><br>
                     <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
                 </div>
-            </form>
-
-
-          
+            </form>         
         </div>
     </div>
 </div> 

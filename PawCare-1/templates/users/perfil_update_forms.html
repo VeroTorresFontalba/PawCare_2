@@ -35,12 +35,34 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-6 col-sm-4">
+
+                                
+                             <!--   <div class="form-group">
+                                    {{ form.region.label}}
+                                    {{ form.region}}
+                                    
+                                </div> <br>
+                                <div class="form-group">
+                                    {{ form.comuna.label}}
+                                    {{ form.comuna}}
+                                    
+                                </div><br>
+                                <div class="form-group">
+                                    {{ form.direccion.label}}
+                                    {{ form.direccion}}
+                                    
+                                </div> <br>-->
+
                                 <div class="form-group">
                                     {{ form.descripcion.label}}
                                     {{ form.descripcion}}
                                     
-                                </div>
+                                </div> <br>
+
+
+
                                 {%if request.user.categoria == '2' %}
                                 <div class="form-group">
                                     {{ form.servicios.label}}

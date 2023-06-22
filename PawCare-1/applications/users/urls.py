@@ -25,7 +25,12 @@ urlpatterns = [
     path('mascota_modificar/<int:pk>', ModificarMascota.as_view(),name='mascota_modificar'),
     path('mascota_eliminar/<int:pk>', MascotaDeleteView.as_view(),name='mascota_eliminar'),
     path('update/<int:pk>', PerfilUpdateView.as_view(),name='update'),
+
+
+
     path('servicios/', ListCuidadores.as_view(),name='cuidadores'),
+
+  
 
     path('servicios/<int:id>', ListCuidadores3.as_view(),name='cuidadores3'),
     
@@ -58,5 +63,7 @@ urlpatterns = [
     path('cancelar_cuidador/<int:idReserva>', views.cancelar_cuidador, name='cancelar_cuidador'),
     path('finalizar_reserva/<int:idReserva>', views.finalizar_reserva, name='finalizar_reserva'),
 
+    # path('habilitar_reserva/<int:idReserva>', views.habilitar_reserva, name='habilitar_reserva'),
+    # path('horas_canceladas/', ListHoras_Canceladas.as_view(), name='horas_canceladas'),
 
 ]

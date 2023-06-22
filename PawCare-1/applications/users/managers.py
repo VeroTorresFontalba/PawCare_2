@@ -27,20 +27,43 @@ class UserManager(BaseUserManager,models.Manager):
     def create_superuser(self, username,email ,password=None, **extra_fields):
         return self._create_user(username, email, password ,True , True, True, **extra_fields)
 
-    def listar_cuidadores(self):
+    # def listar_cuidadores(self):
    
-        return self.filter(
-            categoria = 2 
-        )
+    #     return self.filter(
+    #         categoria = 2 
+    #     )
     
-    def listar_cuidadores_user(self,usuario):
+    def listar_cuidadores(self, kword=None, nombre=None):
+        queryset = self.filter(categoria=2)
+        if kword:
+            queryset = queryset.filter(profile__servicios__nombre__icontains=kword)
+        if nombre:
+            queryset = queryset.filter(nombres__icontains=nombre)
+        return queryset
+
+    # def listar_cuidadores2(self):
    
+    #     return self.filter(
+    #         categoria = 2 
+    #     )
+
+    
+    
+    def listar_cuidadores_user(self,usuario ):
+
         return self.filter(
             categoria = 2,
             user=usuario,
+            
         )
     
+class FilterManager(models.Manager):
+    def listar_cuidadores(self, kword=None):
+        queryset = self.filter(categoria=2)
+        if kword:
+            queryset = queryset.filter(servicios__icontains=kword)
 
+        return queryset
     
 
     
@@ -59,13 +82,28 @@ class HorasManager(models.Manager):
         return self.filter(
             user=usuario,
         )
-    
-    def listar_cuidadores_horas(self,horas):
-   
-        return self.filter(
-            user__id=horas,
+    def listar_cuidadores_horas(self,horas,fecha1 , fecha2):
+        resultado= self.filter(
+            user__id=horas, #este es el parametro del id
             estado = 1,
-        ).order_by('fechaReserva')
+            fechaReserva__range=(fecha1,fecha2)
+        ).order_by('fechaReserva') 
+        return resultado
+    
+    def listar_cuidadores_horas2(self,horas):
+        resultado= self.filter(
+            user__id=horas, #este es el parametro del id
+            estado = 1,  
+        ).order_by('fechaReserva') 
+        return resultado
+    
+    def listar_cuidadores_horas3(self):
+        resultado= self.filter(
+           # user__id=horas,# este es el parametro del id
+            estado = 3,  
+        ).order_by('fechaReserva') 
+        return resultado
+
     
 
 class HorasSolicitadasManager(models.Manager):

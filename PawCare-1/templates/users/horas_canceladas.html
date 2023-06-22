@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+{% load static %}
+
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+
+{% comment %} para menu de administracion
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown button
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <a class="dropdown-item" href="#">Something else here</a>
+    </div>
+  </div> {% endcomment %}
+
+  
+<br>
+<div class="container">
+    <h2 class="titulo">Lista de Colaboradores</h2><br><br>
+
+    <table class="table"> <br>
+        <thead>
+            <tr>
+
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Estado</th> 
+                
+               
+  
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in lista_cuidadores %}
+            <tr>
+                <td>{{c.user}}</td>
+                <td>{{c.fechaReserva}}</td>
+                <td>{{c.horas}}</td>
+                <td>{{c.estado}}</td>
+                <td><a href="{% url 'users_app:habilitar_reserva' c.id %}" class="btn btn-primary  btn-info btn-info-hover">Habilitar Hora</a></td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+  </div><br><br>
+
+  
+ 
+
+
+{% endblock %}
+
+<!-- <div class="modal fade" id="myModalCreateHora" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Hora</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+  
+              <div class="container">
+                <form action="{% url 'users_app:horas' %}" method="POST">
+                    {% csrf_token %}
+  
+                    {{ form.as_p }}
+  
+                   <div class="d-grid">
+                        <button type="submit" class="btn btn-info">Guardar</button>
+                    </div>
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-info">Registrar</button>
+                  </div>
+                    <br>
+                  </form>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+  </div> -->

@@ -24,14 +24,23 @@
     
         {{ form.as_p }}
 
-        {% comment %} <button id="agregar-btn">+</button> {% endcomment %}
+        <!-- <button id="agregar-btn">+</button>-->
         <div class="container ">
-          <button type="button" id="agregar-btn" class="btn btn-primary" onclick="abrir_modal_creacion('{% url 'users_app:horas'  %}');">+</button><div class="row"> 
+          <button type="button" id="agregar-btn" class="btn btn-primary" onclick="abrir_modal_creacion('{% url 'users_app:horas'  %}');">+</button><div class="row"> <br>
+           
+            
          </div>
+        
+   
+        
+          
+
         <br>
       </form>
     </div>
   </div>
+
+
 
 
   {% comment %} <div>
@@ -73,6 +82,9 @@
 
   </div>
 </div> {% endcomment %}
+
+
+
 
 <html lang='en'>
   <head>

@@ -57,12 +57,16 @@ class UserRegisterForm(forms.ModelForm):
             'apellidos',
             'telefono',
             'categoria',
+            'region',
+            'comuna',
+            'direccion',
             'is_active',
             )
         
         labels={
              'is_active':'Bajar cuenta',
              'categoria':'Tipo de Usuario',
+
         }
 
         widgets = {
@@ -125,7 +129,26 @@ class UserRegisterForm(forms.ModelForm):
                   'class': 'formulario__input',
                   'id': 'categoria',
              }
-             )
+             ),
+             'region': forms.Select(
+             attrs={
+                  'class': 'formulario__input',
+                  'id': 'region',
+             }
+             ),
+             'comuna': forms.Select(
+             attrs={
+                  'class': 'formulario__input',
+                  'id': 'comuna',
+             }
+             ),
+
+             'direccion': forms.TextInput(
+             attrs={
+                  'class': 'formulario__input',
+                  'placeholder': 'Los canelos 3911',
+             }
+             ),
              
         }
 
@@ -268,10 +291,37 @@ class PerfilForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('picture','descripcion','servicios')
+        # labels = {
+        #         'region':'Seleccione su Region',
+        #         'comuna':'Seleccione su Comuna'
+        #   }
+        # widgets = {
+        #         'region': forms.Select(
+        #         attrs={
+        #             'class': 'form-control',
+             
+
+        #         }
+        #      ),
+        #         'comuna': forms.Select(
+        #         attrs={
+        #             'class': 'form-control',
+             
+
+        #         }
+        #      ),
+        # }
+
+
+
+    
 
     picture = forms.ImageField(label='Nueva foto de perfil',required=False, widget=forms.FileInput(attrs={'class':'form-control'}))
 
     descripcion = forms.CharField(label= 'Ingresa una breve descripción',widget=forms.Textarea(attrs={'class': 'form-control'}), max_length=260, required=False)
+    #direccion = forms.CharField(label= 'Ingrese su direccion',widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Los alamos 230'}), max_length=260, required=True)
+    
+
 
     servicios = forms.ModelMultipleChoiceField(
          queryset= None,

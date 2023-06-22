@@ -29,6 +29,8 @@ from django.views.generic import (
 from django.views.generic.edit import (
     FormView
 )
+from django.http import JsonResponse
+from django.contrib import messages
 
 from .serializers import MascotaSerializers
 
@@ -58,12 +60,51 @@ class UserRegisterView(FormView):
             telefono = form.cleaned_data['telefono'],
             rut = form.cleaned_data['rut'],
             categoria = form.cleaned_data['categoria'],
+            region = form.cleaned_data['region'],
+            comuna = form.cleaned_data['comuna'],
+            direccion = form.cleaned_data['direccion'],
             # tipodeusuario = form.cleaned_data['tipodeusuario'],
             
         )
 
-        return super(UserRegisterView, self).form_valid(form)
-    
+        return super(UserRegisterView, self).form_valid(form) 
+    # def get_success_url(self):
+    #     return reverse_lazy('users_app:user_register',args=[self.object.id]) + '?ok'
+
+# class UserRegisterView(FormView):
+#     template_name = 'users/registro.html'
+#     form_class = UserRegisterForm
+#     success_url = reverse_lazy('users_app:user_login')
+
+#     def form_valid(self, form):
+#         # Crear un nuevo usuario
+#         user = User.objects.create_user(
+#             form.cleaned_data['username'],
+#             form.cleaned_data['email'],
+#             form.cleaned_data['password1'],
+#             nombres=form.cleaned_data['nombres'],
+#             apellidos=form.cleaned_data['apellidos'],
+#             telefono=form.cleaned_data['telefono'],
+#             rut=form.cleaned_data['rut'],
+#             categoria=form.cleaned_data['categoria'],
+#         )
+
+#         # Mostrar mensaje de éxito utilizando SweetAlert
+#         data = {
+#             'title': '¡Éxito!',
+#             'text': 'Bienvenido!!!.',
+#             'icon': 'success'
+#         }
+#         return JsonResponse(data)
+
+#     def form_invalid(self, form):
+#         # Mostrar mensaje de error utilizando SweetAlert
+#         data = {
+#             'title': 'Error',
+#             'text': 'Hubo un problema al registrar el usuario.',
+#             'icon': 'error'
+#         }
+#         return JsonResponse(data)  
 
 class ReservaRegisterView(FormView):
     template_name='users/prueba.html'
@@ -108,7 +149,7 @@ class LogoutView(View):
             reverse('home_app:home')
             )
      
-    
+
 class ListCuidadores(LoginRequiredMixin,ListView):
     model= User
     context_object_name= 'lista_cuidadores'
@@ -116,7 +157,15 @@ class ListCuidadores(LoginRequiredMixin,ListView):
     login_url = reverse_lazy('users_app:user_login')
 
     def get_queryset(self):
-        return User.objects.listar_cuidadores()
+        kword = self.request.GET.get('kword', '')  # Obtener el valor ingresado en el input de búsqueda
+        palabra_clave = self.request.GET.get('nombre', '') 
+        return User.objects.listar_cuidadores(kword,palabra_clave)
+    
+
+    
+    # def get_queryset(self):
+    #     palabra_clave= self.request.GET.get("kword",'')
+    #     return Servicio.objects.buscar_servicios(palabra_clave)
     
 
 # class ListCuidadores2(LoginRequiredMixin,ListView):
@@ -137,10 +186,31 @@ class ListCuidadores3(LoginRequiredMixin,ListView):
 
     def get_queryset(self):
         id = self.kwargs['id']
-        return Cronograma.objects.listar_cuidadores_horas(id)
-    
+    #   kword = self.request.GET.get('kword', '')
 
-     
+        f1 = self.request.GET.get("fecha1", '')
+        f2 = self.request.GET.get("fecha2", '')
+
+        if f1 and f2 :
+            return Cronograma.objects.listar_cuidadores_horas(id,f1,f2) 
+        else:
+            return Cronograma.objects.listar_cuidadores_horas2(id)
+
+
+# class ListCuidadores3(LoginRequiredMixin,ListView):
+    
+#     context_object_name= 'lista_cuidadores'
+#     template_name= 'users/prueba.html'
+#     login_url = reverse_lazy('users_app:user_login')
+
+#     def get_queryset(self):
+#         id = self.kwargs['id']
+
+#         return Cronograma.objects.listar_cuidadores_horas(id) 
+  
+
+
+  
 
 
     
@@ -446,9 +516,15 @@ def reservar_cuidador(request, cronograma_id):
 
     cronograma = Cronograma.objects.get(id=cronograma_id)
     
+    
 
     estado_reservada = EstadoReserva.objects.get(pk=2) #reservada id 2
     cronograma.estado = estado_reservada
+
+    
+    servicios = cronograma.user.profile.servicios.all()
+    
+
 
     cronograma.save()
 
@@ -465,6 +541,9 @@ def reservar_cuidador(request, cronograma_id):
     reserva.fechareserva = cronograma.fechaReserva
     reserva.horasInicio = cronograma.horas.horaInicio
     reserva.horasFin = cronograma.horas.horaFin
+    # reserva.servicios = cronograma.user.profile.servicios.nombre()
+    # reserva.servicios = [servicio.nombre for servicio in servicios]
+    reserva.servicios = ', '.join([servicio.nombre for servicio in servicios])
 
 
 
@@ -476,6 +555,37 @@ def reservar_cuidador(request, cronograma_id):
     return redirect(request.META.get('HTTP_REFERER', ''))
    # return redirect('users_app:reservar_cuidador', cronograma_id)
 
+# def reservar_cuidador(request, cronograma_id):
+#     cronograma = Cronograma.objects.get(id=cronograma_id)
+    
+#     estado_reservada = EstadoReserva.objects.get(pk=2)  # reservada id 2
+#     cronograma.estado = estado_reservada
+#     servicios = cronograma.user.profile.servicios.all()
+    
+#     cronograma.save()
+
+#     if request.method == 'POST':
+#         servicios_seleccionados = request.POST.getlist('servicios')
+
+#         reserva = ReservaCliente()
+#         reserva.clienteusername = request.user
+#         reserva.idCronograma = cronograma
+#         reserva.idCliente = request.user.id
+#         reserva.idCuidador = cronograma.user.id
+#         reserva.correocliente = cronograma.user.email
+#         reserva.correocuidaor = request.user.email
+#         reserva.nombreCliente = request.user.get_full_name()
+#         reserva.nombreCuidador = cronograma.user.get_full_name()
+#         reserva.fechareserva = cronograma.fechaReserva
+#         reserva.horasInicio = cronograma.horas.horaInicio
+#         reserva.horasFin = cronograma.horas.horaFin
+
+#         servicios_seleccionados = servicios.filter(id__in=servicios_seleccionados)
+#         reserva.servicios = ', '.join([servicio.nombre for servicio in servicios_seleccionados])
+
+#         reserva.save()
+
+#     return redirect(request.META.get('HTTP_REFERER', ''))
 
 class HorasporUserList(ListView):
     context_object_name='horas_por_user'
@@ -496,7 +606,7 @@ def cancelar_cuidador(request, idReserva):
 
     cronograma = reserva.idCronograma  # Accede al objeto de cronograma asociado a la reserva
 
-    estado_cancelado = EstadoReserva.objects.get(pk=3)  # Cancelado id 3
+    estado_cancelado = EstadoReserva.objects.get(pk=1)  # Cancelado id 3 , tambien esta la opcion que de cancelado pase de inmediato a disponible con la pk =1
     cronograma.estado = estado_cancelado
     cronograma.save()
 
@@ -517,3 +627,43 @@ def finalizar_reserva(request, idReserva):
 
     return redirect(request.META.get('HTTP_REFERER', ''))
 
+
+# def habilitar_reserva(request, idReserva):
+#     try:
+#         reserva = ReservaCliente.objects.get(id=idReserva)
+#     except ReservaCliente.DoesNotExist:
+#         return HttpResponse("La reserva de cliente no existe.")
+
+#     cronograma = reserva.idCronograma  # Accede al objeto de cronograma asociado a la reserva
+
+#     estado_realizado = EstadoReserva.objects.get(pk=1)  # Disponibel id 4
+#     cronograma.estado = estado_realizado
+#     cronograma.save()
+
+#     return redirect(request.META.get('HTTP_REFERER', ''))
+
+
+
+
+
+
+# class ListHoras_Canceladas(ListView):
+#     context_object_name= 'lista_horas_canceladas'   
+#     template_name= 'users/horas_canceladas.html'
+#     # login_url = reverse_lazy('users_app:user_login')
+
+#     def get_queryset(self):
+#         id = self.kwargs['id']
+#         return Cronograma.objects.all(id)
+    
+
+# class ListHoras_Canceladas(LoginRequiredMixin,ListView):
+    
+#     context_object_name= 'lista_cuidadores'
+#     template_name= 'users/horas_canceladas.html'
+#     login_url = reverse_lazy('users_app:user_login')
+
+#     def get_queryset(self):
+#         # id = self.kwargs['id']
+#         return Cronograma.objects.listar_cuidadores_horas3() 
+         
