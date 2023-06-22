@@ -9,13 +9,11 @@
 <script  src="{% static 'js/reserva.js' %} "></script> 
 
   
-<div >
-    <a  class="fa-solid fa-caret-left fa-sm"  href="{% url 'users:cuidadores'  %}">Volver</a> 
-<div>
+<br>
 
 <div class="container">
     
-    <h1>Agenda de reserva</h1>
+    <h1 class="titulo">Agenda de reserva</h1>
 
     <div class="container ">
         <div class="row row-cols-3 row-cols-md-3 g-3">
@@ -125,7 +123,15 @@
             {% endfor %}
         </tbody>
     </table>
+    <div id="confirmarreserva"></div>
+    <a class=" btn btn-primary btn-info btn-info-hover" href="{% url 'home_app:servicios' %}">Volver</a>
+    
+
+    <!-- Button trigger modal -->
+  
+  <!-- Modal -->
 </div>
+<br>
 
 <script  src="{% static 'js/reserva.js' %} "></script> 
 {% endblock %}

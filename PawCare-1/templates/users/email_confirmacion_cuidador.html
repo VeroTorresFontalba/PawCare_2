@@ -1,0 +1,43 @@
+<!-- email_confirmacion_cuidador.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirmación de Reserva</title>
+</head>
+<body>
+    <h1>Confirmación de Reserva</h1>
+    <p>Hola, {{reserva.nombreCuidador}}</p>
+    <p>Tu reserva ha sido confirmada con el cliente {{reserva.nombreCliente}} .</p>
+    <p>Detalles de la reserva:</p>
+    <ul>
+        <li>Fecha de reserva: {{ reserva.fechareserva }}</li>
+        <li>Hora de inicio: {{ reserva.horasInicio }}</li>
+        <li>Hora de fin: {{ reserva.horasFin }}</li>
+    </ul>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre Mascota</th>
+                <th>Especie</th>
+                <th>chip</th>
+                <th>Descripción</th>
+           </tr>
+        </thead>
+        <tbody>
+            {% for mascota in mascotas %}
+            <tr>
+                <td>{{mascota.nombre_de_mascota}}</td>
+                <td>{{mascota.especies}}</td>
+                <td>{{mascota.chip}}</td>
+                <td>{{mascota.descripccion}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <p>Gracias por utilizar nuestros servicios.</p>
+    
+</body>
+</html>

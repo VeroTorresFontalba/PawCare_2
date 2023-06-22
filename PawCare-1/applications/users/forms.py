@@ -340,7 +340,7 @@ class MascotaForm(forms.ModelForm):
         labels = {
             # 'dueño':'Dueños de Mascota',
             'nombre_de_mascota':'Nombre de la mascota',
-            'chip':'Poose chip',
+            'chip':'Posee chip',
             'n_chip':'Ingrese el numero de Chip',
             'image':'Ingrese una foto de su mascota',
             'descripccion':'Detalle una descripccion de su mascota',

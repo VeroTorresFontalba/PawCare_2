@@ -17,6 +17,8 @@ from django.contrib.auth import authenticate,login, logout
 from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from django.db.models import Q
 from django.db.models import Subquery
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.views.generic import (
     View,
     CreateView,
@@ -314,7 +316,7 @@ class AddMascota(LoginRequiredMixin,FormView):
         Mascota.objects.create(
             user = self.request.user,
             nombre_de_mascota=form.cleaned_data['nombre_de_mascota'],
-            chip=False,
+            chip=form.cleaned_data['chip'],
             n_chip=form.cleaned_data['n_chip'],
             image=form.cleaned_data['image'],
             descripccion=form.cleaned_data['descripccion'],
@@ -512,6 +514,10 @@ class EspecieDeleteView(LoginRequiredMixin,DeleteView):
 #     # Guardar el nuevo objeto del SegundoModelo
 #     segundo_objeto.save()    
 
+def obtener_mascotas_por_usuario(usuario_id):
+    mascotas = Mascota.objects.filter(user_id=usuario_id)
+    return mascotas
+
 def reservar_cuidador(request, cronograma_id):
 
     cronograma = Cronograma.objects.get(id=cronograma_id)
@@ -550,6 +556,32 @@ def reservar_cuidador(request, cronograma_id):
     reserva.save()
     print(reserva.idCronograma)
 
+    usuario_id = request.user.id
+    mascotas = obtener_mascotas_por_usuario(usuario_id)
+    
+    subject = "Confirmación Reserva"
+    from_email = "pawcare3@gmail.com"
+    message='Hola'
+    recipient_list = [reserva.correocliente] #cuidador
+    context={'subject': subject,
+        'from_email': from_email,
+        'message': message,
+        'reserva': reserva,
+        'mascotas':mascotas}
+    html_message= render_to_string('users/email_confirmacion_cuidador.html', context=context)
+
+    send_mail (subject ,message, from_email, recipient_list, html_message=html_message)
+
+    subject = "Confirmación Reserva"
+    from_email = "pawcare3@gmail.com" 
+    recipient_list = [reserva.correocuidaor] #cliente
+    context={'subject': subject,
+        'from_email': from_email,
+        'message': message,
+        'reserva': reserva}
+    html_message= render_to_string('users/email_confirmacion_cliente.html', context=context)
+
+    send_mail (subject ,message, from_email, recipient_list,html_message=html_message)
 
 
     return redirect(request.META.get('HTTP_REFERER', ''))
@@ -609,6 +641,32 @@ def cancelar_cuidador(request, idReserva):
     estado_cancelado = EstadoReserva.objects.get(pk=1)  # Cancelado id 3 , tambien esta la opcion que de cancelado pase de inmediato a disponible con la pk =1
     cronograma.estado = estado_cancelado
     cronograma.save()
+
+    
+    
+    subject = "Cancelación Reserva"
+    from_email = "pawcare3@gmail.com"
+    message='Hola'
+    recipient_list = [reserva.correocliente] #cuidador
+    context={'subject': subject,
+        'from_email': from_email,
+        'message': message,
+        'reserva': reserva}
+    html_message= render_to_string('users/email_cancelacion_cuidador.html', context=context)
+
+    send_mail (subject ,message, from_email, recipient_list, html_message=html_message)
+
+    subject = "Cancelación Reserva"
+    from_email = "pawcare3@gmail.com" 
+    recipient_list = [reserva.correocuidaor] #cliente
+    context={'subject': subject,
+        'from_email': from_email,
+        'message': message,
+        'reserva': reserva}
+    html_message= render_to_string('users/email_cancelacion_cliente.html', context=context)
+
+    send_mail (subject ,message, from_email, recipient_list,html_message=html_message)
+
 
     return redirect(request.META.get('HTTP_REFERER', ''))
 
