@@ -4,23 +4,25 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{mascota}}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Confirmar Acción</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="{% url 'users_app:mascota_eliminar' object.id %}" method="POST">
                     {% csrf_token %}
             
-                    <div class="mt-5">
-                        <div class="card text-white bg-danger mb-3 mx-auto" style="max-width: 18rem;">
-                            <div class="card-header">CONFIRMAR ACCION</div>
+                    <div class="mt-2">
+                        
+                            <div class="card-header text-center" style="font-size: 30px;">Borrar Mascota</div>
                             <div class="card-body">
-                                <h5 class="card-title">Borrando Mascota...</h5>
+                                <br>
+                                
                                 <p class="card-text">Está seguro de querer eliminar a: "<strong>{{ mascota }}</strong>"</p>
             
                                 <strong>ATENCION, ESTA ACCIÓN NO SE PODRÁ DESHACER</strong>
-                                <hr>
+                                
                                 <div class="text-center">
+                                    <br>
                             
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -30,7 +32,7 @@
             
                                 </div>
                             </div>
-                        </div>
+                        
                     </div>
                 </form>
             </div>

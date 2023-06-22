@@ -8,8 +8,9 @@
 
 <link href="{% static 'css/perfil_update_forms.css' %}" type="text/css" rel="stylesheet">
 
+<br>
 <div class="container">
-    <h2>Editar Perfil</h2>
+    <h2 class="titulo">Editar Perfil</h2>
      {% if 'ok' in request.GET %} 
          <div class="alert alert-success" role="alert">
             El Perfil  se ha actualizado correctamente 
@@ -35,12 +36,34 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-6 col-sm-4">
+
+                                
+                             <!--   <div class="form-group">
+                                    {{ form.region.label}}
+                                    {{ form.region}}
+                                    
+                                </div> <br>
+                                <div class="form-group">
+                                    {{ form.comuna.label}}
+                                    {{ form.comuna}}
+                                    
+                                </div><br>
+                                <div class="form-group">
+                                    {{ form.direccion.label}}
+                                    {{ form.direccion}}
+                                    
+                                </div> <br>-->
+
                                 <div class="form-group">
                                     {{ form.descripcion.label}}
                                     {{ form.descripcion}}
                                     
-                                </div>
+                                </div> <br>
+
+
+
                                 {%if request.user.categoria == '2' %}
                                 <div class="form-group">
                                     {{ form.servicios.label}}
@@ -59,7 +82,7 @@
         <div class="row">
             <div class="text-end col-6">
                 <button class="btn btn-lg btn-info" type="button" value="Cancelar" id="cancelar">
-                    <a href="{% url 'users:profile' username=user.username %}">Cancelar</a>
+                    <a class="buttonnf buttonnf-hover" href="{% url 'users:profile' username=user.username %}">Cancelar</a>
                 </button>
             </div>
             <div class="text-start col-6">
@@ -69,14 +92,14 @@
        
 
 
-        <a href="{% url 'users:profile' username=user.username %}">
-            Regresar a mi perfil </a>
+        
     </div>
 </div>
     
         
     </form>
 </div>
+<br>
 
 <script src="{% static 'js/fotoperfil.js' %}"></script>
 

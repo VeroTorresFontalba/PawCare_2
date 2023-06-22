@@ -25,9 +25,14 @@ urlpatterns = [
     path('mascota_modificar/<int:pk>', ModificarMascota.as_view(),name='mascota_modificar'),
     path('mascota_eliminar/<int:pk>', MascotaDeleteView.as_view(),name='mascota_eliminar'),
     path('update/<int:pk>', PerfilUpdateView.as_view(),name='update'),
+
+
+
     path('servicios/', ListCuidadores.as_view(),name='cuidadores'),
 
-    path('servicios/<id>', ListCuidadores3.as_view(),name='cuidadores3'),
+  
+
+    path('servicios/<int:id>', ListCuidadores3.as_view(),name='cuidadores3'),
     
     path('servicios/<id>', ReservaRegisterView.as_view(),name='cuidadores3'),
 

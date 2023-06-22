@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cancelacion Reserva</title>
+</head>
+<body>
+    <h1>Cancelacion Reserva</h1>
+    <p>Hola, {{reserva.nombreCuidador}}</p>
+    <p>Tu reserva con el cliente {{reserva.nombreCliente}} ha sido cancelada .</p>
+    <p>Detalles de la reserva:</p>
+    <ul>
+        <li>Fecha de reserva: {{ reserva.fechareserva }}</li>
+        <li>Hora de inicio: {{ reserva.horasInicio }}</li>
+        <li>Hora de fin: {{ reserva.horasFin }}</li>
+    </ul>
+    <p>Gracias por utilizar nuestros servicios.</p>
+</body>
+</html>

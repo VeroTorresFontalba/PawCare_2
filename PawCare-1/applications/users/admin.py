@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User,Servicio, Profile ,Especies ,Mascota, EstadoReserva, Hora,Cronograma,ReservaCliente
+from .models import User,Servicio, Profile ,Especies ,Mascota, EstadoReserva, Hora,Cronograma,ReservaCliente,Region,Comuna
 # ,DiaReserva,EstadoReserva
 # Hora
 # Register your models here.
@@ -14,6 +14,10 @@ admin.site.register(Cronograma)
 admin.site.register(Especies)
 admin.site.register(Mascota)
 admin.site.register(ReservaCliente)
+
+admin.site.register(Region)
+admin.site.register(Comuna)
+
 
 
 

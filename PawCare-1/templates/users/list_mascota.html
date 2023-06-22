@@ -8,17 +8,18 @@
 <link href="{% static 'css/tarjetacuidador.css' %}" type="text/css" rel="stylesheet">
 <script  src="{% static 'js/mascota.js' %} "></script> 
 
+<br>
 <div>
     
-  <p class="mb-4"><span class="text-primary font-italic me-1">Mis mascotas </span> 
+  <p class="mb-4"><span class="titulo">Mis mascotas </span> 
   </p>
     <hr>
     <!--Tarjetas-->
     <div class="container ">
       {% comment %} <a href="{% url 'users_app:crear_mascota' %}" class="btn btn-primary">+</a> <br> {% endcomment %}
-      <button type="button" class="btn btn-primary" onclick="abrir_modal_creacion('{% url 'users_app:crear_mascota'  %}');">+</button>
+      <button type="button" class="btn btn-primary btn-info btn-info-hover" onclick="abrir_modal_creacion('{% url 'users_app:crear_mascota'  %}');">Añadir mascota</button>
         <div class="row">
-          
+        <br> 
         </div>
         
         <div class="row row-cols-6 row-cols-md-12 g-12">
@@ -36,8 +37,8 @@
                     </div>
                    <!-- <a href="{% url 'users_app:mascota_modificar' c.id %}" class="btn btn-primary">Modificar</button>-->
                    <!-- <button type="button" class="btn btn-primary" onclick="abrir_modal_edicion('{% url 'users_app:mascota_modificar' c.id %}');">Modificar</button>-->
-                    <button type="button" class="btn btn-primary" onclick="abrir_modal_edicion2('{% url 'users_app:mascota_modificar' c.id %}');">Modificar</button>
-                    <button type="button" class="btn btn-danger" onclick="abrir_modal_eliminar('{% url 'users_app:mascota_eliminar' c.id %}');">Eliminar</button>
+                    <button type="button" class="btn btn-primary btn-info btn-info-hover" onclick="abrir_modal_edicion2('{% url 'users_app:mascota_modificar' c.id %}');">Modificar</button>
+                    <button type="button" class="btn btn-danger  btn-info btn-info-hover" onclick="abrir_modal_eliminar('{% url 'users_app:mascota_eliminar' c.id %}');">Eliminar</button>
  <!--                <a href="{% url 'users_app:mascota_eliminar' c.id %}" class="btn btn-danger">Borrar</a>-->
                 </div>
             </div> 
@@ -51,5 +52,6 @@
     </div>
 
 </div>
+<br>
 
 {% endblock %}
