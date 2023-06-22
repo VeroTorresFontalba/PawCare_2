@@ -15,7 +15,7 @@
         <li>Hora de inicio: {{ reserva.horasInicio }}</li>
         <li>Hora de fin: {{ reserva.horasFin }}</li>
     </ul>
-    {% for mascota in mascotas %}
+    
     <table>
         <thead>
             <tr>
@@ -26,15 +26,17 @@
            </tr>
         </thead>
         <tbody>
+            {% for mascota in mascotas %}
             <tr>
                 <td>{{mascota.nombre_de_mascota}}</td>
                 <td>{{mascota.especies}}</td>
                 <td>{{mascota.chip}}</td>
                 <td>{{mascota.descripccion}}</td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
-    {% endfor %}
+    
     <p>Gracias por utilizar nuestros servicios.</p>
     
 </body>
