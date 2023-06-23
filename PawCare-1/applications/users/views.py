@@ -6,7 +6,8 @@ from rest_framework.generics import (
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.shortcuts import render,get_object_or_404,redirect, render
+from django.shortcuts import render,get_object_or_404,redirect
+#, render
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 
@@ -16,7 +17,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login, logout
 from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from django.db.models import Q
-from django.db.models import Subquery
+from django.db.models import Subquery, Avg
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.views.generic import (
@@ -723,6 +724,23 @@ class Calificacion(CreateView):
     
     def get_success_url(self):
         return reverse_lazy('users_app:profile',args=[self.object.id]) 
+    
+
+def actualizar_promedio_calificacion(id_cuidador):
+    # Obtener todas las reservas del cuidador
+    reservas = ReservaCliente.objects.filter(idCuidador=id_cuidador, calificacion__isnull=False)
+    
+    # Calcular el promedio de las calificaciones
+    promedio = reservas.aggregate(promedio=Avg('calificacion'))['promedio']
+    
+    # Actualizar el promedio de calificación en el modelo User
+    try:
+        user = User.objects.get(id=id_cuidador)
+        user.promediocalificacion = promedio
+        user.save()
+    except User.DoesNotExist:
+        pass  # Manejar el caso en el que el usuario no existe
+  
 
 
 
@@ -739,6 +757,12 @@ def guardar_calificacion(request):
                 reserva = ReservaCliente.objects.get(id=reserva_id)
                 reserva.calificacion = calificacion
                 reserva.save()
+
+                # Obtener el id del cuidador asociado a la reserva
+                id_cuidador = reserva.idCuidador
+
+                # Actualizar el promedio de calificación
+                actualizar_promedio_calificacion(id_cuidador)
                 
                 return JsonResponse({'success': True})
             except ReservaCliente.DoesNotExist:
@@ -760,3 +784,5 @@ def finalizar_reserva(request, idReserva):
     cronograma.save()
 
     return redirect(request.META.get('HTTP_REFERER', ''))
+
+
