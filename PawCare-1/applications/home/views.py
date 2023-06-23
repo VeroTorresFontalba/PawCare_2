@@ -22,3 +22,6 @@ class SomosView(TemplateView):
 
 class BaseView(CreateView):
     template_name='base.html'
+
+class Error404View(TemplateView):
+    template_name = 'home/error_404.html'

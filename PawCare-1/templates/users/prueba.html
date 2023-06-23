@@ -12,9 +12,10 @@
 <br>
 
 <div class="container">
-    
-    <h1 class="titulo">Agenda de reserva</h1>
-
+    <div>
+      <h1 class="titulo">Agenda de reserva</h1>
+      <a class=" btn btn-primary btn-info btn-info-hover" href="{% url 'home_app:servicios' %}">Volver</a>
+    </div>  
     <div class="container ">
         <div class="row row-cols-3 row-cols-md-3 g-3">
 
@@ -124,7 +125,7 @@
         </tbody>
     </table>
     <div id="confirmarreserva"></div>
-    <a class=" btn btn-primary btn-info btn-info-hover" href="{% url 'home_app:servicios' %}">Volver</a>
+    <!--<a class=" btn btn-primary btn-info btn-info-hover" href="{% url 'home_app:servicios' %}">Volver</a>-->
     
 
     <!-- Button trigger modal -->

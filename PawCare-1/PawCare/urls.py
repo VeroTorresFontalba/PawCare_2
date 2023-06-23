@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import path ,re_path,include
 from django.conf import settings
 from django.conf.urls.static import static
-from applications.home.views import HomeView,ColaboradoresView,SomosView,ServicioView
+from applications.home.views import HomeView,ColaboradoresView,SomosView,ServicioView,Error404View
 from applications.users.views import UserRegisterView
 from applications.users.urls import auth_views 
 from applications.users.forms import MySetPasswordForm
 
+from django.conf.urls import handler404
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -44,3 +45,4 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+handler404 = Error404View.as_view()
