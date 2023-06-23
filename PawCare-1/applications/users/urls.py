@@ -6,8 +6,8 @@ from django.contrib.auth import views as auth_views
 from .views import *
 
 from .forms import UserPasswordResetForm
-
-from .views import *
+from .views import View
+from . import views
 app_name ="users_app"
 
 
@@ -25,10 +25,21 @@ urlpatterns = [
     path('mascota_modificar/<int:pk>', ModificarMascota.as_view(),name='mascota_modificar'),
     path('mascota_eliminar/<int:pk>', MascotaDeleteView.as_view(),name='mascota_eliminar'),
     path('update/<int:pk>', PerfilUpdateView.as_view(),name='update'),
+
+
+
     path('servicios/', ListCuidadores.as_view(),name='cuidadores'),
+
+  
+
+    path('servicios/<int:id>', ListCuidadores3.as_view(),name='cuidadores3'),
+    
+    path('servicios/<id>', ReservaRegisterView.as_view(),name='cuidadores3'),
+
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html', form_class=UserPasswordResetForm), name='password_reset'),
     path('api/mascota/por-usuario/', ListMascotaUser.as_view(),name='mascota-mascota-by-user'),
-    path('vista_reserva/<int:pk>',ClienteResevarView.as_view(), name= 'vista_reserva'),
+
+    path('vista_reserva/',ClienteResevarView.as_view(), name= 'vista_reserva'),
 
     path('list_user_admin/', ListUser.as_view(), name='usuarios_admin'),
     path('list_user_admin/<id>', ListUser2.as_view(), name='usuarios_admin_s'),
@@ -47,5 +58,15 @@ urlpatterns = [
     path('especie_modificar/<int:pk>', ModificarEspecie_admin.as_view(),name='especie_modificar'),
     path('especie_eliminar/<int:pk>', EspecieDeleteView.as_view(),name='especie_eliminar'),
 
+    path('reservar_cuidador/<int:cronograma_id>', views.reservar_cuidador, name='reservar_cuidador'),
+    path('list_horas_user/', HorasporUserList.as_view(), name='horas_user'),
+    path('cancelar_cuidador/<int:idReserva>', views.cancelar_cuidador, name='cancelar_cuidador'),
+    path('finalizar_reserva/<int:idReserva>', views.finalizar_reserva, name='finalizar_reserva'),
+    #path('rating_modal/', views.rating_modal , name='rating_modal'),
+    path('rating_modal/', Calificacion.as_view() , name='rating_modal'),
+    path('finalizar_reserva/<int:idReserva>/', views.finalizar_reserva, name='finalizar_reserva'),
 
+    path('guardar_calificacion/', views.guardar_calificacion, name='guardar_calificacion'),
+    #path('calcular_promedio_calificacion/', views.calcular_promedio_calificacion, name='calcular_promedio_calificacion'),
 ]
+

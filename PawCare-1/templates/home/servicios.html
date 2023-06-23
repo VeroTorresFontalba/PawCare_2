@@ -19,6 +19,43 @@
         <div class="row">
 
         </div>
+
+      <form method="GET" > {%csrf_token%}
+
+
+        
+       <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-primary active">
+          <button class="btn btn-info" type="submit" id="kword" name="kword" value="" >Todos</button>
+        </label>
+        <label class="btn btn-warning active">
+          <button class="btn btn-info" type="submit" id="kword" name="kword" value="Cuidado a domicilio" >Cuidado a domicilio</button>
+        </label>
+        <label class="btn btn-warning">
+          <button class="btn btn-info" type="submit" id="kword" name="kword" value="Peluqueria" >Peluqueria</button>
+        </label>
+        <label class="btn btn-warning">
+          <button class="btn btn-info" type="submit" id="kword" name="kword" value="Transporte de Mascota" >Transporte de Mascota</button>
+        </label>
+      </div> 
+
+    </form>
+    <br>
+    <p>
+
+      <!-- <form method="GET" > {%csrf_token%}
+        <input class""  type="text" id="nombre" name="nombre" placeholder="Ingrese nombre">
+        <button type="submit">Buscar</button>
+      </form> -->
+
+      <form method="GET" > {%csrf_token%}
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese nombre" aria-label="Recipient's username" aria-describedby="button-addon2">
+          <button class="btn btn-outline-info" type="submit" id="button-addon2">Buscar</button>
+        </div>
+      </form>
+  </p>
+      <br>
         
         <div class="row row-cols-2 row-cols-md-4 g-4">
             {% for c in lista_cuidadores %}
@@ -33,6 +70,28 @@
                         <span class="badge bg-primary">{{ servicios.nombre  | upper }}</span>
                       {% endfor %} 
 
+                      {% for cronograma in c.cronograma.all %}
+<!--                      <span class="badge bg-primary">{{ cronograma.fechaReserva  | upper }}</span>
+                      <span class="badge bg-primary">{{ cronograma.horas  | upper }}</span> 
+                      <table class="table">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col">Fecha:</th>
+                            <th scope="col">{{ cronograma.fechaReserva  | upper }}</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Horas:</th>
+                            <td>{{ cronograma.horas.horaInicio  | upper }}-{{ cronograma.horas.horaFin  | upper }}</td>
+
+                          </tr>
+                        </table> -->
+                      {% endfor %}
+
+
+
                         <div>{{c.promediocalificacion}}</div>
                         <div id="calificacion_estrellas">
                             <script>
@@ -40,9 +99,17 @@
                             </script>
                         </div>
                         <br>
-                        <div>
-                            <button type="button" class="btn btn-primary" onclick="abrir_modal3('{% url 'users_app:vista_reserva' c.id %}');">Reservar</button>
+                        {%if request.user.categoria == '1' %}
+             <!--           <div>
+                            <button type="button" class="btn btn-primary" onclick="abrir_modal3('{% url 'users_app:vista_reserva'  %}');">Reservar</button>
+                            
                         </div>
+                        <br> -->
+                        <div>
+                            <a type="button" class="btn btn-primary btn-info btn-info-hover" href="{% url 'users_app:cuidadores3' c.id %}">Reservar</a>
+                        </div> 
+                        {% endif%}
+
 
                     </div>
                 </div>

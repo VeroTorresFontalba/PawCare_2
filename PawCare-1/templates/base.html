@@ -60,39 +60,66 @@
                             <a type="button" class="btn btn-outline-danger me-2"  href="{% url 'users_app:user_logout' %}">Cerrar Sesión</a>
                         </li>
 
-                        <li class= "nav-item">   
+    <!--                    <li class= "nav-item">   
                             <a class="nav-link"  href="{% url 'users:profile' user.username %}">Bienvenido {{user.username | upper}} :)</a>   
 
-                        </li>
+                        </li> -->
 
+                        <div class="btn-group" >
+                            <div class="dropdown">
+                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                    Bienvenido {{user.username | upper}} :)
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class=" resaltar1 nav-link dropdown-item fa-solid fa-user" href="{% url 'users:profile' user.username  %}">Mi Perfil</a></li>
+                                
+                                
+                                {%if request.user.categoria == '1' %}
+                                
+                                <li><a class="resaltar1 nav-link dropdown-item fa-solid fa-paw" href="{% url 'users:mascota'  %}">Mis Mascotas</a></li>
+                               
+                                <li><a class="resaltar1 nav-link dropdown-item fa-solid fa-clock " href="{% url 'users:horas_user'  %}">Mis reservas</a></li>
+                                
+                                {% endif %}   
+                                </ul>
+                                
+                                
+                            </div>
+                          <div>
+                          
                         {%if request.user.categoria == '2' %}
                         <li class= "nav-item">   
-                            <a class="nav-link"  href="{% url 'users:calendario'  %}">Cronograma</a>   
+                            
+                            <a class="nav-link fa-solid fa-calendar-days fa-2xl"  href="{% url 'users:calendario'  %}"></a>   
 
                         </li>
                         {% endif %}
+                      
 
-                        {%if request.user.categoria == '3' %}
+                         {%if request.user.categoria == '3' %} 
                         {% comment %} <li class= "nav-item">   
                             <a class="nav-link"  href="{% url 'admin_app:colaboradores_admin'  %}">Administracion </a>  
 
                         </li> {% endcomment %}
                         <div class="btn-group" >
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                                     Administracion
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="{% url 'admin_app:colaboradores_admin'  %}">Ad_Colaboradores</a></li>
-                                <li><a class="dropdown-item" href="{% url 'users_app:usuarios_admin'  %}">Ad_Usuarios</a></li>
-                                <li><a class="dropdown-item" href="{% url 'users_app:servicios_admin'  %}">Ad_Servicios</a></li>
-                                <li><a class="dropdown-item" href="{% url 'users_app:especie_admin'  %}">Ad_Especies</a></li>
-
+                                <li><a class="resaltar1 nav-link dropdown-item fa-solid fa-user-group" href="{% url 'admin_app:colaboradores_admin'  %}">Admin_Colaboradores</a></li>
+                
+                                <li><a class="resaltar1 nav-link dropdown-item fa-solid fa-user-group" href="{% url 'users_app:usuarios_admin'  %}">Admin_Usuarios</a></li>
+                                
+                                <li><a class="resaltar1 nav-link dropdown-item  fa-solid fa-bell-concierge" href="{% url 'users_app:servicios_admin'  %}">Admin_Servicios</a></li>
+                                
+                                <li><a class="resaltar1 nav-link dropdown-item fa-solid fa-dog" href="{% url 'users_app:especie_admin'  %}">Admin_Especies</a></li>
+                             
                                 </ul>
                             </div>
                           <div>
 
-                        {% endif %}
+                         {% endif %} 
 
                         {% else %}
 
@@ -127,7 +154,7 @@
         <footer class="text-center text-lg-start text-muted border-top">           
             <section class="">
                 <div class="container container-fluid text-center text-md-start mt-5" style="height: 100%;">
-                    <div class="row mt-3">
+                    <div class="row row-cols-md-4 mt-3">
                         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 justify-content-center">
                             <!-- Content -->
                             <img src="{% static 'img/logofoot.png' %}" class="rounded-circle"
@@ -155,26 +182,18 @@
                                         
                                         <a href="{% url 'home_app:servicios' %}" class="nolink nolinkh">Servicios</a>
                                     </h7>
+                                </li>
+                                <br>
+                                <li>
+                                    <h7 class="text-uppercase text-center fw-bold mb-4">
+                                        <a href="{% url 'admin_app:colaboradores' %}" class="nolink nolinkh">Colaboradores</a>
+                                    </h7>
                                 </li>        
                             </ul>
                         </div>
+                                                    
                         <!-- Grid column -->
                         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <!-- Links -->
-                            <h7 class="text-uppercase text-center fw-bold mb-4">
-                                <a class="nav-link" href="">Inicio</a>
-                            </h7>
-                        </div>
-                        
-                        <!-- Grid column -->
-                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <!-- Links -->
-                            <h7 class="text-uppercase fw-bold mb-4">
-                                <a href="{% url 'admin_app:colaboradores' %}" class="nolink nolinkh">Colaboradores</a>
-                            </h7>
-                        </div>                        
-                        <!-- Grid column -->
-                        <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-md-0 mb-4">
                             <!-- Links -->
                             <h7 class="text-uppercase text-center fw-bold mb-4">
                                 Contacto
@@ -193,28 +212,32 @@
                                 <img src="{% static 'img/fonoazul.png' %}" style="width: auto; height: 20px"></img> + 56
                                 9 8327 4639</p>
                         </div>
+                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <!-- Links -->
+                            <h7 class="text-uppercase text-center fw-bold mb-4">
+                                Redes Sociales
+                            </h7>
+                            <p>
+                                <a href="/" class="me-4 text-reset">
+                                    <img src="{% static 'img/facebook.png' %}"style="width: auto; height: 30px"></img>
+                                </a>
+                            </p>
+                            <p>
+                                <a href="/" class="me-4 text-reset">
+                                    <img src="{% static 'img/instagram.png' %}"style="width: auto; height: 30px"></img>
+                                </a>
+                            </p>
+                            <p>
+                                <a href="/" class="me-4 text-reset">
+                                    <img src="{% static 'img/twitter.png' %}"style="width: auto; height: 30px"></img>
+                                </a>
+                        </div>
                         <!-- Grid column -->
                     </div>
                     <!-- Grid row -->
                 </div>
             </section>
             <!-- Section: Links  -->
-            <section class="d-flex justify-content-lg-evenly p-4">
-                <div>
-                    <h2>Síguenos en:</h2>
-                </div>
-                <div>
-                    <a href="/" class="me-4 text-reset">
-                        <img src="{% static 'img/facebook.png' %}"style="width: auto; height: 30px"></img>
-                    </a>
-                    <a href="/" class="me-4 text-reset">
-                        <img src="{% static 'img/instagram.png' %}"style="width: auto; height: 30px"></img>
-                    </a>
-                    <a href="/" class="me-4 text-reset">
-                        <img src="{% static 'img/twitter.png' %}"style="width: auto; height: 30px"></img>
-                    </a>
-                </div>
-            </section>
             <section class="">
             <!-- Copyright -->
             <div id="copyright" class="text-center p-4" style="background-color: rgb(41, 41, 41);">

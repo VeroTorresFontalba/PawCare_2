@@ -12,7 +12,7 @@ function generarEstrellas(promediocalificacion) {
 
   // Generar media estrella si corresponde
   if (decimal >= 0.5 && decimal <= 0.9) {
-    estrellasHTML += '<span class="fas fa-star-half-alt checked estrella"></span>';s
+    estrellasHTML += '<span class="fas fa-star-half-alt checked estrella"></span>';
   }
 
   return estrellasHTML;

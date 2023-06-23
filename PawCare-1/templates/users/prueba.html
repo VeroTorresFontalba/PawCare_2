@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+{% load static %}
+
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/tarjetacuidador.css' %}" type="text/css" rel="stylesheet">
+<script  src="{% static 'js/calificacion.js' %} "></script> 
+<script  src="{% static 'js/reserva.js' %} "></script> 
+
+  
+<br>
+
+<div class="container">
+  {% if correo_enviado %}
+      <div class="alert alert-success" role="alert">
+         <p><i class="fa-solid fa-check"></i> Su reserva ha sido realizada con exito. Los detalles fueron enviados al correo: <strong>{{user.email}}</strong> </p>
+      </div>
+    {% endif %} 
+    <div>
+      <h1 class="titulo">Agenda de reserva</h1>
+      <a class=" btn btn-primary btn-info btn-info-hover" href="{% url 'home_app:servicios' %}">Volver</a>
+    </div>  
+    <div class="container ">
+        <div class="row row-cols-3 row-cols-md-3 g-3">
+
+            <p>
+                <form method="GET" > {%csrf_token%}
+                    <h3>Busqueda por fecha</h3>
+                    <input class="form-control"  type="date" id="fecha1" name="fecha1" > <br>
+                    <input class="form-control" type="date" id="fecha2" name="fecha2" >  <br>
+                    <button class="btn btn-primary  btn-info btn-info-hover" type="submit">Buscar</button>
+                    
+                </form>
+            </p>
+
+
+
+<!--    <table class="table"> <br>
+
+        <thead>
+            <tr>
+                <th>c.id</th> 
+                <th>c.user.id</th>
+                <th>c.fechareserva</th>
+                <th>c.horas.horainicio</th>
+                <th>c.horas.horafin</th>
+            </tr> 
+        </thead> -->
+
+ 
+
+        {% for c in lista_cuidadores %}
+        <div class="col" width="60px">
+         <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-2">
+              <div class="row row-cols-2 row-cols-md-2 g-2">
+                <img src="{% static 'img/hora.png' %}" class="img-fluid rounded-start" alt="5px">
+        
+                
+              </div>
+              <div class="row row-cols-2 row-cols-md-4 g-4">
+                <div class="card-body">
+                  <h5 class="card-title">{{c.user.nombres }} {{c.user.apellidos }}</h5>
+                  <p class="card-text">Dia: <strong>{{c.fechaReserva | upper}}</strong></p>
+                  <p class="card-text">Hora: <strong>{{c.horas.horaInicio |upper}} - {{c.horas.horaFin |upper}}</strong></p>
+
+                <strong><p>Seleccione el/los servicios a solicitar:</p></strong>
+                  {% for servicios in c.user.profile.servicios.all %}
+                   <span class="badge bg-warning"> 
+                  <input type="checkbox" name="servicios" id="servicios" value="{{ servicios.nombre }}"> <label for="servicios">{{ servicios.nombre }}</label>
+                </span>
+                {% endfor %} 
+
+                <br><br>
+                 <a href="{% url 'users_app:reservar_cuidador' cronograma_id=c.id %}"  class="btn btn-primary  btn-info btn-info-hover">Reservar</a>
+                </div>
+                
+              </div>
+              
+            </div>
+          </div> 
+        </div>
+
+       <!-- <form id="formulario_hidden" action="#" method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{c.id| upper }}"> 
+            <input type="hidden" value="{{c.user.id| upper }}">
+            <input type="hidden" value="{{c.fechaReserva| upper }}">
+            <input type="hidden" value="{{c.horas.horaInicio| upper }}">
+            <input type="hidden" value="{{c.horas.horaFin| upper }}">
+            <input type="hidden" value="{{c.horaFin| upper }}"> 
+            
+        </form> 
+
+        <tbody>
+            
+            <tr>
+               <td>{{c.id }}</td>
+               <td>{{c.user.id }}</td>
+               <td>{{c.fechaReserva | upper}}</td>
+               <td>{{c.horas.horaInicio |upper}}</td>
+               <td>{{c.horas.horaFin |upper}}</td>
+               
+               
+
+
+
+
+
+
+               <td>{{c.horaFin}}</td> 
+               <th>{{user.email}}</th>
+               <th>{{c.user.email}}</th>
+
+                <!-{% for cronograma in c.cronograma.all %}
+                <td>{{ cronograma.fechaReserva  | upper }}</td>
+                <td>{{ cronograma.horas.horaInicio   | upper }}</td>
+                <td>{{ cronograma.horas.horaFin | upper }}</td>
+                {% endfor %}
+
+
+                
+
+                <td><a href="{% url 'users_app:reservar_cuidador' cronograma_id=c.id %}"  class="btn btn-primary  btn-info btn-info-hover">Reservar</a></td>
+                  <td><a href="#" class="btn btn-danger">Eliminar</a></td> 
+
+            </tr>--> 
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="confirmarreserva"></div>
+    <!--<a class=" btn btn-primary btn-info btn-info-hover" href="{% url 'home_app:servicios' %}">Volver</a>-->
+    
+
+    <!-- Button trigger modal -->
+  
+  <!-- Modal -->
+</div>
+<br>
+
+<script  src="{% static 'js/reserva.js' %} "></script> 
+{% endblock %}

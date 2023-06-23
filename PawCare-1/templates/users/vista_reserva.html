@@ -2,14 +2,42 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Título del modal</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Reserva</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <h1>Hola</h1>
-            </div>
+            
+            <table class="table"> <br>
+                <thead>
+                    <tr>
+                     <!--   <th>Nombre del Cuidador</th> -->
+                        <th>Dia</th>
+                        <th>Hora Inicio</th>
+                        <th>Hora Fin</th>
+        
+          
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in lista_cuidadores %}
+                        <tr>
+                        <!--   <td>{{c.nombres}}{{c.apellidos}}</td> -->
+            
+            
+                            {% for cronograma in c.cronograma.all %}
+                            <td>{{ cronograma.fechaReserva  | upper }}</td>
+                            <td>{{ cronograma.horas.horaInicio   | upper }}</td>
+                            <td>{{ cronograma.horas.horaFin | upper }}</td>
+                            {% endfor %}
+            
+                            <td><a href="#" class="btn btn-primary  btn-info btn-info-hover">Reservar</a></td>
+                            {% comment %} <td><a href="#" class="btn btn-danger">Eliminar</a></td> {% endcomment %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
             <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" value="Reservar">
+                {% comment %} <input type="submit" class="btn btn-primary" value="Reservar"> {% endcomment %}
                 <button class="btn btn-danger" type="button" data-bs-dismiss="modal" >Cancelar</button>
             </div>
         </div>

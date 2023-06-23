@@ -15,6 +15,17 @@
 </div> {% endcomment %}
 
 <div class="container">
+  
+     {% if 'ok' in request.GET %} 
+         <div class="alert alert-success" role="alert">
+            La especie se ha actualizado correctamente 
+            <span>
+                <a class="btn btn-sm btn-success" href="{% url 'users:especie_admin'  %}" id="">Volver</a>
+            </span>
+        </div>
+    {% endif %} 
+
+<div class="container">
     <div class="row">
         <h2>Modificar Especie</h2> 
     </div>

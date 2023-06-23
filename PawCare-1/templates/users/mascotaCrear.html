@@ -24,9 +24,6 @@
         <div class="row">
             <form method="POST" action="{% url 'users_app:crear_mascota' %}" id="formulario" enctype="multipart/form-data">
                 {% csrf_token %}
-
-                
-
                 <div class="form-group">
                     {{ form.nombre_de_mascota.label }}
                     {{ form.nombre_de_mascota }}

@@ -13,3 +13,7 @@ function abrir_modal3(url){
             }
         });
 }
+
+function click(url){
+    console.log(url)
+}
