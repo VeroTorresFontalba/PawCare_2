@@ -339,12 +339,20 @@ class ModificarMascota(LoginRequiredMixin,UpdateView):
         return super().form_invalid(form)
     
     def get_success_url(self):
-        return reverse_lazy('users_app:mascota',args=[self.object.id]) 
+        return reverse_lazy('users_app:mascota',args=[self.object.id]) + '?ok'
     
 class MascotaDeleteView(LoginRequiredMixin,DeleteView):
     model = Mascota
-    success_url=reverse_lazy('users_app:mascota')
+    success_url=reverse_lazy('users_app:mascota') 
     login_url = reverse_lazy('users_app:user_login')
+
+    def delete(self, request, *args, **kwargs):
+        # Resto del código
+        
+        return HttpResponseRedirect(self.get_success_url())
+    
+    def get_success_url(self):
+        return reverse_lazy('users_app:mascota') + '?deleted'
 
 class ClienteResevarView(LoginRequiredMixin,ListView):
     context_object_name= 'reserva'
@@ -559,6 +567,8 @@ def reservar_cuidador(request, cronograma_id):
 
     usuario_id = request.user.id
     mascotas = obtener_mascotas_por_usuario(usuario_id)
+
+    correo_enviado = True
     
     subject = "Confirmación Reserva"
     from_email = "pawcare3@gmail.com"
@@ -584,8 +594,14 @@ def reservar_cuidador(request, cronograma_id):
 
     send_mail (subject ,message, from_email, recipient_list,html_message=html_message)
 
+    context = {
+        'correo_enviado': correo_enviado,
+    }
 
-    return redirect(request.META.get('HTTP_REFERER', ''))
+    return render(request, 'prueba.html', context)
+
+
+    #return redirect(request.META.get('HTTP_REFERER', ''))
    # return redirect('users_app:reservar_cuidador', cronograma_id)
 
 # def reservar_cuidador(request, cronograma_id):

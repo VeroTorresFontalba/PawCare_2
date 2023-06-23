@@ -12,6 +12,11 @@
 <br>
 
 <div class="container">
+  {% if correo_enviado %}
+      <div class="alert alert-success" role="alert">
+         <p><i class="fa-solid fa-check"></i> Su reserva ha sido realizada con exito. Los detalles fueron enviados al correo: <strong>{{user.email}}</strong> </p>
+      </div>
+    {% endif %} 
     <div>
       <h1 class="titulo">Agenda de reserva</h1>
       <a class=" btn btn-primary btn-info btn-info-hover" href="{% url 'home_app:servicios' %}">Volver</a>
