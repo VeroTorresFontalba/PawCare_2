@@ -14,6 +14,17 @@
   <p class="mb-4"><span class="titulo">Mis mascotas </span> 
   </p>
     <hr>
+    {% if 'ok' in request.GET %} 
+  <div class="alert alert-success" role="alert" id="modificarmascota">
+     <p><i class="fa-solid fa-check"></i> Su mascota se ha actualizado correctamente </p>
+  </div>
+{% endif %} 
+
+{% if 'deleted' in request.GET %}
+  <div class="alert alert-success" role="alert" id="eliminarmascota">
+    <p><i class="fa-solid fa-check"></i> La mascota se ha eliminado correctamente</p>
+  </div>
+{% endif %}
     <!--Tarjetas-->
     <div class="container ">
       {% comment %} <a href="{% url 'users_app:crear_mascota' %}" class="btn btn-primary">+</a> <br> {% endcomment %}

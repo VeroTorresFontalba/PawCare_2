@@ -10,6 +10,11 @@
 <div class="idance">
   <div class="schedule content-block">
       <div class="container">
+        {% if correo_enviado %}
+        <div class="alert alert-success" role="alert">
+          <p><i class="fa-solid fa-check"></i> Su reserva ha sido cancelada</p>
+        </div>
+        {% endif %} 
           <h2 data-aos="zoom-in-up" class="titulo aos-init aos-animate">Mis horas</h2>
           
           <div class="container">
@@ -28,7 +33,7 @@
                         <div class="timetable-item-name"><strong>Servicios a realizar:</strong> {{hora.servicios}}</div> 
                         <!--  <div class="timetable-item-name">{{hora}}</div> aqui tiene que ir el servicio que escogio -->
                    <!---    <td><a href="{% url 'users_app:finalizar_reserva' idReserva=hora.id %}" id="{{hora.id}}"class="btn btn-primary  btn-info btn-info-hover">Realizado</a></td>--> 
-                      <!---  <td><a href="{% url 'users_app:cancelar_cuidador' idReserva=hora.id %}" class="btn btn-danger  btn-danger btn-danger-hover">Cancelar Hora</a></td> --> 
+                     <td><a href="{% url 'users_app:cancelar_cuidador' idReserva=hora.id %}" class="btn btn-danger  btn-danger btn-danger-hover">Cancelar Hora</a></td>
                      <button id="realizadoBtn-{{hora.id}}" data-toggle="modal" data-target="#calificacionModal" value="{{hora.id}}">Realizado</button>
                         
 
