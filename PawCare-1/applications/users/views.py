@@ -347,10 +347,10 @@ class MascotaDeleteView(LoginRequiredMixin,DeleteView):
     success_url=reverse_lazy('users_app:mascota') 
     login_url = reverse_lazy('users_app:user_login')
 
-    def delete(self, request, *args, **kwargs):
+    #def delete(self, request, *args, **kwargs):
         # Resto del código
         
-        return HttpResponseRedirect(self.get_success_url())
+        #return HttpResponseRedirect(self.get_success_url())
     
     def get_success_url(self):
         return reverse_lazy('users_app:mascota') + '?deleted'
@@ -599,7 +599,7 @@ def reservar_cuidador(request, cronograma_id):
         'correo_enviado': correo_enviado,
     }
 
-    return render(request, 'prueba.html', context)
+    return render(request, 'users/prueba.html', context)
 
 
     #return redirect(request.META.get('HTTP_REFERER', ''))
@@ -660,7 +660,7 @@ def cancelar_cuidador(request, idReserva):
     cronograma.estado = estado_cancelado
     cronograma.save()
 
-    
+    correo_enviado = True
     
     subject = "Cancelación Reserva"
     from_email = "pawcare3@gmail.com"
@@ -685,8 +685,16 @@ def cancelar_cuidador(request, idReserva):
 
     send_mail (subject ,message, from_email, recipient_list,html_message=html_message)
 
+    context = {
+        'correo_enviado': correo_enviado,
+    }
+    #return render(request, 'users/listarHorasUser.html', context)
+    #return redirect(request.META.get('HTTP_REFERER', ''), context)
+    redirect_url = request.META.get('HTTP_REFERER', '')
 
-    return redirect(request.META.get('HTTP_REFERER', ''))
+    redirect_url += '?correo_enviado={}'.format(correo_enviado)
+
+    return redirect(redirect_url)
 
 
 #def rating_modal(request):

@@ -10,7 +10,7 @@
 <div class="idance">
   <div class="schedule content-block">
       <div class="container">
-        {% if correo_enviado %}
+        {% if 'correo_enviado' in request.GET %}
         <div class="alert alert-success" role="alert">
           <p><i class="fa-solid fa-check"></i> Su reserva ha sido cancelada</p>
         </div>
@@ -35,7 +35,7 @@
                    <!---    <td><a href="{% url 'users_app:finalizar_reserva' idReserva=hora.id %}" id="{{hora.id}}"class="btn btn-primary  btn-info btn-info-hover">Realizado</a></td>--> 
                         <!--<td><a href="{% url 'users_app:cancelar_cuidador' idReserva=hora.id %}" class="btn btn-danger  btn-danger btn-danger-hover">Cancelar Hora</a></td> -->
                         <button id="realizadoBtn-{{hora.id}}" data-toggle="modal" data-target="#calificacionModal" value="{{hora.id}}" class="btn btn-primary  btn-info btn-info-hover">Realizado</button>
-                        <td><a href="{% url 'users_app:cancelar_cuidador' idReserva=hora.id %}" class="btn btn-danger  btn-danger btn-danger-hover">Cancelar Hora</a></td> 
+                        <td><a href="{% url 'users_app:cancelar_cuidador' idReserva=hora.id %}"  class="btn btn-danger  btn-danger btn-danger-hover">Cancelar Hora</a></td> 
 
 
                         <div class="timetable-item-like">
