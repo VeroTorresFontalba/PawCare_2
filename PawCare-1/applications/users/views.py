@@ -647,6 +647,22 @@ class HorasporUserList(ListView):
     
 
 
+class HorasRealizadasporUserList(ListView):
+    context_object_name='horas_realizadas_por_user'
+    template_name='users/listaHorasRealizadasUser.html'
+    def get_queryset(self):
+        usuario= self.request.user
+        return ReservaCliente.objects.horas_por_user_realizadas(usuario)
+
+# class HorasRealizadasporUserList(ListView):
+#     context_object_name='horas_realizadas_por_user'
+#     template_name='users/listaHorasUser.html'
+#     def get_queryset(self):
+#         usuario= self.request.user
+#         return ReservaCliente.objects.horas_por_user_realizadas(usuario)
+    
+
+
 
 def cancelar_cuidador(request, idReserva):
     try:
@@ -792,5 +808,23 @@ def finalizar_reserva(request, idReserva):
     cronograma.save()
 
     return redirect(request.META.get('HTTP_REFERER', ''))
+
+
+class ListCronogramaDisponibles(LoginRequiredMixin,ListView):
+    context_object_name= 'lista_hora_disponible'
+    template_name= 'users/lista_hora_disponible.html'
+    login_url = reverse_lazy('users_app:user_login')
+
+    def get_queryset(self):
+        usuario= self.request.user
+        return Cronograma.objects.horas_por_user(usuario)
+    
+
+class CronogramaDeleteView(LoginRequiredMixin,DeleteView):
+    model = Cronograma
+    success_url=reverse_lazy('users_app:horaseliminar') 
+    login_url = reverse_lazy('users_app:user_login')
+    def get_success_url(self):
+        return reverse_lazy('users_app:horaseliminar') + '?deleted'
 
 

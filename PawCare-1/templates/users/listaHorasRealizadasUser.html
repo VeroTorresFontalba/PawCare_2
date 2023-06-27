@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+{% load static %}
+
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/agenda.css' %}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/rating.css' %}" type="text/css" rel="stylesheet">
+<div class="idance">
+  <div class="schedule content-block">
+      <div class="container">
+        {% if 'correo_enviado' in request.GET %}
+        <div class="alert alert-success" role="alert">
+          <p><i class="fa-solid fa-check"></i> Su reserva ha sido cancelada</p>
+        </div>
+        {% endif %} 
+          <h2 data-aos="zoom-in-up" class="titulo aos-init aos-animate">Historial de Atencion</h2>
+          
+          <div class="container">
+                <div class="row row-cols-10 row-cols-md-4 g-4 ">
+                  {% for hora in horas_realizadas_por_user %}
+                  <!-- Schedule Item 1 -->
+                  <div class="col-md-4">
+                    <div class="timetable-item">
+                      <div class="timetable-item-img">
+                          {{hora.fechareserva}}
+                        <img src="{% static 'img/agenda.png' %}" alt="Contemporary Dance"> 
+                        <!--<img class="card-img-top" src="{{hora.profile.picture.url}}" width="240px"> -->
+                      </div>
+                      <div class="timetable-item-main">
+                        <div class="timetable-item-time">{{hora.horasInicio}} - {{hora.horasFin}}</div>
+                        <div class="timetable-item-name">{{hora.nombreCuidador}}</div>
+                        <div class="timetable-item-name"><strong>Servicios a realizar:</strong> {{hora.servicios}}</div> 
+
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+          
+      </div>
+  </div>     
+</div>
+
+
+
+
+
+{% endblock %}
+
