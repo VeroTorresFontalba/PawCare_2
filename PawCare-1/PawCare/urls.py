@@ -24,6 +24,7 @@ from applications.users.urls import auth_views
 from applications.users.forms import MySetPasswordForm
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 

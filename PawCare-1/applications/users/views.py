@@ -6,7 +6,8 @@ from rest_framework.generics import (
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.shortcuts import render,get_object_or_404,redirect, render
+from django.shortcuts import render,get_object_or_404,redirect
+#, render
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 
@@ -16,7 +17,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login, logout
 from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from django.db.models import Q
-from django.db.models import Subquery
+from django.db.models import Subquery, Avg
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.views.generic import (
@@ -346,10 +347,10 @@ class MascotaDeleteView(LoginRequiredMixin,DeleteView):
     success_url=reverse_lazy('users_app:mascota') 
     login_url = reverse_lazy('users_app:user_login')
 
-    def delete(self, request, *args, **kwargs):
+    #def delete(self, request, *args, **kwargs):
         # Resto del código
         
-        return HttpResponseRedirect(self.get_success_url())
+        #return HttpResponseRedirect(self.get_success_url())
     
     def get_success_url(self):
         return reverse_lazy('users_app:mascota') + '?deleted'
@@ -598,7 +599,7 @@ def reservar_cuidador(request, cronograma_id):
         'correo_enviado': correo_enviado,
     }
 
-    return render(request, 'prueba.html', context)
+    return render(request, 'users/prueba.html', context)
 
 
     #return redirect(request.META.get('HTTP_REFERER', ''))
@@ -646,6 +647,22 @@ class HorasporUserList(ListView):
     
 
 
+class HorasRealizadasporUserList(ListView):
+    context_object_name='horas_realizadas_por_user'
+    template_name='users/listaHorasRealizadasUser.html'
+    def get_queryset(self):
+        usuario= self.request.user
+        return ReservaCliente.objects.horas_por_user_realizadas(usuario)
+
+# class HorasRealizadasporUserList(ListView):
+#     context_object_name='horas_realizadas_por_user'
+#     template_name='users/listaHorasUser.html'
+#     def get_queryset(self):
+#         usuario= self.request.user
+#         return ReservaCliente.objects.horas_por_user_realizadas(usuario)
+    
+
+
 
 def cancelar_cuidador(request, idReserva):
     try:
@@ -659,7 +676,7 @@ def cancelar_cuidador(request, idReserva):
     cronograma.estado = estado_cancelado
     cronograma.save()
 
-    
+    correo_enviado = True
     
     subject = "Cancelación Reserva"
     from_email = "pawcare3@gmail.com"
@@ -684,8 +701,16 @@ def cancelar_cuidador(request, idReserva):
 
     send_mail (subject ,message, from_email, recipient_list,html_message=html_message)
 
+    context = {
+        'correo_enviado': correo_enviado,
+    }
+    #return render(request, 'users/listarHorasUser.html', context)
+    #return redirect(request.META.get('HTTP_REFERER', ''), context)
+    redirect_url = request.META.get('HTTP_REFERER', '')
 
-    return redirect(request.META.get('HTTP_REFERER', ''))
+    redirect_url += '?correo_enviado={}'.format(correo_enviado)
+
+    return redirect(redirect_url)
 
 
 #def rating_modal(request):
@@ -723,6 +748,23 @@ class Calificacion(CreateView):
     
     def get_success_url(self):
         return reverse_lazy('users_app:profile',args=[self.object.id]) 
+    
+
+def actualizar_promedio_calificacion(id_cuidador):
+    # Obtener todas las reservas del cuidador
+    reservas = ReservaCliente.objects.filter(idCuidador=id_cuidador, calificacion__isnull=False)
+    
+    # Calcular el promedio de las calificaciones
+    promedio = reservas.aggregate(promedio=Avg('calificacion'))['promedio']
+    
+    # Actualizar el promedio de calificación en el modelo User
+    try:
+        user = User.objects.get(id=id_cuidador)
+        user.promediocalificacion = promedio
+        user.save()
+    except User.DoesNotExist:
+        pass  # Manejar el caso en el que el usuario no existe
+  
 
 
 
@@ -739,6 +781,12 @@ def guardar_calificacion(request):
                 reserva = ReservaCliente.objects.get(id=reserva_id)
                 reserva.calificacion = calificacion
                 reserva.save()
+
+                # Obtener el id del cuidador asociado a la reserva
+                id_cuidador = reserva.idCuidador
+
+                # Actualizar el promedio de calificación
+                actualizar_promedio_calificacion(id_cuidador)
                 
                 return JsonResponse({'success': True})
             except ReservaCliente.DoesNotExist:
@@ -760,3 +808,23 @@ def finalizar_reserva(request, idReserva):
     cronograma.save()
 
     return redirect(request.META.get('HTTP_REFERER', ''))
+
+
+class ListCronogramaDisponibles(LoginRequiredMixin,ListView):
+    context_object_name= 'lista_hora_disponible'
+    template_name= 'users/lista_hora_disponible.html'
+    login_url = reverse_lazy('users_app:user_login')
+
+    def get_queryset(self):
+        usuario= self.request.user
+        return Cronograma.objects.horas_por_user(usuario)
+    
+
+class CronogramaDeleteView(LoginRequiredMixin,DeleteView):
+    model = Cronograma
+    success_url=reverse_lazy('users_app:horaseliminar') 
+    login_url = reverse_lazy('users_app:user_login')
+    def get_success_url(self):
+        return reverse_lazy('users_app:horaseliminar') + '?deleted'
+
+

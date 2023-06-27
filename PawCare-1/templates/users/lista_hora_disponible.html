@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+{% load static %}
+
+<link href="{% static 'css/global.css' %}" type="text/css" rel="stylesheet">
+<script  src="{% static 'js/cronograma.js' %} "></script> 
+
+<br>
+<div class="container">
+    <h2 class="titulo">Mis horas Disponibles</h2><br><br>
+
+    {% if 'deleted' in request.GET %}
+    <div class="alert alert-success" role="alert" id="eliminarmascota">
+        <p><i class="fa-solid fa-check"></i> La hora se ha eliminado correctamente</p>
+    </div>
+    {% endif %}
+
+    <table class="table table-info table-hover"> <br>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for hora in lista_hora_disponible %}
+            <tr>
+                <td>{{hora.fechaReserva | upper}}</td>
+                <td>{{hora.horas }}</td>
+
+
+                <td><button type="button" class="btn btn-danger  btn-danger btn-danger-hover" onclick="abrir_modal_eliminar('{% url 'users_app:cronograma_eliminar' hora.id %}');"><i class="fa-sharp fa-solid fa-trash"></i></button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+    <div id="eliminar"></div>
+  </div><br><br>
+
+  
+ 
+
+
+{% endblock %}
+
+
+

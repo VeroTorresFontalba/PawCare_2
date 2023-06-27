@@ -22,3 +22,5 @@ class SomosView(TemplateView):
 
 class BaseView(CreateView):
     template_name='base.html'
+
+

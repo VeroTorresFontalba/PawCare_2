@@ -81,7 +81,9 @@ class HorasManager(models.Manager):
 
         return self.filter(
             user=usuario,
+            estado = 1,
         )
+    
     def listar_cuidadores_horas(self,horas,fecha1 , fecha2):
         resultado= self.filter(
             user__id=horas, #este es el parametro del id
@@ -113,6 +115,13 @@ class HorasSolicitadasManager(models.Manager):
         return self.filter(
             clienteusername=usuario,
             idCronograma__estado=2
+        ).order_by('-id')
+    
+    def horas_por_user_realizadas(self,usuario):
+
+        return self.filter(
+            clienteusername=usuario,
+            idCronograma__estado=4
         ).order_by('-id')
 
 

@@ -49,7 +49,7 @@ class User (AbstractBaseUser, PermissionsMixin, models.Model ):
     # tipodeusuario=models.CharField(max_length=2,choices=TIPOUSER_CHOICES,null=True,default=2)
     # categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null=True)
     categoria = models.CharField(max_length=2,choices=TIPOUSER_CHOICES,null=True,default=1)
-    promediocalificacion = models.DecimalField(max_digits=3, decimal_places=2, null=True)
+    promediocalificacion = models.DecimalField(max_digits=2, decimal_places=1, null=True,default=0)
 
     region =  models.ForeignKey(Region,on_delete=models.CASCADE,related_name='Region',null=True,default=1)
     comuna =  models.ForeignKey(Comuna,on_delete=models.CASCADE,related_name='Comuna',null=True,default=1)

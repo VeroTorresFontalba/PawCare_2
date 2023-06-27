@@ -1,4 +1,6 @@
 
+
+
 /*function abrir_modal_ratings(url) {
   console.log("HOLAAA");
   console.log(url);
