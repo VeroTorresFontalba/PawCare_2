@@ -41,3 +41,8 @@
     color: #fad905;
     font-size: 30px; 
   }
+
+.tarjeta-colab{
+    height: 300px;
+    width: 400px;
+}
