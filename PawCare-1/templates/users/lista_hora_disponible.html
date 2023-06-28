@@ -34,6 +34,12 @@
 
                 <td><button type="button" class="btn btn-danger  btn-danger btn-danger-hover" onclick="abrir_modal_eliminar('{% url 'users_app:cronograma_eliminar' hora.id %}');"><i class="fa-sharp fa-solid fa-trash"></i></button></td>
             </tr>
+            {% empty %}
+                  
+            <div class="container">
+              <h3>No se encontraron horas disponibles para eliminar</h3>
+            </div>
+            
             {% endfor %}
         </tbody>
     </table><br>
