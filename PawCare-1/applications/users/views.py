@@ -637,19 +637,20 @@ def reservar_cuidador(request, cronograma_id):
 
 #     return redirect(request.META.get('HTTP_REFERER', ''))
 
-class HorasporUserList(ListView):
+class HorasporUserList(LoginRequiredMixin,ListView):
     context_object_name='horas_por_user'
     template_name='users/listaHorasUser.html'
-
+    login_url = reverse_lazy('users_app:user_login')
     def get_queryset(self):
         usuario= self.request.user
         return ReservaCliente.objects.horas_por_user_solicitadas(usuario)
     
 
 
-class HorasRealizadasporUserList(ListView):
+class HorasRealizadasporUserList(LoginRequiredMixin,ListView):
     context_object_name='horas_realizadas_por_user'
     template_name='users/listaHorasRealizadasUser.html'
+    login_url = reverse_lazy('users_app:user_login')
     def get_queryset(self):
         usuario= self.request.user
         return ReservaCliente.objects.horas_por_user_realizadas(usuario)
@@ -817,7 +818,7 @@ class ListCronogramaDisponibles(LoginRequiredMixin,ListView):
 
     def get_queryset(self):
         usuario= self.request.user
-        return Cronograma.objects.horas_por_user(usuario)
+        return Cronograma.objects.horas_por_user_disponibles(usuario)
     
 
 class CronogramaDeleteView(LoginRequiredMixin,DeleteView):

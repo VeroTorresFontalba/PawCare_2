@@ -52,6 +52,11 @@
                     <button type="button" class="btn btn-danger  btn-info btn-info-hover" onclick="abrir_modal_eliminar('{% url 'users_app:mascota_eliminar' c.id %}');">Eliminar</button>
  <!--                <a href="{% url 'users_app:mascota_eliminar' c.id %}" class="btn btn-danger">Borrar</a>-->
                 </div>
+            </div>
+            {% empty %}
+                  
+            <div class="container">
+              <h3>No hay Haz registrado ninguna mascota</h3>
             </div> 
             {% endfor %}
             {% endif%}

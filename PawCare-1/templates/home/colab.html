@@ -52,6 +52,11 @@
                         <center><a class="btn btn-primary btn-info btn-info-hover" href="{{c.url}}"target="_blank">Visita Nuestra pagina</a></center>
                     </div>
                 </div>
+            </div>
+            {% empty %}
+                  
+            <div class="container">
+              <h3>No hay Colaboradores registrados</h3>
             </div> 
             {% endfor %}
         </div>

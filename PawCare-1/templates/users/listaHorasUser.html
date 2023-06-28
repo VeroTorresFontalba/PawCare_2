@@ -10,78 +10,91 @@
 <div class="idance">
   <div class="schedule content-block">
       <div class="container">
-        {% if 'correo_enviado' in request.GET %}
-        <div class="alert alert-success" role="alert">
-          <p><i class="fa-solid fa-check"></i> Su reserva ha sido cancelada</p>
-        </div>
-        {% endif %} 
+          {% if 'correo_enviado' in request.GET %}
+          <div class="alert alert-success" role="alert">
+              <p><i class="fa-solid fa-check"></i> Su reserva ha sido cancelada</p>
+          </div>
+          {% endif %}
           <h2 data-aos="zoom-in-up" class="titulo aos-init aos-animate">Mis horas</h2>
-          
           <div class="container">
-                <div class="row row-cols-10 row-cols-md-4 g-4 ">
+              <div class="row row-cols-10 row-cols-md-4 g-4 ">
                   {% for hora in horas_por_user %}
-                  <!-- Schedule Item 1 -->
                   <div class="col-md-4">
-                    <div class="timetable-item">
-                      <div class="timetable-item-img">
-                          {{hora.fechareserva}}
-                        <img src="{% static 'img/agenda.png' %}" alt="Contemporary Dance"> 
+                      <div class="timetable-item">
+                          <div class="timetable-item-img">
+                              {{hora.fechareserva}}
+                              <img src="{% static 'img/agenda.png' %}" alt="Contemporary Dance">
+                          </div>
+                          <div class="timetable-item-main">
+                              <div class="timetable-item-time">{{hora.horasInicio}} - {{hora.horasFin}}</div>
+                              <div class="timetable-item-name">{{hora.nombreCuidador}}</div>
+                              <div class="timetable-item-name"><strong>Servicios a realizar:</strong> {{hora.servicios}}</div>
+                              <button id="realizadoBtn-{{hora.id}}" data-toggle="modal" data-target="#calificacionModal" value="{{hora.id}}" class="btn btn-primary  btn-info btn-info-hover">Realizado</button>
+                              <td><a href="{% url 'users_app:cancelar_cuidador' idReserva=hora.id %}" class="btn btn-danger  btn-danger btn-danger-hover">Cancelar Hora</a></td>
+                              <div class="timetable-item-like">
+                                  <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                  <i class="fa fa-heart" aria-hidden="true"></i>
+                              </div>
+                          </div>
                       </div>
-                      <div class="timetable-item-main">
-                        <div class="timetable-item-time">{{hora.horasInicio}} - {{hora.horasFin}}</div>
-                        <div class="timetable-item-name">{{hora.nombreCuidador}}</div>
-                        <div class="timetable-item-name"><strong>Servicios a realizar:</strong> {{hora.servicios}}</div> 
-                        <!--  <div class="timetable-item-name">{{hora}}</div> aqui tiene que ir el servicio que escogio -->
-                   <!---    <td><a href="{% url 'users_app:finalizar_reserva' idReserva=hora.id %}" id="{{hora.id}}"class="btn btn-primary  btn-info btn-info-hover">Realizado</a></td>--> 
-                        <!--<td><a href="{% url 'users_app:cancelar_cuidador' idReserva=hora.id %}" class="btn btn-danger  btn-danger btn-danger-hover">Cancelar Hora</a></td> -->
-                        <button id="realizadoBtn-{{hora.id}}" data-toggle="modal" data-target="#calificacionModal" value="{{hora.id}}" class="btn btn-primary  btn-info btn-info-hover">Realizado</button>
-                        <td><a href="{% url 'users_app:cancelar_cuidador' idReserva=hora.id %}"  class="btn btn-danger  btn-danger btn-danger-hover">Cancelar Hora</a></td> 
-
-
-                        <div class="timetable-item-like">
-                          <i class="fa fa-heart-o" aria-hidden="true"></i>
-                          <i class="fa fa-heart" aria-hidden="true"></i>
-                          
-                        </div>
-                      </div>
-                    </div>
+                  </div> <br><br>
+                  {% empty %}
+                  
+                  <div class="container">
+                    <h3>No se encontraron horas Reservadas</h3>
                   </div>
                   {% endfor %}
-                </div>
               </div>
-          
+          </div>
       </div>
-  </div>     
+  </div>
 </div>
 
+<!--<div class="container">
+
+    <h2 data-aos="zoom-in-up" class="titulo aos-init aos-animate">Historial de Atencion</h2>
+    
+    <div class="container">
+      <div class="row row-cols-10 row-cols-md-4 g-4 ">
+        {% for hora in horas_realizadas_por_user %}
+          Schedule Item 1 esto estaba comentado 
+        <div class="col-md-4">
+          <div class="timetable-item">
+            <div class="timetable-item-img">
+                {{hora.fechareserva}}
+              <img src="{% static 'img/agenda.png' %}" alt="Contemporary Dance"> 
+              <img class="card-img-top" src="{{hora.profile.picture.url}}" width="240px"> 
+            </div>
+            <div class="timetable-item-main">
+              <div class="timetable-item-time">{{hora.horasInicio}} - {{hora.horasFin}}</div>
+              <div class="timetable-item-name">{{hora.nombreCuidador}}</div>
+              <div class="timetable-item-name"><strong>Servicios a realizar:</strong> {{hora.servicios}}</div> 
+
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>-->
 
 
 
 {% for hora in horas_por_user %}
 <div id="div_modal_rating">
-
-<div class="modal fade" id="calificacionModal-{{hora.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Calificar Servicio</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <div class="container">
-                  <div class="row">
-                      <div class="stars">
-                        {% csrf_token %} 
-                        <input type="hidden" value="{{ reserva_id }}" id="reserva-id">
-                        <!--  <form action="#" method="POST">
-                              {% csrf_token %}
-
-                              <input type="hidden" value="{{id}}" id="id_usuario">
-                              {{ form.as_p }}
-              
-                          
-                              <div class="mb-4"></div>
-                          </form>-->
+    <div class="modal fade" id="calificacionModal-{{hora.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Calificar Servicio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="stars">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{ reserva_id }}" id="reserva-id">
+  
                           <span class="star" data-rating="1"><i class="far fa-star"></i></span>
                           <span class="star" data-rating="2"><i class="far fa-star"></i></span>
                           <span class="star" data-rating="3"><i class="far fa-star"></i></span>
@@ -89,7 +102,6 @@
                           <span class="star" data-rating="5"><i class="far fa-star"></i></span>
                       </div>
                       <button id="save-rating-{{hora.id}}" class="btn btn-primary" data-reserva-id="{{ hora.id }}">Guardar Calificación</button>
-
                   </div>
               </div>
           </div>
@@ -97,6 +109,7 @@
   </div>
 </div>
 {% endfor %}
+</div>
 
 </div> <br>
 

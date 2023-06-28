@@ -81,6 +81,13 @@ class HorasManager(models.Manager):
 
         return self.filter(
             user=usuario,
+            
+        )
+    
+    def horas_por_user_disponibles(self,usuario):
+
+        return self.filter(
+            user=usuario,
             estado = 1,
         )
     
