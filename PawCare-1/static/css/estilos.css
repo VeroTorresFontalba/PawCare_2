@@ -81,6 +81,7 @@ footer div p {
 .contenido{
     width: 1280px;
     margin: 0 auto;
+    min-height: 720px;
 }
 
 .resaltar:hover{
